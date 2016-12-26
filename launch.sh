@@ -2,7 +2,7 @@ config_lines=(
   	'default_profile = "dbteam";'
   	''
   	'dbteam = {'
-  	'	config_directory = "../DBTeam/bot";'
+  	'	config_directory = "../bot";'
   	'	test = false;'
   	'	msg_num = true;'
   	'	lua_script = "bot.lua";'
@@ -49,9 +49,12 @@ case `character 1 "$1"` in
 			done
 			printf "\nDone\n"
 			do_file config
+			chmod +x ./bin/telegram-cli
 			exit
 		esac
 	fi
 	esac
+	exit
 ;;
 esac
+./bin/telegram-cli
