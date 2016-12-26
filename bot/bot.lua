@@ -16,5 +16,6 @@ function do_notify (user, msg)
 end
 
 function tdcli_update_callback (data)
-	
+    vardump(data)
+    print("a")
 end
