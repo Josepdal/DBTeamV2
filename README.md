@@ -1,9 +1,12 @@
 DBTeam-bot
 ============
 
+Installation
+------------
+
 ```bash
 # Tested on Ubuntu 16.04.
-sudo apt-get git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev apt-get install lua-lgi glib-2.0 libnotify-dev
+sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev
 ```
 
 ```bash
