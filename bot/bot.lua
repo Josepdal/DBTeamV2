@@ -46,8 +46,8 @@ function create_config()
         sudo_users = {our_id},
         disabled_channels = {}
     }
-    serialize_to_file(config, '../data/config.lua')
-    print ('saved config into ../data/config.lua')
+    serialize_to_file(config, './data/config.lua')
+    print ('saved config into ./data/config.lua')
 end
 
 function load_plugins()
