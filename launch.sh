@@ -1,5 +1,6 @@
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
+LOGFILE_MAXSIZE=25
 dbteam_dir="DBTeamV2"
 config_lines=(
   	'default_profile = "dbteam";'
@@ -164,6 +165,7 @@ case $1 in
     show_logo
     configure "${2}"; exit ;;
   *)
+  if [[ `echo $(du -bsh bot/log.txt) | cut -d "M" -f1` -gt "${LOGFILE_MAXSIZE}" ]]; then sudo rm -rf ./bot/log.txt; fi
     show_logo
     start_bot ${2}
 esac
