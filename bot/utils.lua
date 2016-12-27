@@ -1,6 +1,6 @@
 serpent = require("serpent")
 
-json = (loadfile "../libs/JSON.lua")()
+json = (loadfile "./libs/JSON.lua")()
 
 --redis = (loadfile "./libs/redis.lua")()
 

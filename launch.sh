@@ -163,4 +163,4 @@ case $1 in
   install
   subprocess
 esac
-./bin/telegram-cli --json
+./bin/telegram-cli

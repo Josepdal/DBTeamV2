@@ -1,5 +1,5 @@
 package.path = package.path .. ';../.luarocks/share/lua/5.2/?.lua'
-  ..';.luarocks/share/lua/5.2/?/init.lua'..';../bot/?.lua'..';./libs/?.lua'
+  ..';.luarocks/share/lua/5.2/?/init.lua'..';./bot/?.lua'..';./libs/?.lua'
 package.cpath = package.cpath .. ';.luarocks/lib/lua/5.2/?.so'
 
 require('utils')
@@ -29,7 +29,7 @@ function load_config( )
   	else
   		f:close()
   	end
-  	local config = loadfile ("../data/config.lua")()
+  	local config = loadfile ("./data/config.lua")()
   	for v,user in pairs(config.sudo_users) do
   		print("Allowed user: " .. user)
   	end
@@ -54,7 +54,7 @@ function load_plugins()
     for k, v in pairs(_config.enabled_plugins) do
         print("Loading plugin", v)
         local ok, err =  pcall(function()
-            local t = loadfile("../plugins/"..v..'.lua')()
+            local t = loadfile("./plugins/"..v..'.lua')()
             plugins[v] = t
         end)
         if not ok then
