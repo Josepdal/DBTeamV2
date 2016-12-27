@@ -1,9 +1,11 @@
-# Launch created by @Jarriz, @Josepdal and @iicc1)
+# Launch created by @Jarriz, @Josepdal and @iicc1
+tgcli_version=1222
+dbteam_dir="DBTeamV2"
 config_lines=(
   	'default_profile = "dbteam";'
   	''
   	'dbteam = {'
-  	'	config_directory = "../bot";'
+  	'	config_directory = "../'${dbteam_dir}'/bot";'
   	'	test = false;'
   	'	msg_num = true;'
   	'	lua_script = "bot.lua";'
@@ -14,21 +16,22 @@ config_lines=(
   	'}'
 )
 
+lualibs=(ss
+  	'luasec'
+  	'lbase64 20120807-3'
+  	'luafilesystem'
+  	'lub'
+  	'luaexpat'
+  	'redis-lua'
+  	'lua-cjson'
+  	'fakeredis'
+  	'xml'
+  	'feedparser'
+  	'serpent'
+)
+
 function install_libs_lua() {
   today=`date +%F`
-  lualibs=(
-    "luasec"
-    "lbase64 20120807-3"
-    "luafilesystem"
-    "lub"
-    "luaexpat"
-    "redis-lua"
-    "lua-cjson"
-    "fakeredis"
-    "xml"
-    "feedparser"
-    "serpent"
-  )
   if [[ ! -d "logs" ]]; then mkdir logs; fi
   if [[ -f "logs/logluarocks_${today}.txt" ]]; then rm logs/logluarocks_${today}.txt; fi
   local i file
@@ -71,7 +74,14 @@ function update() {
   git pull
 }
 
-function subprocess() {
+function configure() {
+  if [[ ${1} != "--no-download" ]]; then
+			printf "Downloading telegram-cli v${tgcli_version}... [0%%]"
+			wget https://valtman.name/files/telegram-cli-${tgcli_version} &>/dev/null
+      printf "\r                                                    "
+      if [ ! -d "bin" ]; then mkdir bin; fi
+			mv telegram-cli-${tgcli_version} ./bin/telegram-cli
+  fi
 			for i in 25 50 75 100; do
 				printf "\rConfiguring... [%i%%]" $i
 				sleep 0.5
@@ -82,7 +92,7 @@ function subprocess() {
 }
 
 function start_bot() {
-  ./bin/telegram-cli
+  ./bin/telegram-cli ${1}
 }
 
 function show_logo_slowly() {
@@ -117,23 +127,27 @@ function show_logo_slowly() {
 function show_logo() {
  #Adding some color. By @iicc1 :D
  echo -e "\033[38;5;208m"
- echo -e "      ____  ____ _____                        "
- echo -e "     |    \|  _ )_   _|___ ____   __  __      "
- echo -e "     | |_  )  _ \ | |/ .__|  _ \_|  \/  |     "
- echo -e "     |____/|____/ |_|\____/\_____|_/\/\_|     "
- echo -e "                                              \033[0;00m"
- echo -e "\e[36m"
+ echo -e "\t____  ____ ______"
+ echo -e "\t|    \|  _ )_   _|___ ____   __  __"
+ echo -e "\t| |_  )  _ \ | |/ .__|  _ \_|  \/  |"
+ echo -e "\t|____/|____/ |_|\____/\_____|_/\/\_|  v2"
+ echo -e "\n\e[36m"
 }
 
-case `character 1 "$1"` in
+case `character 0 "$1"` in
 -)
-	case `character 2 "$1"` in
+	case `character 1 "$1"` in
 	i)
     show_logo_slowly
-		install
-		subprocess
-	esac
-	exit
+		install ;;
+  u)
+    show_logo
+    update ;;
+  c)
+    show_logo
+    configure ${2};;
+  esac
+  exit
 ;;
 esac
 
@@ -141,12 +155,15 @@ case $1 in
   install)
     show_logo_slowly
     install
-    subprocess
     exit ;;
   update)
+    show_logo
     update
     exit ;;
+  configure)
+    show_logo
+    configure "${2}"; exit ;;
   *)
     show_logo
-    start_bot
+    start_bot ${2}
 esac
