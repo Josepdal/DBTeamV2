@@ -16,7 +16,7 @@ config_lines=(
   	'}'
 )
 
-lualibs=(ss
+lualibs=(
   	'luasec'
   	'lbase64 20120807-3'
   	'luafilesystem'
