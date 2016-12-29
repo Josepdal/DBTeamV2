@@ -1,3 +1,4 @@
+#!/bin/bash
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
 LOGFILE_MAXSIZE=25
@@ -97,32 +98,21 @@ function start_bot() {
 }
 
 function show_logo_slowly() {
-  seconds="0.009"
-  logo1="____  ____ ______"
-  logo2="|    \|  _ )_   _|___ ____   __  __"
-  logo3="| |_  )  _ \ | |/ .__|  _ \_|  \/  |"
-  logo4="|____/|____/ |_|\____/\_____|_/\/\_|  v2"
+  declare -A logo
+  seconds="0.008"
+  logo[1]="____  ____ ______"
+  logo[2]="|    \|  _ )_   _|___ ____   __  __"
+  logo[3]="| |_  )  _ \ | |/ .__|  _ \_|  \/  |"
+  logo[4]="|____/|____/ |_|\____/\_____|_/\/\_|  v2"
   printf "\033[38;5;208m\t"
-  for x in `seq 0 ${#logo1}`; do
-    printf "${logo1:$x:1}"
-    sleep $seconds
+  for i in ${!logo[@]}; do
+    for x in `seq 0 ${#logo[$i]}`; do
+      printf "${logo[$i]:$x:1}"
+      sleep $seconds
+    done
+    printf "\n\t"
   done
-  printf "\n\t"
-  for x in `seq 0 ${#logo2}`; do
-    printf "${logo2:$x:1}"
-    sleep $seconds
-  done
-  printf "\n\t"
-  for x in `seq 0 ${#logo3}`; do
-    printf "${logo3:$x:1}"
-    sleep $seconds
-  done
-  printf "\n\t"
-  for x in `seq 0 ${#logo4}`; do
-    printf "${logo4:$x:1}"
-    sleep $seconds
-  done
-  printf "\e[36m\n\n"
+  printf "\n"
 }
 
 function show_logo() {
