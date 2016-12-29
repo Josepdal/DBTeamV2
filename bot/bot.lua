@@ -3,17 +3,13 @@ package.path = package.path .. ';../.luarocks/share/lua/5.2/?.lua'
 package.cpath = package.cpath .. ';.luarocks/lib/lua/5.2/?.so'
 
 require('utils')
+require('methods')
 
 local lgi = require ('lgi')
 local notify = lgi.require('Notify')
 notify.init ("Telegram updates")
 
-
-
 chats = {}
-
-function dl_cb (arg, data)
-end
 
 function do_notify (user, msg)
     local n = notify.Notification.new(user, msg)
@@ -97,7 +93,7 @@ function tdcli_update_callback (data)
                 msg = pre_process_msg(msg)
                 if msg then
                     match_plugins(msg)
-                    --mark_read(receiver, ok_cb, false)
+                    mark_as_read(msg.to.id, {[0] = msg.id})
                 end
             end
         end
@@ -148,7 +144,6 @@ function pre_process_msg(msg)
       		msg = plugin.pre_process(msg)
     	end
   	end
-
   	return msg
 end
 
