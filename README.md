@@ -23,5 +23,9 @@ sudo dnf install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2
 After those dependencies, lets install the bot
 ```bash
 git clone https://github.com/Josepdal/DBTeamV2.git
-./telegram-cli-1222 # Will ask you for a phone number & confirmation code.
+cd DBTeamV2
+chmod +x launch.sh
+sudo ./launch.sh install
+./launch.sh configure
+./launch.sh # Will ask you for a phone number & confirmation code.
 ```
