@@ -7,12 +7,13 @@
 ----------------------------------------------------
 
 local function run(msg, matches)
-    send_msg(msg.to.id, "*User ID:* " .. msg.from.id .. "\n*Chat ID:* " .. msg.to.id, "md")
+    kick_by_reply(msg.to.id, msg.reply_id, false)
 end
 
 return {
   patterns = {
-    "^!id"
+    "^!kick (.*)",
+    "^!kick"
   },
   run = run
 }

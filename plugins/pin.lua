@@ -7,12 +7,16 @@
 ----------------------------------------------------
 
 local function run(msg, matches)
-    send_msg(msg.to.id, "*User ID:* " .. msg.from.id .. "\n*Chat ID:* " .. msg.to.id, "md")
+    if msg.reply_id == 0 then
+    	pin_msg(msg.to.id, msg.id, 1)
+    else
+    	pin_msg(msg.to.id, msg.reply_id, 1)
+    end
 end
 
 return {
   patterns = {
-    "^!id"
+    "^!pin"
   },
   run = run
 }

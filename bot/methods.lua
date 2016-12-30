@@ -72,17 +72,13 @@ function mark_as_read(chat_id, message_ids)
   	}, dl_cb, extra)
 end
 
-function get_msg_info(chat_id, message_id, cb_function, cb_extra)
-	cb_function(chat_id, message_id, cb_extra.disable_notification)
+function get_msg_info(chat_id, message_id, cb_function, extra)
   	tdcli_function ({
     	ID = "GetMessage",
     	chat_id_ = chat_id,
     	message_id_ = message_id
-  	}, dl_cb, extra)
-end
-
-function pin_by_reply(channel_id, message_id, disable_notification)
-	get_msg_info(channel_id, message_id, pin_msg, {disable_notification = disable_notification})
+  	}, cb_function, extra)
+  	print("01")
 end
 
 function pin_msg(channel_id, message_id, disable_notification)
@@ -91,5 +87,32 @@ function pin_msg(channel_id, message_id, disable_notification)
     	channel_id_ = getChatId(channel_id).ID,
     	message_id_ = message_id,
     	disable_notification_ = disable_notification
+  	}, dl_cb, nil)
+end
+
+function kick_by_reply(channel_id, message_id, extra)
+	get_msg_info(channel_id, message_id, kick_user_cb, false)
+end
+
+function kick_user(chat_id, user_id, extra)
+  	tdcli_function ({
+    	ID = "ChangeChatMemberStatus",
+    	chat_id_ = chat_id,
+    	user_id_ = user_id,
+    	status_ = {
+      		ID = "ChatMemberStatusKicked"
+    	},
+  	}, dl_cb, nil)
+end
+
+function kick_user_cb(arg, msg)
+	vardump(msg)
+  	tdcli_function ({
+    	ID = "ChangeChatMemberStatus",
+    	chat_id_ = msg.chat_id_,
+    	user_id_ = msg.sender_user_id_,
+    	status_ = {
+      		ID = "ChatMemberStatusKicked"
+    	},
   	}, dl_cb, nil)
 end
