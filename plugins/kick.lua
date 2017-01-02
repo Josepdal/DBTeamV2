@@ -7,7 +7,11 @@
 ----------------------------------------------------
 
 local function run(msg, matches)
-    kick_by_reply(msg.to.id, msg.reply_id, false)
+    if msg.reply_id == 0 then
+    	kick_user(msg.to.id, matches[0])
+    else
+    	kick_by_reply(msg.to.id, msg.reply_id)
+    end
 end
 
 return {
