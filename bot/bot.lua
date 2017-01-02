@@ -1,5 +1,4 @@
 package.path = package.path .. ';../.luarocks/share/lua/5.2/?.lua'
-  ..';.luarocks/share/lua/5.2/?/init.lua'..';./bot/?.lua'..';./libs/?.lua'
 package.cpath = package.cpath .. ';.luarocks/lib/lua/5.2/?.so'
 
 require('utils')
@@ -17,19 +16,6 @@ function do_notify (user, msg)
 end
 
 function load_config( )
-	local f = io.open('./data/config.lua', "r")
-  	-- If config.lua doesn't exist
-  	if not f then
-  		create_config()
-  		print ("Created new config file: data/config.lua")
-  	else
-  		f:close()
-  	end
-  	local config = loadfile ("./data/config.lua")()
-  	for v,user in pairs(config.sudo_users) do
-  		print("Allowed user: " .. user)
-  	end
-  	return config
 end
 
 function create_config()
@@ -49,7 +35,6 @@ end
 function load_plugins()
     for k, v in pairs(_config.enabled_plugins) do
         print("Loading plugin", v)
-        local ok, err =  pcall(function()
             local t = loadfile("./plugins/"..v..'.lua')()
             plugins[v] = t
         end)
@@ -101,95 +86,21 @@ function tdcli_update_callback (data)
 end
 
 function msg_valid(msg)
-  	-- Don't process outgoing messages
-  	if msg.from.id == 0 then
-    	print('\27[36mNot valid: msg from us\27[39m')
-    	return false
-  	end
-
-  	-- Before bot was started
-  	if msg.date < now then
-    	print('\27[36mNot valid: old msg\27[39m')
-    	return false
-  	end
-
-  	if msg.unread == 0 then
-    	print('\27[36mNot valid: readed\27[39m')
-    	return false
-  	end
-
-  	if not msg.to.id then
-    	print('\27[36mNot valid: To id not provided\27[39m')
-    	return false
-  	end
-
-  	if not msg.from.id then
-    	print('\27[36mNot valid: From id not provided\27[39m')
-    	return false
-  	end
-
-  	if msg.from.id == 777000 then
-    	print('\27[36mNot valid: Telegram message\27[39m')
-    	return false
-  	end
-
-  	return true
 end
 
 -- Apply plugin.pre_process function
 function pre_process_msg(msg)
-  	for name,plugin in pairs(plugins) do
-    	if plugin.pre_process and msg then
-      		print('Preprocess', name)
-      		msg = plugin.pre_process(msg)
-    	end
-  	end
-  	return msg
 end
 
 -- Go over enabled plugins patterns.
 function match_plugins(msg)
-  	for name, plugin in pairs(plugins) do
-    	match_plugin(plugin, name, msg)
-  	end
 end
 
 -- Check if plugin is on _config.disabled_plugin_on_chat table
 local function is_plugin_disabled_on_chat(plugin_name, receiver)
-  	local disabled_chats = _config.disabled_plugin_on_chat
-  	-- Table exists and chat has disabled plugins
-  	if disabled_chats and disabled_chats[receiver] then
-    	-- Checks if plugin is disabled on this chat
-    	for disabled_plugin,disabled in pairs(disabled_chats[receiver]) do
-      		if disabled_plugin == plugin_name and disabled then
-        		local warning = 'Plugin '..disabled_plugin..' is disabled on this chat'
-        		return true
-      		end
-    	end
-  	end
-  	return false
 end
 
 function match_plugin(plugin, plugin_name, msg)
-  	local receiver = get_receiver(msg)
-
-  	-- Go over patterns. If one matches it's enough.
-  	for k, pattern in pairs(plugin.patterns) do
-    	local matches = match_pattern(pattern, msg.text)
-    	if matches then
-
-      		-- Function exists
-      		if plugin.run then
-        		-- If plugin is for privileged users only
-      			local result = plugin.run(msg, matches)
-      			if result then
-        			send_large_msg(receiver, result)
-      			end
-      		end
-      		-- One patterns matches
-      		return
-    	end
-  	end
 end
 
 our_id = 0
