@@ -1,8 +1,6 @@
 serpent = require("serpent")
 
-json = (loadfile "./libs/JSON.lua")()
-
---redis = (loadfile "./libs/redis.lua")()
+--json = (loadfile "./libs/JSON.lua")()
 
 function dl_cb (arg, data)
 end
@@ -75,18 +73,18 @@ end
 
 -- Returns a table with matches or nil
 function match_pattern(pattern, text, lower_case)
-  if text then
-    local matches = {}
-    if lower_case then
-      matches = { string.match(text:lower(), pattern) }
-    else
-      matches = { string.match(text, pattern) }
+    if text then
+        local matches = {}
+        if lower_case then
+            matches = { string.match(text:lower(), pattern) }
+        else
+            matches = { string.match(text, pattern) }
+        end
+        if next(matches) then
+            return matches
+        end
     end
-      if next(matches) then
-        return matches
-      end
-  end
-  -- nil
+    -- nil
 end
 
 function get_receiver(msg)
@@ -95,18 +93,51 @@ function get_receiver(msg)
 end
 
 function getChatId(chat_id)
-    print("chat_id")
-  local chat = {}
-  local chat_id = tostring(chat_id)
+    local chat = {}
+    local chat_id = tostring(chat_id)
 
-  if chat_id:match('^-100') then
-    local channel_id = chat_id:gsub('-100', '')
-    chat = {ID = channel_id, type = 'channel'}
-  else
-    local group_id = chat_id:gsub('-', '')
-    chat = {ID = group_id, type = 'group'}
-  end
-  vardump(chat)
+    if chat_id:match('^-100') then
+        local channel_id = chat_id:gsub('-100', '')
+        chat = {ID = channel_id, type = 'channel'}
+    else
+        local group_id = chat_id:gsub('-', '')
+        chat = {ID = group_id, type = 'group'}
+    end
 
-  return chat
+    return chat
+end
+
+function set_text(lang, keyword, text)
+    local hash = 'lang:'..lang..':'..keyword
+    redis:set(hash, text)
+end
+
+function is_mod(chat_id, user_id)
+    local hash = 'mod:'..chat_id..':'..user_id
+    if redis:get(hash) then
+        return true
+    else
+        return false
+    end
+end
+
+function is_admin(user_id)
+    for v,user in pairs(_config.admin_users) do
+        print(user[1])
+        if user[1] == user_id then
+            return true
+        end
+    end
+    return false
+end
+
+function new_is_sudo(user_id)
+    local var = false
+    -- Check users id in config
+    for v,user in pairs(_config.sudo_users) do
+        if user == user_id then
+            var = true
+        end
+    end
+    return var
 end
