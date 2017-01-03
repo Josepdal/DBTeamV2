@@ -1,18 +1,20 @@
-blacklist = {
-  ["default"] = {
-    "telegram.me",
-    "telegra.ph",
-    "@channel"
+return {
+  blacklist = {
+    ["default"] = {
+      "telegram.me",
+      "telegra.ph",
+      "@channel"
+    }
+    ["search"] = {
+      "google.com"
+    }
   }
-  ["search"] = {
-    "google.com"
-  }
-}
 
-whitelist = {
-  ["default"] = {
-    "@DBTeam",
-    "@DBTeamES",
-    "@DBTeamEN"
+  whitelist = {
+    ["default"] = {
+      "@DBTeam",
+      "@DBTeamES",
+      "@DBTeamEN"
+    }
   }
 }
