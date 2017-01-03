@@ -40,6 +40,7 @@ function create_config()
     -- A simple config with basic plugins and ourselves as privileged user
     config = {
         enabled_plugins = {
+            "settings",
             "id"
         },
         enabled_lang = {
@@ -215,7 +216,7 @@ function match_plugin(plugin, plugin_name, msg)
                 -- If plugin is for privileged users only
                 local result = plugin.run(msg, matches)
                 if result then
-                    send_large_msg(receiver, result)
+                    send_msg(receiver, result, "md")
                 end
             end
             -- One patterns matches
