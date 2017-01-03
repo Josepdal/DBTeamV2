@@ -33,6 +33,11 @@ lualibs=(
 )
 
 function install_libs_lua() {
+  echo "Installing luarocks 2.2.2..."
+  wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz
+  tar zxpf luarocks-2.2.2.tar.gz
+  cd luarocks-2.2.2
+  ./configure; make bootstrap; cd ..
   today=`date +%F`
   if [[ ! -d "logs" ]]; then mkdir logs; fi
   if [[ -f "logs/logluarocks_${today}.txt" ]]; then rm logs/logluarocks_${today}.txt; fi
@@ -44,6 +49,7 @@ function install_libs_lua() {
   sleep 0.2
   printf "\rInstalling lualibs... [11/11]"
   printf "\nLogfile created: `pwd`/logs/logluarocks_${today}.txt\nDone\n"
+  rm -rf luarocks-2.2*
 }
 
 function install() {
