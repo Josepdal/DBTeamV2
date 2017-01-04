@@ -114,3 +114,10 @@ function kick_user_cb(arg, msg)
     	},
   	}, dl_cb, nil)
 end
+
+function resolve(username, cb_function, cb_extra)
+    return  tdcli_function ({
+    ID = "SearchPublicChat",
+    username_ = username
+  }, cb_function, cb_extra)
+end
