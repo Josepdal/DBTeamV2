@@ -25,7 +25,6 @@ After those dependencies, lets install the bot
 git clone https://github.com/Josepdal/DBTeamV2.git
 cd DBTeamV2
 chmod +x launch.sh
-sudo ./launch.sh install
-./launch.sh configure
+./launch.sh install
 ./launch.sh # Will ask you for a phone number & confirmation code.
 ```
