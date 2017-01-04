@@ -32,24 +32,19 @@ lualibs=(
   	'serpent'
 )
 
-function install_libs_lua() {
-  echo "Installing luarocks 2.2.2..."
-  wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz
-  tar zxpf luarocks-2.2.2.tar.gz
-  cd luarocks-2.2.2
-  ./configure --prefix=../.luarocks --sysconfdir=../.luarocks/luarocks --force-config; make bootstrap; cd ..
+function download_libs_lua() {
   today=`date +%F`
   if [[ ! -d "logs" ]]; then mkdir logs; fi
   if [[ -f "logs/logluarocks_${today}.txt" ]]; then rm logs/logluarocks_${today}.txt; fi
   local i file
   for i in ${!lualibs[@]}; do
-    printf "\rInstalling lualibs... [${i}/${#lualibs[@]}]\t${lualibs[i]}                         "
-    luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
+    printf "\rDBTeam: downloading libs... [${i}/${#lualibs[@]}]\t${lualibs[i]}                  "
+    ./.luarocks/bin/luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
   done
   sleep 0.2
-  printf "\rInstalling lualibs... [11/11]"
+  printf "\rDBTeam: downloading libs... [11/11]"
   printf "\nLogfile created: `pwd`/logs/logluarocks_${today}.txt\nDone\n"
-  rm -rf luarocks-2.2*
+  rm -rf luarocks-2.2.2*
 }
 
 function install() {
@@ -83,12 +78,18 @@ function update() {
 }
 
 function configure() {
+  dir=`pwd`
+  wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz
+  tar zxpf luarocks-2.2.2.tar.gz
+  cd luarocks-2.2.2
+  ./configure --prefix=$dir/.luarocks --sysconfdir=$dir/.luarocks/luarocks --force-config; make bootstrap; cd ..; rm -rf luarocks*
+  download_libs_lua
   if [[ ${1} != "--no-download" ]]; then
 			printf "Downloading telegram-cli v${tgcli_version}... [0%%]"
 			wget https://valtman.name/files/telegram-cli-${tgcli_version} &>/dev/null
       printf "\r                                                    "
       if [ ! -d "bin" ]; then mkdir bin; fi
-			mv telegram-cli-${tgcli_version} ./bin/telegram-cli
+			mv telegram-cli-${tgcli_version} ./bin/telegram-cli; chmod +x ./bin/telegram-cli
   fi
 			for i in 25 50 75 100; do
 				printf "\rConfiguring... [%i%%]" $i
@@ -96,11 +97,18 @@ function configure() {
 			done
 			printf "\nDone\n"
 			do_file config
-			chmod +x ./bin/telegram-cli
 }
 
 function start_bot() {
-  ./bin/telegram-cli ${1}
+  if [[ $1 == "--"* ]]; then
+    ./bin/telegram-cli --${1:2}
+    exit
+  elif [[ $1 == "-"* ]]; then
+    ./bin/telegram-cli -${1:1}
+    exit
+  else
+    ./bin/telegram-cli
+  fi
 }
 
 function show_logo_slowly() {
@@ -131,37 +139,33 @@ function show_logo() {
  echo -e "\n\e[36m"
 }
 
-case `character 0 "$1"` in
--)
-	case `character 1 "$1"` in
-	i)
-    show_logo_slowly
-		install ;;
-  u)
-    show_logo
-    update ;;
-  c)
-    show_logo
-    configure ${2};;
-  esac
-  exit
-;;
-esac
+function delete_log() {
+  IS_NUMBER='^[0-9]+$'
+  LOG_FILE_SIZE=`echo $(du -bsh $LOG_FILE) | cut -d "M" -f1`
+  LOG_FILE="bot/log.txt"
+  if [[ $LOG_FILE_SIZE =~ $IS_NUMBER ]] ; then
+    if [[ -f "$LOG_FILE" ]] && [[ "${LOG_FILE_SIZE}" -gt "${LOGFILE_MAXSIZE}" ]]; then
+      rm -rf $LOG_FILE
+    fi
+  fi
+}
 
 case $1 in
   install)
     show_logo_slowly
-    install
+    configure ${2}
     exit ;;
   update)
     show_logo
     update
     exit ;;
-  configure)
-    show_logo
-    configure "${2}"; exit ;;
-  *)
-  if [[ `echo $(du -bsh bot/log.txt) | cut -d "M" -f1` -gt "${LOGFILE_MAXSIZE}" ]]; then sudo rm -rf ./bot/log.txt; fi
-    show_logo
-    start_bot ${2}
 esac
+
+show_logo
+delete_log
+if [[ $1 == "-"* ]]; then
+  start_bot $1
+  exit
+fi
+start_bot
+exit
