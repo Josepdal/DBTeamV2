@@ -22,9 +22,9 @@ sudo dnf install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2
 
 After those dependencies, lets install the bot
 ```bash
-git clone https://github.com/Josepdal/DBTeamV2.git
-cd DBTeamV2
-chmod +x launch.sh
-./launch.sh install
-./launch.sh # Will ask you for a phone number & confirmation code.
+ git clone https://github.com/Josepdal/DBTeamV2.git
+ cd DBTeamV2
+ chmod +x launch.sh
+ ./launch.sh install
+ ./launch.sh # Will ask you for a phone number & confirmation code.
 ```
