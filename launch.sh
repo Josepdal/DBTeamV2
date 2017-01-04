@@ -37,7 +37,7 @@ function install_libs_lua() {
   wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz
   tar zxpf luarocks-2.2.2.tar.gz
   cd luarocks-2.2.2
-  ./configure; make bootstrap; cd ..
+  ./configure --prefix=../.luarocks --sysconfdir=../.luarocks/luarocks --force-config; make bootstrap; cd ..
   today=`date +%F`
   if [[ ! -d "logs" ]]; then mkdir logs; fi
   if [[ -f "logs/logluarocks_${today}.txt" ]]; then rm logs/logluarocks_${today}.txt; fi
