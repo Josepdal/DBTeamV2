@@ -1,10 +1,12 @@
 local function pre_process()
-  list = require("data/spam_data")
-  for number,pattern in pairs(list.blacklist.default) do
-    if match_pattern(pattern, msg.text) then
-      print("Link "..pattern.." is spam")
+    list = require("data/spam_data")
+    for number, pattern in pairs(list.blacklist["default"]) do
+        local matches = match_pattern(pattern, msg.text)
+        if matches then
+            send_msg(msg.to.id, "El texto `" .. msg.text .. "` ha coincidido con `" .. pattern .. "`", "md")
+        end
     end
-  end
+    return msg
 end
 
 
