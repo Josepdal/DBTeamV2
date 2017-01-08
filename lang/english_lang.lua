@@ -77,7 +77,31 @@ local function run(msg, matches)
 
 		set_text(LANG, 'audiosT', '`>` *Audios* are now *allowed* in this chat.')
 		set_text(LANG, 'noAudiosT', '`>` *Audios* are *not allowed* in this chat.')
+		
+		set_text(LANG, 'documentsT', '`>` *Documents* are now *allowed* in this chat.')
+		set_text(LANG, 'noDocumentsT', '`>` *Documents* are *not allowed* in this chat.')
+		
+		set_text(LANG, 'videos', '`>` *Videos* are now *allowed* in this chat.')
+		set_text(LANG, 'noVideosT', '`>` *Videos* are *not allowed* in this chat.')
+		
+		set_text(LANG, 'locationT', '`>` *Location* are now *allowed* in this chat.')
+		set_text(LANG, 'noLocationsT', '`>` *Location* are *not allowed* in this chat.')
+		
+		set_text(LANG, 'emojisT', '> *Emojis* are now *allowed* in this chat.')
+		set_text(LANG, 'noEmojisT', '> *Emojis* are *not allowed* in this chat.')
 
+		set_text(LANG, 'englishT', '> *English* are now *allowed* in this chat.')
+		set_text(LANG, 'noEnglishT', '> *English* are *not allowed* in this chat.')
+
+		set_text(LANG, 'inviteT', '> *Invite* are now *allowed* in this chat.')
+		set_text(LANG, 'noInviteT', '> *Invite* are *not allowed* in this chat.')
+
+		set_text(LANG, 'audiosT', '> *Audios* are now *allowed* in this chat.')
+		set_text(LANG, 'noAudiosT', '> *Audios* are *not allowed* in this chat.')
+
+		set_text(LANG, 'voiceT', '> *Voice messages* are now *allowed* in this chat.')
+		set_text(LANG, 'noVoiceT', '> *Voice messages* are *not allowed* in this chat.')
+	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
 
