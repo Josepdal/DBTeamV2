@@ -5,11 +5,11 @@ return {
       "telegra.ph/(.*)",
       "t.me/(.*)",
       "@channel"
-    }
+    },
     ["links"] = {
       "https?://[%w-_%.%?%.:/%+=&]+%"
     }
-  }
+  },
 
   whitelist = {
     ["default"] = {
