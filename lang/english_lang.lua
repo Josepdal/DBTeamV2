@@ -5,11 +5,6 @@
 --     |____/|____/ |_|\____/\_____|_/\/\_|v2   --
 --                                              --
 --------------------------------------------------
---                                              --
---                                              --
---                                              --
---                                              --
---------------------------------------------------
 
 local LANG = 'en'
 
@@ -62,38 +57,32 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'isFlooding', 'is flooding')
 
-		set_text(LANG, 'noStickersT', 'Stickers are not allowed in this chat.')
-		set_text(LANG, 'stickersT', 'Stickers are now allowed in this chat.')
+		set_text(LANG, 'noStickersT', '`>` *Stickers* are *not allowed* in this chat.')
+		set_text(LANG, 'stickersT', '`>` *Stickers* are now *allowed* in this chat.')
 		
-		set_text(LANG, 'noTgservicesT', 'Telegram services muted in this chat.')
-		set_text(LANG, 'tgservicesT', 'Telegram services allowed in this chat.')
-		
-		set_text(LANG, 'LinksT', 'Links are now allowed in this chat.')
-		set_text(LANG, 'noLinksT', 'Links are not allowed in this chat.')
+		set_text(LANG, 'noTgservicesT', '`>` *Telegram services disabled* in this chat.')
+		set_text(LANG, 'tgservicesT', '`>` *Telegram services enabled* in this chat.')
 
-		set_text(LANG, 'gifsT', 'Gifs are now allowed in this chat.')
-		set_text(LANG, 'noGifsT', 'Gifs are not allowed in this chat.')
+		set_text(LANG, 'gifsT', '`>` *Gifs* are now *allowed* in this chat.')
+		set_text(LANG, 'noGifsT', '`>` *Gifs* are *not allowed* in this chat.')
 
-		set_text(LANG, 'photosT', 'Photos are now allowed in this chat.')
-		set_text(LANG, 'noPhotosT', 'Photos are not allowed in this chat.')
+		set_text(LANG, 'photosT', '`>` *Photos* are now `allowed` in this chat.')
+		set_text(LANG, 'noPhotosT', '`>` *Photos* are *not allowed* in this chat.')
 
-		set_text(LANG, 'botsT', 'Bots are now allowed in this chat.')
-		set_text(LANG, 'noBotsT', 'Bots are not allowed in this chat.')
+		set_text(LANG, 'botsT', '`>` *Bots* are now allowed in this chat.')
+		set_text(LANG, 'noBotsT', '`>` Bots are not allowed in this chat.')
 
-		set_text(LANG, 'arabicT', 'Arabic is now allowed in this chat.')
-		set_text(LANG, 'noArabicT', 'Arabic is not allowed in this chat.')
+		set_text(LANG, 'arabicT', '`>` *Arabic* is now *allowed* in this chat.')
+		set_text(LANG, 'noArabicT', '`>` *Arabic* is *not allowed* in this chat.')
 
-		set_text(LANG, 'audiosT', 'Audios are now allowed in this chat.')
-		set_text(LANG, 'noAudiosT', 'Audios are not allowed in this chat.')
+		set_text(LANG, 'audiosT', '`>` *Audios* are now *allowed* in this chat.')
+		set_text(LANG, 'noAudiosT', '`>` *Audios* are *not allowed* in this chat.')
 
-		set_text(LANG, 'kickmeT', 'Autokick is now allowed in this chat.')
-		set_text(LANG, 'noKickmeT', 'Autokick is not allowed in this chat.')
+		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
+		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
 
-		set_text(LANG, 'floodT', 'Flood is now allowed in this chat.')
-		set_text(LANG, 'noFloodT', 'Flood is not allowed in this chat.')
-
-		set_text(LANG, 'floodTime', 'Flood time check has been set to ')
-		set_text(LANG, 'floodMax', 'Max flood messages have been set to ')
+		set_text(LANG, 'floodTime', '`>` *Flood time* check has been set to ')
+		set_text(LANG, 'floodMax', '`>` *Max flood* messages have been set to ')
 
 		set_text(LANG, 'gSettings', 'chat settings')
 
@@ -280,13 +269,13 @@ local function run(msg, matches)
 		set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
 		
 		-- welcome.lua --
-                set_text(LANG, 'welcome:0', 6)
-                set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat')
-                set_text(LANG, 'welcome:2', '#setbye [text for farewell]. You can make a custom farewell for this chat')
-                set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')
-                set_text(LANG, 'welcome:4', '#getbye - returns the current welcome in this chat')
-                set_text(LANG, 'welcome:5', '#welcome on/off - enable/disable welcome in this chat')
-                set_text(LANG, 'welcome:6', '#bye on/off - enable/disable farewell in this chat')
+        set_text(LANG, 'welcome:0', 6)
+        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat')
+        set_text(LANG, 'welcome:2', '#setbye [text for farewell]. You can make a custom farewell for this chat')
+        set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')
+        set_text(LANG, 'welcome:4', '#getbye - returns the current welcome in this chat')
+        set_text(LANG, 'welcome:5', '#welcome on/off - enable/disable welcome in this chat')
+        set_text(LANG, 'welcome:6', '#bye on/off - enable/disable farewell in this chat')
 
 		-- giverank.lua --
 		set_text(LANG, 'giverank:0', 9)
