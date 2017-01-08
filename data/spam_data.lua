@@ -1,12 +1,13 @@
 return {
   blacklist = {
     ["default"] = {
-      "telegram.me",
-      "telegra.ph",
+      "telegram.me/(.*)",
+      "telegra.ph/(.*)",
+      "t.me/(.*)",
       "@channel"
     }
-    ["search"] = {
-      "google.com"
+    ["links"] = {
+      "https?://[%w-_%.%?%.:/%+=&]+%"
     }
   }
 
