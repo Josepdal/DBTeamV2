@@ -48,12 +48,86 @@ function oldtg(data)
     msg.from = {}
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
-    msg.text = data.message_.content_.text_
+    if data.message_.content_.ID == "MessageText" then
+        msg.text = data.message_.content_.text_
+    end
     msg.date = data.message_.date_
     msg.id = data.message_.id_
     msg.unread = false
     msg.reply_id = data.message_.reply_to_message_id_
+
+    if data.message_.content_.ID == "MessagePhoto" then
+        msg.photo = true
+    else
+        msg.photo = false
+    end
+    if data.message_.content_.ID == "MessageSticker" then
+        msg.sticker = true
+    else
+        msg.sticker = false
+    end
+    if data.message_.content_.ID == "MessageAudio" then
+        msg.audio = true
+    else
+        msg.audio = false
+    end
+    if data.message_.content_.ID == "MessageVoice" then
+        msg.voice = true
+    else
+        msg.voice = false
+    end
+    if data.message_.content_.ID == "MessageAnimation" then
+        msg.gif = true
+    else
+        msg.gif = false
+    end
+    if data.message_.content_.ID == "MessageVideo" then
+        msg.video = true
+    else
+        msg.video = false
+    end
+    if data.message_.content_.ID == "MessageDocument" then
+        msg.document = true
+    else
+        msg.document = false
+    end
+    if data.message_.content_.ID == "MessageGame" then
+        msg.game = true
+    else
+        msg.game = false
+    end
+    if data.message_.content_.ID == "MessageChatAddMembers" or data.message_.content_.ID == "MessageChatDeleteMember" or
+        data.message_.content_.ID == "MessageChatChangeTitle" or data.message_.content_.ID == "MessageChatChangePhoto" or
+        data.message_.content_.ID == "MessageChatJoinByLink" or data.message_.content_.ID == "MessageGameScore" then
+        msg.service = true
+    else
+        msg.service = false
+    end
     return msg
+end
+
+function return_media(msg)
+    if msg.photo then
+        return "MessagePhoto"
+    elseif msg.sticker then
+        return "MessageSticker"
+    elseif msg.audio then
+        return "MessageAudio"
+    elseif msg.voice then
+        return "MessageVoice"
+    elseif msg.gif then
+        return "MessageAnimation"
+    elseif msg.text then
+        return "MessageText"
+    elseif msg.service then
+        return "MessageService"
+    elseif msg.video then
+        return "MessageVideo"
+    elseif msg.document then
+        return "MessageDocument"
+    elseif msg.game then
+        return "MessageGame"
+    end
 end
 
 function serialize_to_file(data, file, uglify)
@@ -156,4 +230,12 @@ function lang_text(chat_id, keyword)
         return 'Please, install your selected "'..lang..'" language by #install [archive_name(english_lang, spanish_lang...)]. First, active your language package like a normal plugin by it\'s name. For example, #plugins enable english_lang. Or set another one by typing #lang [language(en, es...)].'
     end
     
+end
+
+function is_number(name_id)
+    if tonumber(name_id) then
+        return true
+    else
+        return false
+    end
 end
