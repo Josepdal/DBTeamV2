@@ -137,9 +137,25 @@ local function run(msg, matches)
 		set_text(LANG, 'gName', 'Group Name')
 		set_text(LANG, 'flood', 'Flood')
 		set_text(LANG, 'language', 'Language')
-		set_text(LANG, 'mFlood', 'Flood max')
+		set_text(LANG, 'mFlood', 'Max flood')
 		set_text(LANG, 'tFlood', 'Flood time')
 		set_text(LANG, 'setphoto', 'Set photo')
+
+		--DBTEAMV2
+		set_text(LANG, 'videos', 'Videos')
+		set_text(LANG, 'invite', 'Invite')
+		set_text(LANG, 'games', 'Games')
+		set_text(LANG, 'documents', 'Documents')
+		set_text(LANG, 'location', 'Location')
+		set_text(LANG, 'voice', 'Voice')
+		set_text(LANG, 'icontitle', 'Change icon/title')
+		set_text(LANG, 'english', 'English')
+		set_text(LANG, 'emojis', 'Emojis')
+		--Made with @TgTextBot by @iicc1
+		set_text(LANG, 'groupSettings', 'G̲r̲o̲u̲p̲ s̲e̲t̲t̲i̲n̲g̲s̲')
+		set_text(LANG, 'allowedMedia', 'A̲l̲l̲o̲w̲e̲d̲ m̲e̲d̲i̲a̲')
+		set_text(LANG, 'settingsText', 'T̲e̲x̲t̲')
+
 
 		set_text(LANG, 'photoSaved', 'Photo saved!')
 		set_text(LANG, 'photoFailed', 'Failed, please try again!')
