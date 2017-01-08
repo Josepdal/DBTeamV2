@@ -55,7 +55,8 @@ local function run(msg, matches)
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
-		set_text(LANG, 'isFlooding', 'is flooding')
+		set_text(LANG, 'isFlooding', '*is flooding.*')
+		set_text(LANG, 'isSpaming', '*is spamming.*')
 
 		set_text(LANG, 'noStickersT', '`>` *Stickers* are *not allowed* in this chat.')
 		set_text(LANG, 'stickersT', '`>` *Stickers* are now *allowed* in this chat.')
@@ -87,27 +88,27 @@ local function run(msg, matches)
 		set_text(LANG, 'locationT', '`>` *Location* is now *allowed* in this chat.')
 		set_text(LANG, 'noLocationT', '`>` *Location* is *not allowed* in this chat.')
 		
-		set_text(LANG, 'emojisT', '> *Emojis* are now *allowed* in this chat.')
-		set_text(LANG, 'noEmojisT', '> *Emojis* are *not allowed* in this chat.')
+		set_text(LANG, 'emojisT', '`>` *Emojis* are now *allowed* in this chat.')
+		set_text(LANG, 'noEmojisT', '`>` *Emojis* are *not allowed* in this chat.')
 
-		set_text(LANG, 'englishT', '> *English* is now *allowed* in this chat.')
-		set_text(LANG, 'noEnglishT', '> *English* is *not allowed* in this chat.')
+		set_text(LANG, 'englishT', '`>` *English* is now *allowed* in this chat.')
+		set_text(LANG, 'noEnglishT', '`>` *English* is *not allowed* in this chat.')
 
-		set_text(LANG, 'inviteT', '> *Invite* is now *allowed* in this chat.')
-		set_text(LANG, 'noInviteT', '> *Invite* is *not allowed* in this chat.')
+		set_text(LANG, 'inviteT', '`>` *Invite* is now *allowed* in this chat.')
+		set_text(LANG, 'noInviteT', '`>` *Invite* is *not allowed* in this chat.')
 
-		set_text(LANG, 'voiceT', '> *Voice messages* are now *allowed* in this chat.')
-		set_text(LANG, 'noVoiceT', '> *Voice messages* are *not allowed* in this chat.')
+		set_text(LANG, 'voiceT', '`>` *Voice messages* are now *allowed* in this chat.')
+		set_text(LANG, 'noVoiceT', '`>` *Voice messages* are *not allowed* in this chat.')
 		
-		set_text(LANG, 'infoT', '> *Photo/title* can be changed in this chat.')
-		set_text(LANG, 'noInfoT', '> *Photo/title* can\'t be changed in this chat.')
+		set_text(LANG, 'infoT', '`>` *Photo/title* can be changed in this chat.')
+		set_text(LANG, 'noInfoT', '`>` *Photo/title* can\'t be changed in this chat.')
 		
-		set_text(LANG, 'gamesT', '> *Games* are now *allowed* in this chat.')
-		set_text(LANG, 'noGamesT', '> *Games* are *not allowed* in this chat.')
+		set_text(LANG, 'gamesT', '`>` *Games* are now *allowed* in this chat.')
+		set_text(LANG, 'noGamesT', '`>` *Games* are *not allowed* in this chat.')
 		
-		set_text(LANG, 'spamT', '> *Spam* is now *allowed* in this chat.')
-		set_text(LANG, 'noSpamT', '> *Spam* is *not allowed* in this chat.')
-		set_text(LANG, 'setSpam', '> Changed blacklist to ')
+		set_text(LANG, 'spamT', '`>` *Spam* is now *allowed* in this chat.')
+		set_text(LANG, 'noSpamT', '`>` *Spam* is *not allowed* in this chat.')
+		set_text(LANG, 'setSpam', '`>` Changed blacklist to ')
 	
 	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
@@ -172,7 +173,6 @@ local function run(msg, matches)
 		set_text(LANG, 'notChatRename', 'Now you can\'t rename the chat.')
 
 		set_text(LANG, 'lockMembersT', 'The number of members has been locked on this chat.')
-
 		set_text(LANG, 'notLockMembersT', 'The number of members now is not locked on this chat.')
 
 		set_text(LANG, 'langUpdated', 'Your language has been updated to: ')
