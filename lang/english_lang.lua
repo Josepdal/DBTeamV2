@@ -90,8 +90,8 @@ local function run(msg, matches)
 		set_text(LANG, 'emojisT', '> *Emojis* are now *allowed* in this chat.')
 		set_text(LANG, 'noEmojisT', '> *Emojis* are *not allowed* in this chat.')
 
-		set_text(LANG, 'englishT', '> *English* are now *allowed* in this chat.')
-		set_text(LANG, 'noEnglishT', '> *English* are *not allowed* in this chat.')
+		set_text(LANG, 'englishT', '> *English* is now *allowed* in this chat.')
+		set_text(LANG, 'noEnglishT', '> *English* is *not allowed* in this chat.')
 
 		set_text(LANG, 'inviteT', '> *Invite* are now *allowed* in this chat.')
 		set_text(LANG, 'noInviteT', '> *Invite* are *not allowed* in this chat.')
@@ -105,8 +105,8 @@ local function run(msg, matches)
 		set_text(LANG, 'gamesT', '> *Games* are now *allowed* in this chat.')
 		set_text(LANG, 'noGamesT', '> *Games* are *not allowed* in this chat.')
 		
-		set_text(LANG, 'spamT', '> *Spam* are now *allowed* in this chat.')
-		set_text(LANG, 'noSpamT', '> *Spam* are *not allowed* in this chat.')
+		set_text(LANG, 'spamT', '> *Spam* is now *allowed* in this chat.')
+		set_text(LANG, 'noSpamT', '> *Spam* is *not allowed* in this chat.')
 	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
@@ -387,12 +387,12 @@ local function run(msg, matches)
 		set_text(LANG, 'rules:1', '#rules: shows chat rules.')
 
 		if matches[1] == 'install' then
-			return 'ℹ️ English was successfully installed on your bot.'
+			return '`>` *English* was successfully installed on your bot.'
 		elseif matches[1] == 'update' then
-			return 'ℹ️ English was successfully updated on your bot.'
+			return '`>` *English* was successfully updated on your bot.'
 		end
 	else
-		return "🚫 This plugin requires sudo privileged user."
+		return "`>` This plugin *requires sudo* privileged user."
 	end
 end
 
