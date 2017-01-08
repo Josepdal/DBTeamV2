@@ -1,18 +1,18 @@
 function send_msg(chat_id, text, parse)
     tdcli_function ({
     	ID="SendMessage",
-    	chat_id_=chat_id,
-    	reply_to_message_id_=0,
-    	disable_notification_=0,
-    	from_background_=1,
-    	reply_markup_=nil,
-    	input_message_content_={
+    	chat_id_ = chat_id,
+    	reply_to_message_id_ = 0,
+    	disable_notification_ = 0,
+    	from_background_ = 1,
+    	reply_markup_ = nil,
+    	input_message_content_ = {
     		ID="InputMessageText",
-    		text_=text,
-    		disable_web_page_preview_=1,
-    		clear_draft_=0,
+    		text_ = text,
+    		disable_web_page_preview_ = 1,
+    		clear_draft_ = 0,
     		parse_mode_ = getParse(parse),
-    		entities_={}
+    		entities_ = {}
     	}
     }, dl_cb, nil)
 end
@@ -115,9 +115,68 @@ function kick_user_cb(arg, msg)
   	}, dl_cb, nil)
 end
 
-function resolve(username, cb_function, cb_extra)
-    return  tdcli_function ({
-    ID = "SearchPublicChat",
-    username_ = username
-  }, cb_function, cb_extra)
+function resolve_username(username, cb_function, cb_extra)
+    vardump(username)
+    tdcli_function ({
+        ID = "SearchPublicChat",
+        username_ = username
+    }, cb_function, cb_extra)
+end
+
+function resolve_id(user_id, cb_function, cb_extra)
+    tdcli_function ({
+        ID = "GetUserFull",
+        user_id_ = user_id
+    }, cb_function, cb_extra)
+end
+
+function forward_msg(chat_id, from_chat_id, message_id)
+    message_id = {[0] = message_id}
+    tdcli_function ({
+        ID = "ForwardMessages",
+        chat_id_ = chat_id,
+        from_chat_id_ = from_chat_id,
+        message_ids_ = message_id,
+        disable_notification_ = 0,
+        from_background_ = 1
+    }, dl_cb, nil)
+end
+
+function kick_resolve_cb(chat_id, user)
+    tdcli_function ({
+        ID = "ChangeChatMemberStatus",
+        chat_id_ = tonumber(chat_id),
+        user_id_ = user.id_,
+        status_ = {
+            ID = "ChatMemberStatusKicked"
+        },
+    }, dl_cb, nil)
+end
+
+function kick_resolve(chat_id, username)
+    resolve_username(username, kick_resolve_cb, chat_id)
+end
+
+function redisunban_by_reply(channel_id, message_id)
+    get_msg_info(channel_id, message_id, redisunban_by_reply_cb, channel_id)
+end
+
+function redisunban_by_reply_cb(channel_id, msg)
+    redis:del("ban:" .. channel_id .. ":" .. msg.sender_user_id_)
+end
+
+function redisban_resolve_cb(chat_id, user)
+    redis:set("ban:" .. chat_id .. ":" .. user.id_, true)
+end
+
+function redisban_resolve(chat_id, username)
+    resolve_username(username, redisban_resolve_cb, chat_id)
+end
+
+function redisunban_resolve_cb(chat_id, user)
+    redis:del("ban:" .. chat_id .. ":" .. user.id_)
+end
+
+function redisunban_resolve(chat_id, username)
+    resolve_username(username, redisunban_resolve_cb, chat_id)
 end
