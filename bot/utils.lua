@@ -46,6 +46,7 @@ function oldtg(data)
     local msg = {}
     msg.to = {}
     msg.from = {}
+    msg.replied = {}
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
     if data.message_.content_.ID == "MessageText" then
@@ -54,8 +55,11 @@ function oldtg(data)
     msg.date = data.message_.date_
     msg.id = data.message_.id_
     msg.unread = false
-    msg.reply_id = data.message_.reply_to_message_id_
-
+    if data.message_.reply_to_message_id_ == 0 then
+        msg.reply_id = false
+    else
+        msg.reply_id = data.message_.reply_to_message_id_
+    end
     if data.message_.content_.ID == "MessagePhoto" then
         msg.photo = true
     else
@@ -102,6 +106,32 @@ function oldtg(data)
         msg.service = true
     else
         msg.service = false
+    end
+    return msg
+end
+
+function user_data(msg, data)
+    if data.username_ then
+        msg.from.username = data.username_
+    end
+    if data.first_name_ then
+        msg.from.first_name = data.first_name_
+    end
+    if data.last_name_ then
+        msg.from.last_name = data.last_name_
+    end
+    return msg
+end
+
+function reply_data(msg, data)
+    if data.username_ then
+        msg.replied.username = data.username_
+    end
+    if data.first_name_ then
+        msg.replied.first_name = data.first_name_
+    end
+    if data.last_name_ then
+        msg.replied.last_name = data.last_name_
     end
     return msg
 end

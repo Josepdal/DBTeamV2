@@ -99,38 +99,67 @@ plugins = {}
 load_plugins()
 load_lang()
 
+function bot_init(msg)
+    receiver = msg.to.id
+
+    if _config.our_id == msg.from.id then
+        msg.from.id = 0
+    end
+
+    if msg_valid(msg) then
+        msg = pre_process_msg(msg)
+        if msg then
+            match_plugins(msg)
+            mark_as_read(msg.to.id, {[0] = msg.id})
+        end
+    end
+end
+
+function user_reply_callback(msg, message)
+    msg = reply_data(msg, message)
+    bot_init(msg)
+end
+
+function reply_callback(msg, message)
+    msg.replied.id = message.sender_user_id_
+    tdcli_function ({
+        ID = "GetUser",
+        user_id_ = msg.replied.id
+    }, user_reply_callback, msg)
+end
+
+function user_callback(msg, message)
+    msg = user_data(msg, message)
+    if msg.reply_id then
+        tdcli_function ({
+            ID = "GetMessage",
+            chat_id_ = msg.to.id,
+            message_id_ = msg.reply_id
+        }, reply_callback, msg)
+    else
+        bot_init(msg)
+    end
+end
+
 -- This function is called when tg receive a msg
-function tdcli_update_callback (data)
+function tdcli_update_callback(data)
+    local msgb = data.message_
+    local d = data.disable_notification_
+    local chat = chats[msgb.chat_id_]
+
+    if ((not d) and chat) then
+        if msgb.content_.ID == "MessageText" then
+            do_notify(chat.title_, msgb.content_.text_)
+        else
+            do_notify(chat.title_, msgb.content_.ID)
+        end
+    end
     if (data.ID == "UpdateNewMessage") then
-        local msgb = data.message_
-        local d = data.disable_notification_
-        local chat = chats[msgb.chat_id_]
-
-        if ((not d) and chat) then
-            if msgb.content_.ID == "MessageText" then
-                do_notify (chat.title_, msgb.content_.text_)
-            else
-                do_notify (chat.title_, msgb.content_.ID)
-            end
-        end
-        
-        --vardump(data)
-        
         msg = oldtg(data)
-
-        receiver = msg.to.id
-
-        if _config.our_id == msg.from.id then
-            msg.from.id = 0
-        end
-
-        if msg_valid(msg) then
-            msg = pre_process_msg(msg)
-            if msg then
-                match_plugins(msg)
-                mark_as_read(msg.to.id, {[0] = msg.id})
-            end
-        end
+        tdcli_function ({
+            ID = "GetUser",
+            user_id_ = data.message_.sender_user_id_
+        }, user_callback, msg)
     end
 end
 
@@ -206,12 +235,10 @@ end
 
 function match_plugin(plugin, plugin_name, msg)
     local receiver = get_receiver(msg)
-
     -- Go over patterns. If one matches it's enough.
     for k, pattern in pairs(plugin.patterns) do
         local matches = match_pattern(pattern, msg.text)
         if matches then
-
             -- Function exists
             if plugin.run then
                 -- If plugin is for privileged users only
