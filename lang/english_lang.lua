@@ -84,8 +84,8 @@ local function run(msg, matches)
 		set_text(LANG, 'videosT', '`>` *Videos* are now *allowed* in this chat.')
 		set_text(LANG, 'noVideosT', '`>` *Videos* are *not allowed* in this chat.')
 		
-		set_text(LANG, 'locationT', '`>` *Location* are now *allowed* in this chat.')
-		set_text(LANG, 'noLocationT', '`>` *Location* are *not allowed* in this chat.')
+		set_text(LANG, 'locationT', '`>` *Location* is now *allowed* in this chat.')
+		set_text(LANG, 'noLocationT', '`>` *Location* is *not allowed* in this chat.')
 		
 		set_text(LANG, 'emojisT', '> *Emojis* are now *allowed* in this chat.')
 		set_text(LANG, 'noEmojisT', '> *Emojis* are *not allowed* in this chat.')
@@ -93,8 +93,8 @@ local function run(msg, matches)
 		set_text(LANG, 'englishT', '> *English* is now *allowed* in this chat.')
 		set_text(LANG, 'noEnglishT', '> *English* is *not allowed* in this chat.')
 
-		set_text(LANG, 'inviteT', '> *Invite* are now *allowed* in this chat.')
-		set_text(LANG, 'noInviteT', '> *Invite* are *not allowed* in this chat.')
+		set_text(LANG, 'inviteT', '> *Invite* is now *allowed* in this chat.')
+		set_text(LANG, 'noInviteT', '> *Invite* is *not allowed* in this chat.')
 
 		set_text(LANG, 'voiceT', '> *Voice messages* are now *allowed* in this chat.')
 		set_text(LANG, 'noVoiceT', '> *Voice messages* are *not allowed* in this chat.')
@@ -107,6 +107,8 @@ local function run(msg, matches)
 		
 		set_text(LANG, 'spamT', '> *Spam* is now *allowed* in this chat.')
 		set_text(LANG, 'noSpamT', '> *Spam* is *not allowed* in this chat.')
+		set_text(LANG, 'setSpam', '> Changed blacklist to $blacklistName.')
+	
 	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
@@ -349,27 +351,39 @@ local function run(msg, matches)
 		set_text(LANG, 'moderation:18', '#rem: replying to a message, the message will be removed.')
 		
 		-- settings.lua --
-	    set_text(LANG, 'settings:0', 20)
-	    set_text(LANG, 'settings:1', '#settings stickers enable/disable: when disabled, all stickers will be cleared.')
-	    set_text(LANG, 'settings:2', '#settings links enable/disable: when disabled, all links will be cleared.')
-	    set_text(LANG, 'settings:3', '#settings arabic enable/disabl: when disabled, all messages with arabic/persian will be cleared.')
-	    set_text(LANG, 'settings:4', '#settings bots enable/disable: when disabled, if someone adds a bot, it will be kicked.')
-	    set_text(LANG, 'settings:5', '#settings gifs enable/disable: when disabled, all gifs will be cleared.')
-	    set_text(LANG, 'settings:6', '#settings photos enable/disable: when disabled, all photos will be cleared.')
-	    set_text(LANG, 'settings:7', '#settings audios enable/disable: when disabled, all audios will be cleared.')
-	    set_text(LANG, 'settings:8', '#settings kickme enable/disable: when disabled, people can kick out itself.')
-	    set_text(LANG, 'settings:9', '#settings spam enable/disable: when disabled, all spam links will be cleared.')
-	    set_text(LANG, 'settings:10', '#settings setphoto enable/disable: when enabled, if a user changes the chat photo, the bot will revert to the saved photo.')
-	    set_text(LANG, 'settings:11', '#settings setname enable/disable: when enabled, if a user changes the chat name, the bot will revert to the saved name.')
-	    set_text(LANG, 'settings:12', '#settings lockmember enable/disable: when enabled, the bot will kick all people that enters to the chat.')
-	    set_text(LANG, 'settings:13', '#settings floodtime <secs>: set the time that bot uses to check flood.')
-	    set_text(LANG, 'settings:14', '#settings maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood.')
-	    set_text(LANG, 'settings:15', '#setname <chat title>: the bot will change chat title.')
-	    set_text(LANG, 'settings:16', '#setphoto <then send photo>: the bot will change chat photo.')
-	    set_text(LANG, 'settings:17', '#lang <language (en, es...)>: it changes the language of the bot.')
-	    set_text(LANG, 'settings:18', '#setlink <link>: saves the link of the chat.')
-	    set_text(LANG, 'settings:19', '#link: to get the link of the chat.')
-		set_text(LANG, 'settings:20', '#settings tgservices enable/disable: when disabled, new user participant message will be erased.')
+	    	set_text(LANG, 'settings:0', 25)
+		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, new user participant message will be erased.')
+		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
+		set_text(LANG, 'settings:3', '#info on/off: when enabled, if a user changes the chat photo/title, the bot will revert to the previous photo/title.')
+		set_text(LANG, 'settings:4', '#lang <language (en, es...)>: changes the language of the bot.')
+		---- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
+		
+		set_text(LANG, 'settings:6', '#photos on/off: when disabled, all photos will be cleared.')
+		set_text(LANG, 'settings:7', '#videos on/off: when disabled, all videos will be cleared.')
+		set_text(LANG, 'settings:8', '#stickers on/off: when disabled, all stickers will be cleared.')
+		set_text(LANG, 'settings:9', '#gifs on/off: when disabled, all gifs will be cleared.')
+	   	set_text(LANG, 'settings:10', '#voice on/off: when disabled, all voicess will be cleared.')
+	    	set_text(LANG, 'settings:11', '#audios on/off: when disabled, all audios will be cleared.')
+		set_text(LANG, 'settings:12', '#documents on/off: when disabled, all documents will be cleared.')
+		set_text(LANG, 'settings:13', '#location on/off: when disabled, all locations will be cleared.')
+		set_text(LANG, 'settings:14', '#games on/off: when disabled, all games will be cleared.')
+		
+	    	set_text(LANG, 'settings:15', '#spam on/off: when disabled, all spam messages will be cleared.')
+		set_text(LANG, 'settings:16', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
+	    	set_text(LANG, 'settings:17', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
+		
+	    	set_text(LANG, 'settings:18', '#links on/off: when disabled, all links will be cleared.')
+	    	set_text(LANG, 'settings:19', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
+		set_text(LANG, 'settings:20', '#english on/off: when disabled, all messages with english letters will be cleared.')
+	    	set_text(LANG, 'settings:21', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
+		
+	   
+	    	set_text(LANG, 'settings:22', '#setname <chat title>: the bot will change chat title.')
+	    	set_text(LANG, 'settings:23', '#setphoto <then send photo>: the bot will change chat photo.')
+	    
+	  	set_text(LANG, 'settings:24', '#setlink <link>: saves the link of the chat.')
+	  	set_text(LANG, 'settings:25', '#link: to get the link of the chat.')
+	    
 
 		-- plugins.lua --
 		set_text(LANG, 'plugins:0', 4)
