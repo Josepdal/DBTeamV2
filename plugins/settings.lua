@@ -40,7 +40,40 @@ local function pre_process(msg)
         if redis:get("settings:documents:" .. msg.to.id) then
         	delete_msg(msg.to.id, msg.id)
         end
+    elseif msg.text then
+    	if redis:get("settings:spam:" .. msg.to.id) then
+	    	local list = require("data/spam_data")
+	    	local blacklist = redis:get("settings:setspam:" .. msg.to.id) or "default"
+		    for number, pattern in pairs(list.blacklist[blacklist]) do
+		        local matches = match_pattern(pattern, msg.text)
+		        if matches then
+		        	reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
+		            delete_msg(msg.to.id, msg.id)
+		            msg.text = ""
+		            return msg
+		        end
+		    end
+		end
     end
+    if redis:get("settings:flood:" .. msg.to.id) then
+	    local maxFlood = tonumber(redis:get("settings:maxFlood:" .. msg.to.id)) or 5
+	    local floodTime = tonumber(redis:get("settings:floodTime:" .. msg.to.id)) or 3
+	    local hash = 'flood:'..msg.from.id..':'..msg.to.id..':msg-num'
+	    local msgs = tonumber(redis:get(hash) or 0)
+	    if msgs > maxFlood then
+	        local user = msg.from.id
+	        local chat = msg.to.id
+	        local username = msg.from.username or "username"
+	        if not redis:get("settings:flood:user:" .. msg.from.id) then
+	        	send_msg(msg.to.id, lang_text(chat, 'user')..' @'.. username ..' ('..msg.from.id..') ' .. lang_text(chat, 'isFlooding'), 'md')
+	        end
+	        redis:setex("settings:flood:user:" .. msg.from.id, 60, true)
+	        --kick_user(msg.to.id, msg.from.id)
+	        msg.text = ""
+		    return msg
+	    end
+	    redis:setex(hash, floodTime, msgs+1)
+	end
 	return msg
 end
 
@@ -68,11 +101,11 @@ local function run(msg, matches)
 			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'invite') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
 		end
 		-- Check Icon/Title
-		if redis:get("settings:icontitle:" .. msg.to.id) then
-			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'icontitle') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
-		else
-			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'icontitle') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
-		end
+		--if redis:get("settings:icontitle:" .. msg.to.id) then
+			--settings = settings .. "`>` *" .. lang_text(msg.to.id, 'icontitle') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+		--else
+			--settings = settings .. "`>` *" .. lang_text(msg.to.id, 'icontitle') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+		--end
 		-- Check Language
 		if redis:get("langset:" .. msg.to.id) then
 			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'language') .. ":* `" .. redis:get("langset:" .. msg.to.id) .. "`\n"
@@ -146,17 +179,29 @@ local function run(msg, matches)
 		else
 			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
 		end
+		-- Get Spam
+		if redis:get("settings:spam:type" .. msg.to.id) then
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* `" .. redis:get("settings:spam:type" .. msg.to.id) .. "`\n"
+		else
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* ` default `\n"
+		end
+		-- Check Flood
+		if redis:get("settings:flood:" .. msg.to.id) then
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'flood') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+		else
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'flood') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+		end
 		-- Check maxFlood
 		if redis:get("settings:maxFlood:" .. msg.to.id) then
 			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'mFlood') .. ":* `" .. redis:get("settings:maxFlood:" .. msg.to.id) .. "`\n"
 		else
-			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'mFlood') .. ":* `∞`\n"
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'mFlood') .. ":* `5`\n"
 		end
 		-- Check timeFlood
 		if redis:get("settings:floodTime:" .. msg.to.id) then
 			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'tFlood') .. ":* `" .. redis:get("settings:floodTime:" .. msg.to.id) .. "`\n"
 		else
-			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'tFlood') .. ":* `∞`\n"
+			settings = settings .. "`>` *" .. lang_text(msg.to.id, 'tFlood') .. ":* `3`\n"
 		end
 		-- Check Arabic
 		if redis:get("settings:arabic:" .. msg.to.id) then
@@ -194,14 +239,14 @@ local function run(msg, matches)
 			redis:del("settings:invite:" .. msg.to.id)
 			send_msg(msg.to.id, lang_text(msg.to.id, 'inviteT'), 'md')
 		end
-	elseif matches[1] == "info" then
-		if matches[2] == 'off' then
-			redis:set("settings:icontitle:" .. msg.to.id, true)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'noInfoT'), 'md')
-		elseif matches[2] == 'on' then
-			redis:del("settings:icontitle:" .. msg.to.id)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'infoT'), 'md')
-		end
+	--elseif matches[1] == "info" then
+		--if matches[2] == 'off' then
+			--redis:set("settings:icontitle:" .. msg.to.id, true)
+			--send_msg(msg.to.id, lang_text(msg.to.id, 'noInfoT'), 'md')
+		--elseif matches[2] == 'on' then
+			--redis:del("settings:icontitle:" .. msg.to.id)
+			--send_msg(msg.to.id, lang_text(msg.to.id, 'infoT'), 'md')
+		--end
 	elseif matches[1] == "photos" then
 		if matches[2] == 'off' then
 			redis:set("settings:photos:" .. msg.to.id, true)
@@ -282,6 +327,9 @@ local function run(msg, matches)
 			redis:del("settings:spam:" .. msg.to.id)
 			send_msg(msg.to.id, lang_text(msg.to.id, 'spamT'), 'md')
 		end
+	elseif matches[1] == "setspam" and matches[2] then
+		redis:set("settings:setspam:" .. msg.to.id, matches[2])
+		send_msg(msg.to.id, lang_text(msg.to.id, 'setSpam') .. "*" .. matches[2] .. "*.", 'md')
 	elseif matches[1] == "arabic" then
 		if matches[2] == 'off' then
 			redis:set("settings:arabic:" .. msg.to.id, true)
@@ -306,10 +354,18 @@ local function run(msg, matches)
 			redis:del("settings:emojis:" .. msg.to.id)
 			send_msg(msg.to.id, lang_text(msg.to.id, 'emojisT'), 'md')
 		end
-	elseif matches[1] == "flood" and is_number(matches[2]) then
+	elseif matches[1] == "flood" then
+		if matches[2] == 'off' then
+			redis:set("settings:flood:" .. msg.to.id, true)
+			send_msg(msg.to.id, lang_text(msg.to.id, 'noFloodT'), 'md')
+		elseif matches[2] == 'on' then
+			redis:del("settings:flood:" .. msg.to.id)
+			send_msg(msg.to.id, lang_text(msg.to.id, 'floodT'), 'md')
+		end
+	elseif matches[1] == "max" and is_number(matches[2]) then
 		if tonumber(matches[2]) == 0 then
 			redis:del("settings:maxFlood:" .. msg.to.id)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'floodTime') .. ": `∞`", 'md')
+			send_msg(msg.to.id, lang_text(msg.to.id, 'floodTime') .. ": `3`", 'md')
 		else
 			redis:set("settings:maxFlood:" .. msg.to.id, tonumber(matches[2]))
 			send_msg(msg.to.id, lang_text(msg.to.id, 'floodTime') .. ": `" .. matches[2] .. "`", 'md')
@@ -317,7 +373,7 @@ local function run(msg, matches)
 	elseif matches[1] == "time" and is_number(matches[2]) then
 		if tonumber(matches[2]) == 0 then
 			redis:del("settings:floodTime:" .. msg.to.id)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'floodMax') .. ": `∞`", 'md')
+			send_msg(msg.to.id, lang_text(msg.to.id, 'floodMax') .. ": `5`", 'md')
 		else
 			redis:set("settings:floodTime:" .. msg.to.id, tonumber(matches[2]))
 			send_msg(msg.to.id, lang_text(msg.to.id, 'floodMax') .. ": `" .. matches[2] .. "`", 'md')
@@ -331,7 +387,7 @@ return {
     	'^[!/#](lang) (.*)$',
     	'^[!/#](tgservices) (.*)$',
     	'^[!/#](invite) (.*)$',
-    	'^[!/#](info) (.*)$',
+    	--'^[!/#](info) (.*)$',
     	'^[!/#](photos) (.*)$',
     	'^[!/#](videos) (.*)$',
     	'^[!/#](stickers) (.*)$',
@@ -342,10 +398,12 @@ return {
     	'^[!/#](location) (.*)$',
     	'^[!/#](games) (.*)$',
     	'^[!/#](spam) (.*)$',
+    	'^[!/#](setspam) (.*)$',
       	'^[!/#](arabic) (.*)$',
       	'^[!/#](english) (.*)$',
       	'^[!/#](emojis) (.*)$',
       	'^[!/#](flood) (.*)$',
+      	'^[!/#](max) (.*)$',
       	'^[!/#](time) (.*)$'
   	},
   	run = run,
