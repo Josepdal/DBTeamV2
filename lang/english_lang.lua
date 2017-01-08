@@ -107,7 +107,7 @@ local function run(msg, matches)
 		
 		set_text(LANG, 'spamT', '> *Spam* is now *allowed* in this chat.')
 		set_text(LANG, 'noSpamT', '> *Spam* is *not allowed* in this chat.')
-		set_text(LANG, 'setSpam', '> Changed blacklist to $blacklistName.')
+		set_text(LANG, 'setSpam', '> Changed blacklist to ')
 	
 	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
@@ -352,7 +352,7 @@ local function run(msg, matches)
 		
 		-- settings.lua --
 	    	set_text(LANG, 'settings:0', 25)
-		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, new user participant message will be erased.')
+		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
 		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
 		set_text(LANG, 'settings:3', '#info on/off: when enabled, if a user changes the chat photo/title, the bot will revert to the previous photo/title.')
 		set_text(LANG, 'settings:4', '#lang <language (en, es...)>: changes the language of the bot.')
