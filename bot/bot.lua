@@ -55,6 +55,7 @@ function create_config()
         },
         our_id = {0},
         sudo_users = {our_id},
+        admin_users = {{}},
         disabled_channels = {}
     }
     serialize_to_file(config, './data/config.lua')
@@ -112,7 +113,9 @@ function tdcli_update_callback (data)
                 do_notify (chat.title_, msgb.content_.ID)
             end
         end
-
+        
+        --vardump(data)
+        
         msg = oldtg(data)
 
         receiver = msg.to.id
@@ -121,13 +124,11 @@ function tdcli_update_callback (data)
             msg.from.id = 0
         end
 
-        if data.message_.content_.ID == "MessageText" then
-            if msg_valid(msg) then
-                msg = pre_process_msg(msg)
-                if msg then
-                    match_plugins(msg)
-                    mark_as_read(msg.to.id, {[0] = msg.id})
-                end
+        if msg_valid(msg) then
+            msg = pre_process_msg(msg)
+            if msg then
+                match_plugins(msg)
+                mark_as_read(msg.to.id, {[0] = msg.id})
             end
         end
     end
