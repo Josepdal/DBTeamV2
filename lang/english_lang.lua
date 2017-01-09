@@ -196,18 +196,18 @@ local function run(msg, matches)
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
 
-		-- giverank.lua --
-		set_text(LANG, 'alreadyAdmin', 'This user is already admin.')
-		set_text(LANG, 'alreadyMod', 'This user is already mod.')
+		-- promote.lua --
+		set_text(LANG, 'alreadyAdmin', 'This user is already *admin.*')
+		set_text(LANG, 'alreadyMod', 'This user is already *mod.*')
 
-		set_text(LANG, 'newAdmin', 'New admin')
-		set_text(LANG, 'newMod', 'New mod')
-		set_text(LANG, 'nowUser', 'is now an user.')
+		set_text(LANG, 'newAdmin', '`>` *New admin*')
+		set_text(LANG, 'newMod', '`>` *New mod*')
+		set_text(LANG, 'nowUser', '`>` *is now an user.*')
 
-		set_text(LANG, 'modList', 'Mods list')
-		set_text(LANG, 'adminList', 'Admins list')
-		set_text(LANG, 'modEmpty', 'Mod list is empty in this chat.')
-		set_text(LANG, 'adminEmpty', 'Admin list is empty.')
+		set_text(LANG, 'modList', '`>` *Mods list*')
+		set_text(LANG, 'adminList', '`>` *Admins list')
+		set_text(LANG, 'modEmpty', '*Mod list is empty* in this chat.')
+		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
 
 		-- id.lua --
 		set_text(LANG, 'user', 'User')
@@ -238,9 +238,9 @@ local function run(msg, matches)
 
 		set_text(LANG, 'addUser:1', 'User')
 		set_text(LANG, 'addUser:2', 'added to chat.')
-
-
+		
 		set_text(LANG, 'kickmeBye', 'bye.')
+		
 
 		-- plugins.lua --
 		set_text(LANG, 'plugins', 'Plugins')
