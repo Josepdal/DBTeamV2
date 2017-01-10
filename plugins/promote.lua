@@ -1,28 +1,38 @@
-local function is_already_mod(hash, id)
-  local members = redis:smembers(hash)
-  for x,user in pairs(members) do
-    if tonumber(id) == tonumber(user) then
-      return true
-    end
-  end
-  return false
-end
-
 local function run(msg, matches)
-  hash = 'mod:'..msg.to.id..':'..msg.reply_id
-  if matches[1] == "promote" then
-    if is_already_mod(hash, msg.reply_id) then
-      send_msg(msg.to.id, "This user is already mod", "md")
-      return
-    end
-    redis:sadd(hash, msg.reply_id)
-    send_msg(msg.to.id, "New mod "..msg.reply_id, "md")
-  end
+	if matches[1] == "admin" then
+		if permissions(msg.from.id, msg.to.id, "promote_admin") then
+			if msg.reply_id then
+				redis:set('admin:' .. msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": @" .. msg.replied.username, "md")
+			end
+		end
+	elseif matches[1] == "mod" then
+		if permissions(msg.from.id, msg.to.id, "promote_mod") then
+			if msg.reply_id then
+				redis:set('mod:'..msg.to.id..':'..msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": @" .. msg.replied.username, "md")
+			end
+		end
+	elseif matches[1] == "user" then
+		if permissions(msg.from.id, msg.to.id, "promote_user") then
+			if msg.reply_id then
+				if new_is_sudo(msg.from.id) then
+					redis:del('mod:' .. msg.to.id .. ':' .. msg.replied.id)
+					redis:del('admin:' .. msg.replied.id)
+				else
+					redis:del('mod:' .. msg.to.id .. ':' .. msg.replied.id)
+				end
+				send_msg(msg.to.id, lang_text(msg.to.id, '>') .. " @" .. msg.replied.username .. lang_text(msg.to.id, 'nowUser'), "md")
+			end
+		end
+	end
 end
 
 return {
   patterns = {
-    "/(promote)"
+  	"^[!/#](admin)$",
+    "^[!/#](mod)$",
+    "^[!/#](user)$"
   },
   run = run
 }
