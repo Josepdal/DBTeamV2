@@ -215,32 +215,11 @@ local function run(msg, matches)
 		set_text(LANG, 'chat', 'Chat')
 
 		-- moderation.lua --
-		set_text(LANG, 'userUnmuted:1', 'User')
-		set_text(LANG, 'userUnmuted:2', 'unmuted.')
-
-		set_text(LANG, 'userMuted:1', 'User')
-		set_text(LANG, 'userMuted:2', 'muted.')
-
-		set_text(LANG, 'kickUser:1', 'User')
-		set_text(LANG, 'kickUser:2', 'kicked out.')
-
-		set_text(LANG, 'banUser:1', 'User')
-		set_text(LANG, 'banUser:2', 'banned.')
-
-		set_text(LANG, 'unbanUser:1', 'User')
-		set_text(LANG, 'unbanUser:2', 'is unbanned.')
-
-		set_text(LANG, 'gbanUser:1', 'User')
-		set_text(LANG, 'gbanUser:2', 'globally banned.')
-
-		set_text(LANG, 'ungbanUser:1', 'User')
-		set_text(LANG, 'ungbanUser:2', 'unglobally banned.')
-
-		set_text(LANG, 'addUser:1', 'User')
-		set_text(LANG, 'addUser:2', 'added to chat.')
-		
-		set_text(LANG, 'kickmeBye', 'bye.')
-		
+		set_text(LANG, 'kickUser', '`>` User *kicked out.*')
+		set_text(LANG, 'banUser', '`>` *Banned* user.')
+		set_text(LANG, 'unbanUser', '`>` *Unbanned* user.')
+		set_text(LANG, 'gbanUser', '`>` *Globally banned* user.')
+		set_text(LANG, 'ungbanUser', '`>` *Unglobally banned* user.')
 
 		-- plugins.lua --
 		set_text(LANG, 'plugins', 'Plugins')
