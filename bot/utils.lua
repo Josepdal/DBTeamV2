@@ -100,6 +100,9 @@ function oldtg(data)
     else
         msg.game = false
     end
+    if data.message_.content_.ID then
+        msg.content = data.message_.content_.ID
+    end
     if data.message_.content_.ID == "MessageChatAddMembers" or data.message_.content_.ID == "MessageChatDeleteMember" or
         data.message_.content_.ID == "MessageChatChangeTitle" or data.message_.content_.ID == "MessageChatChangePhoto" or
         data.message_.content_.ID == "MessageChatJoinByLink" or data.message_.content_.ID == "MessageGameScore" then
@@ -226,13 +229,12 @@ function is_mod(chat_id, user_id)
 end
 
 function is_admin(user_id)
-    for v,user in pairs(_config.admin_users) do
-        print(user[1])
-        if user[1] == user_id then
-            return true
-        end
+    local hash = 'admin:' .. user_id
+    if redis:get(hash) then
+        return true
+    else
+        return false
     end
-    return false
 end
 
 function new_is_sudo(user_id)
@@ -257,7 +259,7 @@ function lang_text(chat_id, keyword)
     if redis:get(hashtext) then
         return redis:get(hashtext)
     else
-        return 'Please, install your selected "'..lang..'" language by #install [archive_name(english_lang, spanish_lang...)]. First, active your language package like a normal plugin by it\'s name. For example, #plugins enable english_lang. Or set another one by typing #lang [language(en, es...)].'
+        return 'Please, install your selected "'..lang..'" language by #install [`archive_name(english_lang, spanish_lang...)`]. First, active your language package like a normal plugin by it\'s name. For example, #plugins enable `english_lang`. Or set another one by typing #lang [language(en, es...)].'
     end
     
 end
