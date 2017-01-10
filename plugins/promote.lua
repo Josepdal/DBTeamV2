@@ -30,9 +30,9 @@ end
 
 return {
   patterns = {
-  	"^[!/#](admin)$",
-    "^[!/#](mod)$",
-    "^[!/#](user)$"
+	"^[!/#](admin)$",
+	"^[!/#](mod)$",
+	"^[!/#](user)$"
   },
   run = run
 }
