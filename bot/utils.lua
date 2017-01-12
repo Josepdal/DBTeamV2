@@ -8,18 +8,18 @@ end
 function vardump(value, depth, key)
     local linePrefix = ""
     local spaces = ""
-  
+
     if key ~= nil then
         linePrefix = "["..key.."] = "
     end
-  
+
     if depth == nil then
         depth = 0
     else
         depth = depth + 1
         for i=1, depth do spaces = spaces .. "  " end
     end
-  
+
     if type(value) == 'table' then
         mTable = getmetatable(value)
         if mTable == nil then
@@ -27,7 +27,7 @@ function vardump(value, depth, key)
         else
             print(spaces .."(metatable) ")
             value = mTable
-        end   
+        end
         for tableKey, tableValue in pairs(value) do
             vardump(tableValue, depth, tableKey)
         end
@@ -39,10 +39,11 @@ function vardump(value, depth, key)
 end
 
 function ok_cb(extra, success, result)
-    
+
 end
 
 function oldtg(data)
+    local new_members = data.message_.content_.members_
     local msg = {}
     msg.to = {}
     msg.from = {}
@@ -111,9 +112,20 @@ function oldtg(data)
     else
         msg.service = false
     end
-    if data.message_.content_.members_ then
+    if new_members then
         for i = 0, #new_members, 1 do
-            msg.added[i] = "`@" .. new_members[i].username_ .. "`"
+           if new_members[i].status_.ID == "UserStatusOnline" then
+                   status = "online"
+           else
+                   status = "offline"
+           end
+            msg.added[i] = {
+                    id = new_members[i].id_,
+                    username = new_members[i].username_,
+                    first_name = new_members[i].first_name_,
+                    last_name = new_members[i].last_name_,
+                    status = status
+            }
         end
     end
     return msg
@@ -267,7 +279,7 @@ function lang_text(chat_id, keyword)
     else
         return 'Please, install your selected "'..lang..'" language by #install [`archive_name(english_lang, spanish_lang...)`]. First, active your language package like a normal plugin by it\'s name. For example, #plugins enable `english_lang`. Or set another one by typing #lang [language(en, es...)].'
     end
-    
+
 end
 
 function is_number(name_id)
