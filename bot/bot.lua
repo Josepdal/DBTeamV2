@@ -41,17 +41,12 @@ function create_config()
     config = {
         enabled_plugins = {
             "settings",
-            "id"
+            "id",
+            "promote",
+            "moderation"
         },
         enabled_lang = {
-            "arabic_lang",
-            "catalan_lang",
-            "english_lang",
-            "galician_lang",
-            "italian_lang",
-            "persian_lang",
-            "portuguese_lang",
-            "spanish_lang"
+            "english_lang"
         },
         our_id = {0},
         sudo_users = {our_id},
