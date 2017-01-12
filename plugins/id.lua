@@ -15,7 +15,7 @@ function getID_by_reply_cb(arg, msg)
 end
 
 local function run(msg, matches)
-    if msg.reply_id == 0 then
+    if not msg.reply_id then
     	send_msg(msg.to.id, "*User ID:* " .. msg.from.id .. "\n*Chat ID:* " .. msg.to.id, "md")
     else
     	send_ID_by_reply(msg.to.id, msg.reply_id)
