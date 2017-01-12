@@ -47,6 +47,7 @@ function oldtg(data)
     msg.to = {}
     msg.from = {}
     msg.replied = {}
+    msg.added = {}
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
     if data.message_.content_.ID == "MessageText" then
@@ -109,6 +110,11 @@ function oldtg(data)
         msg.service = true
     else
         msg.service = false
+    end
+    if data.message_.content_.members_ then
+        for i = 0, #new_members, 1 do
+            msg.added[i] = "`@" .. new_members[i].username_ .. "`"
+        end
     end
     return msg
 end
