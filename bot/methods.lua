@@ -39,8 +39,8 @@ end
 function delete_msg(chat_id, msg_id)
 	msg_id = {[0] = msg_id}
     tdcli_function ({
-    	ID="DeleteMessages",
-    	chat_id_=chat_id,
+    	ID = "DeleteMessages",
+    	chat_id_ = chat_id,
     	message_ids_ = msg_id
     }, dl_cb, nil)
 end
@@ -89,10 +89,6 @@ function pin_msg(channel_id, message_id, disable_notification)
   	}, dl_cb, nil)
 end
 
-function kick_by_reply(channel_id, message_id)
-	get_msg_info(channel_id, message_id, kick_user_cb, false)
-end
-
 function kick_user(chat_id, user_id)
   	tdcli_function ({
     	ID = "ChangeChatMemberStatus",
@@ -104,19 +100,7 @@ function kick_user(chat_id, user_id)
   	}, dl_cb, nil)
 end
 
-function kick_user_cb(arg, msg)
-  	tdcli_function ({
-    	ID = "ChangeChatMemberStatus",
-    	chat_id_ = msg.chat_id_,
-    	user_id_ = msg.sender_user_id_,
-    	status_ = {
-      		ID = "ChatMemberStatusKicked"
-    	},
-  	}, dl_cb, nil)
-end
-
 function resolve_username(username, cb_function, cb_extra)
-    vardump(username)
     tdcli_function ({
         ID = "SearchPublicChat",
         username_ = username
@@ -142,35 +126,50 @@ function forward_msg(chat_id, from_chat_id, message_id)
     }, dl_cb, nil)
 end
 
-function kick_resolve_cb(chat_id, user)
-    tdcli_function ({
-        ID = "ChangeChatMemberStatus",
-        chat_id_ = tonumber(chat_id),
-        user_id_ = user.id_,
-        status_ = {
-            ID = "ChatMemberStatusKicked"
-        },
-    }, dl_cb, nil)
+function kick_resolve_cb(extra, user)
+    if compare_permissions(extra.chat_id, extra.superior, user.id_) then
+        tdcli_function ({
+            ID = "ChangeChatMemberStatus",
+            chat_id_ = tonumber(extra.chat_id),
+            user_id_ = user.id_,
+            status_ = {
+                ID = "ChatMemberStatusKicked"
+            },
+        }, dl_cb, nil)
+    else
+        send_msg(extra.chat_id, 'error', 'md')
+    end
 end
 
-function kick_resolve(chat_id, username)
-    resolve_username(username, kick_resolve_cb, chat_id)
-end
-
-function redisunban_by_reply(channel_id, message_id)
-    get_msg_info(channel_id, message_id, redisunban_by_reply_cb, channel_id)
+function kick_resolve(chat_id, username, extra)
+    resolve_username(username, kick_resolve_cb, {chat_id = chat_id, superior = extra})
 end
 
 function redisunban_by_reply_cb(channel_id, msg)
     redis:del("ban:" .. channel_id .. ":" .. msg.sender_user_id_)
 end
 
-function redisban_resolve_cb(chat_id, user)
-    redis:set("ban:" .. chat_id .. ":" .. user.id_, true)
+function redisunban_by_reply(channel_id, message_id)
+    get_msg_info(channel_id, message_id, redisunban_by_reply_cb, channel_id)
 end
 
-function redisban_resolve(chat_id, username)
-    resolve_username(username, redisban_resolve_cb, chat_id)
+function redisban_resolve_cb(extra, user)
+    if compare_permissions(chat_id, extra.superior, user.id_) then
+        redis:set("ban:" .. extra.chat_id .. ":" .. user.id_, true)
+    end
+end
+
+function redisban_resolve(chat_id, username, superior)
+    local extra = {}
+    resolve_username(username, redisban_resolve_cb, {chat_id = chat_id, superior = superior})
+end
+
+function redisgban_resolve_cb(chat_id, user)
+    redis:set("gban:" .. user.id_, true)
+end
+
+function redisgban_resolve(chat_id, username)
+    resolve_username(username, redisgban_resolve_cb, chat_id)
 end
 
 function redisunban_resolve_cb(chat_id, user)
@@ -180,3 +179,20 @@ end
 function redisunban_resolve(chat_id, username)
     resolve_username(username, redisunban_resolve_cb, chat_id)
 end
+
+function redismute_resolve_cb(chat_id, user)
+    redis:set("muted:" .. chat_id .. ":" .. user.id_, true)
+end
+
+function redismute_resolve(chat_id, username)
+    resolve_username(username, redismute_resolve_cb, chat_id)
+end
+
+function redisunmute_resolve_cb(chat_id, user)
+    redis:del("muted:" .. chat_id .. ":" .. user.id_)
+end
+
+function redisunmute_resolve(chat_id, username)
+    resolve_username(username, redisunmute_resolve_cb, chat_id)
+end
+

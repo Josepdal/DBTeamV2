@@ -1,11 +1,17 @@
 local sudos = {
-    "lang_install"
+    "lang_install",
+    "promote_admin"
 }
 local admins = {
-
+	"promote_mod",
+	"promote_user",
+	"gban"
 }
 local mods = {
-
+	"set_lang",
+	"settings",
+	"muteBan",
+	"moderation"
 }
 
 local function get_tag(plugin_tag)
@@ -39,12 +45,31 @@ local function user_num(user_id, chat_id)
 	end
 end
 
-function permissions(user_id, chat_id, plugin_tag)
-	local user_is = get_tag(plugin_tag)
-	local user_n = user_num(user_id, chat_id)
-	if user_n >= user_is then
+local function send_warning(user_id, chat_id, user_need)
+	if user_need == 3 then
+		send_msg(chat_id, lang_text(chat_id, 'require_sudo'), 'md')
+	elseif user_need == 2 then
+		send_msg(chat_id, lang_text(chat_id, 'require_admin'), 'md')
+	elseif user_need == 3 then
+		send_msg(chat_id, lang_text(chat_id, 'require_mod'), 'md')
+	end
+end
+
+function compare_permissions(chat_id, user_id, user_id2)
+	if user_num(user_id, chat_id) > user_num(user_id2, chat_id) then
 		return true
 	else
+		return false
+	end
+end
+
+function permissions(user_id, chat_id, plugin_tag)
+	local user_need = get_tag(plugin_tag)
+	local user_is = user_num(user_id, chat_id)
+	if user_is >= user_need then
+		return true
+	else
+		send_warning(user_id, chat_id, user_need)
 		return false
 	end
 end
