@@ -6,8 +6,39 @@
 --                                                --
 ----------------------------------------------------
 
+local function get_added_users(msg, username, id)
+	user = {}
+	user[0] = no_markdown(msg.added[0].first_name)
+	if username then
+		user[0] = user[0].." @"..no_markdown(msg.added[0].username)
+	end
+	if id then
+		user[0] = user[0].." ("..msg.added[0].id..")"
+	end
+	for i = 1, #msg.added, 1 do
+		user[i] = no_markdown(msg.added[i].first_name)
+		if username then
+			user[i] = user[i].." @"..no_markdown(msg.added[i].username)
+		end
+		if id then
+			user[i] =  user[i].." ("..msg.added[i].id..")"
+		end
+	end
+	return user
+end
+
 local function pre_process(msg)
 	--send_msg(msg.to.id, return_media(msg), 'md')
+	if msg.added then
+		if redis:get("settings:welcome:"..msg.to.id) then
+			user = get_added_users(msg, true, true)
+			user_list = user[0]
+			for i=1, #user, 1 do
+				user_list = user_list.." "..user[i]
+			end
+			send_msg(msg.to.id, "*Welcome* "..user_list, 'md')
+		end
+	end
 	if permissions(msg.from.id, msg.to.id, "settings") then
 		return msg
 	end
@@ -366,6 +397,14 @@ local function run(msg, matches)
 				redis:del("settings:flood:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'floodT'), 'md')
 			end
+		elseif matches[1] == "welcome" then
+			if matches[2] == 'on' then
+				redis:set("settings:welcome:" .. msg.to.id, true)
+				send_msg(msg.to.id, "Welcome off", 'md')
+			elseif matches[2] == 'off' then
+				redis:del("settings:welcome:" .. msg.to.id)
+				send_msg(msg.to.id, "Welcome on", 'md')
+			end
 		elseif matches[1] == "max" and is_number(matches[2]) then
 			if tonumber(matches[2]) == 0 then
 				redis:del("settings:maxFlood:" .. msg.to.id)
@@ -388,28 +427,29 @@ end
 
 return {
   	patterns = {
-  		'^[!/#]([Ss]ettings)$',
-    	'^[!/#](lang) (.*)$',
-    	'^[!/#](tgservices) (.*)$',
-    	'^[!/#](invite) (.*)$',
-    	--'^[!/#](info) (.*)$',
-    	'^[!/#](photos) (.*)$',
-    	'^[!/#](videos) (.*)$',
-    	'^[!/#](stickers) (.*)$',
-    	'^[!/#](gifs) (.*)$',
-    	'^[!/#](voice) (.*)$',
-    	'^[!/#](audios) (.*)$',
-    	'^[!/#](documents) (.*)$',
-    	'^[!/#](location) (.*)$',
-    	'^[!/#](games) (.*)$',
-    	'^[!/#](spam) (.*)$',
-    	'^[!/#](setspam) (.*)$',
-      	'^[!/#](arabic) (.*)$',
-      	'^[!/#](english) (.*)$',
-      	'^[!/#](emojis) (.*)$',
-      	'^[!/#](flood) (.*)$',
-      	'^[!/#](max) (.*)$',
-      	'^[!/#](time) (.*)$'
+		'^[!/#]([Ss]ettings)$',
+		'^[!/#](lang) (.*)$',
+		'^[!/#](tgservices) (.*)$',
+		'^[!/#](invite) (.*)$',
+		--'^[!/#](info) (.*)$',
+		'^[!/#](photos) (.*)$',
+		'^[!/#](videos) (.*)$',
+		'^[!/#](stickers) (.*)$',
+		'^[!/#](gifs) (.*)$',
+		'^[!/#](voice) (.*)$',
+		'^[!/#](audios) (.*)$',
+		'^[!/#](documents) (.*)$',
+		'^[!/#](location) (.*)$',
+		'^[!/#](games) (.*)$',
+		'^[!/#](spam) (.*)$',
+		'^[!/#](setspam) (.*)$',
+		'^[!/#](arabic) (.*)$',
+		'^[!/#](english) (.*)$',
+		'^[!/#](emojis) (.*)$',
+		'^[!/#](flood) (.*)$',
+		'^[!/#](welcome) (.*)$',
+		'^[!/#](max) (.*)$',
+		'^[!/#](time) (.*)$'
   	},
   	run = run,
   	pre_process = pre_process
