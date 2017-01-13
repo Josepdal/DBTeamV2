@@ -1,5 +1,6 @@
 *.jpg
-
+bin/
 bot/log.txt
 logs/
 bot/data
+.luarocks/
