@@ -1,7 +1,7 @@
 #!/bin/bash
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
-LOGFILE_MAXSIZE=25
+CACHES_MAXSIZE=4
 dbteam_dir="DBTeamV2"
 config_lines=(
   	'default_profile = "dbteam";'
@@ -140,15 +140,29 @@ function show_logo() {
 }
 
 function delete_log() {
-  IS_NUMBER='^[0-9]+$'
   LOG_FILE_SIZE=`echo $(du -bsh $LOG_FILE) | cut -d "M" -f1`
   LOG_FILE="bot/log.txt"
-  if [[ $LOG_FILE_SIZE =~ $IS_NUMBER ]] ; then
-    if [[ -f "$LOG_FILE" ]] && [[ "${LOG_FILE_SIZE}" -gt "${LOGFILE_MAXSIZE}" ]]; then
+  if [[ $LOG_FILE_SIZE =~ "^[0-9]+$" ]]; then
+    if [[ -f "$LOG_FILE" ]] && [[ "${LOG_FILE_SIZE}" -gt "${CACHES_MAXSIZE}" ]]; then
       rm -rf $LOG_FILE
     fi
   fi
 }
+
+function delete_cache() {
+  CACHE_SIZE=`echo $(du -bsh $LOG_FILE) | cut -d "M" -f1`
+  CACHE="bot/data"
+  if [[ $CACHE_SIZE =~ "^[0-9]+$" ]]; then
+    if [[ -d "$CACHE" ]] && [[ "${CACHE_SIZE}" -gt "${CACHES_MAXSIZE}" ]]; then
+      list_dir=( `ls -1 -d bot/data/*/` )
+      for ((i=0; i<${#list_dir[@]}; i++)); do
+              rm -rf ${list_dir[$i]}
+      done
+    fi
+  fi
+}
+delete_log
+delete_cache
 
 case $1 in
   install)
@@ -160,12 +174,11 @@ case $1 in
     update
     exit ;;
 esac
-
-show_logo
-delete_log
 if [[ $1 == "-"* ]]; then
+  show_logo
   start_bot $1
   exit
 fi
+show_logo
 start_bot
 exit
