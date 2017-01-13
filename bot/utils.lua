@@ -114,17 +114,11 @@ function oldtg(data)
     end
     if new_members then
         for i = 0, #new_members, 1 do
-           if new_members[i].status_.ID == "UserStatusOnline" then
-                   status = "online"
-           else
-                   status = "offline"
-           end
             msg.added[i] = {
                     id = new_members[i].id_,
                     username = new_members[i].username_,
                     first_name = new_members[i].first_name_,
                     last_name = new_members[i].last_name_,
-                    status = status
             }
         end
     end
