@@ -1,7 +1,8 @@
 #!/bin/bash
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
-CACHES_MAXSIZE=4
+LOGFILE_MAXSIZE=10000 # Size max of bot/log.txt in KB
+CACHE_FOLDER_MAXSIZE=100000 # Size max of bot/data/*/ in KB
 dbteam_dir="DBTeamV2"
 config_lines=(
   	'default_profile = "dbteam";'
@@ -140,26 +141,34 @@ function show_logo() {
 }
 
 function delete_log() {
-  LOG_FILE_SIZE=`echo $(du -bsh $LOG_FILE) | cut -d "M" -f1`
-  LOG_FILE="bot/log.txt"
-  if [[ $LOG_FILE_SIZE =~ "^[0-9]+$" ]]; then
-    if [[ -f "$LOG_FILE" ]] && [[ "${LOG_FILE_SIZE}" -gt "${CACHES_MAXSIZE}" ]]; then
-      rm -rf $LOG_FILE
+    LOG_FILE="bot/log.txt"
+    if [ -f "$LOG_FILE" ]; then
+        LOG_FILE_SIZE=`echo $(du -s $LOG_FILE)`
+        VV=`echo ${LOG_FILE_SIZE//[a-Z\ \/.]/}`
+        if [[ `echo $LOG_FILE_SIZE | grep -E "^[0-9]+"` ]]; then
+            if [[ $VV -gt $LOGFILE_MAXSIZE ]]; then
+                rm -rf $LOG_FILE
+                echo -e "\033[1;36mLogfile (`pwd`/bot/log.txt) is greater than ${LOGFILE_MAXSIZE}K (${VV}K), deleted.\033[0m"
+            fi
+        fi
     fi
-  fi
 }
 
 function delete_cache() {
-  CACHE_SIZE=`echo $(du -bsh $LOG_FILE) | cut -d "M" -f1`
-  CACHE="bot/data"
-  if [[ $CACHE_SIZE =~ "^[0-9]+$" ]]; then
-    if [[ -d "$CACHE" ]] && [[ "${CACHE_SIZE}" -gt "${CACHES_MAXSIZE}" ]]; then
-      list_dir=( `ls -1 -d bot/data/*/` )
-      for ((i=0; i<${#list_dir[@]}; i++)); do
-              rm -rf ${list_dir[$i]}
-      done
+    CACHE_FOLDER="bot/data"
+    if [ -d "${CACHE_FOLDER}" ]; then
+        CACHE_SIZE=`echo $(du -s $CACHE_FOLDER)`
+        VV=`echo ${CACHE_SIZE//[a-Z\ \/.]/}`
+        if [[ `echo $CACHE_SIZE | grep -E "^[0-9]+"` ]]; then
+            if [[ $VV -gt $CACHE_FOLDER_MAXSIZE ]]; then
+                list_dir=( `ls -1 -d bot/data/*/` )
+                for ((i=0; i<${#list_dir[@]}; i++)); do
+                    rm -rf ${list_dir[$i]}
+                done
+                echo -e "\033[1;36mCache folder (`pwd`/bot/data) is greater than ${CACHE_FOLDER_MAXSIZE}K (${VV}K), deleted.\033[0m"
+            fi
+        fi
     fi
-  fi
 }
 delete_log
 delete_cache
