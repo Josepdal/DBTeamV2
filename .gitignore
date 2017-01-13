@@ -1,0 +1,5 @@
+*.jpg
+
+bot/log.txt
+logs/
+bot/data
