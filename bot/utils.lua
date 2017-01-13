@@ -283,3 +283,20 @@ function is_number(name_id)
         return false
     end
 end
+
+function no_markdown(text, replace)
+    if text then
+        text = tostring(text)
+        if replace then
+            text = text:gsub("`", replace)
+            text = text:gsub("*", replace)
+            text = text:gsub("_", replace)
+            return text
+        end
+        text = text:gsub("`", "")
+        text = text:gsub("*", "")
+        text = text:gsub("_", "")
+        return text
+    end
+    return false
+end
