@@ -102,7 +102,7 @@ function oldtg(data)
         msg.game = false
     end
     if data.message_.content_.ID then
-        msg.content = data.message_.content_.ID
+        msg.action = data.message_.content_.ID
     end
     if data.message_.content_.ID == "MessageChatAddMembers" or data.message_.content_.ID == "MessageChatDeleteMember" or
         data.message_.content_.ID == "MessageChatChangeTitle" or data.message_.content_.ID == "MessageChatChangePhoto" or
@@ -136,12 +136,21 @@ end
 function user_data(msg, data)
     if data.username_ then
         msg.from.username = data.username_
+    else
+        msg.from.username = false
     end
-    if data.first_name_ then
-        msg.from.first_name = data.first_name_
-    end
+    msg.from.first_name = data.first_name_
     if data.last_name_ then
         msg.from.last_name = data.last_name_
+    else
+        msg.from.last_name = false
+    end
+    if msg.action == "MessageChatJoinByLink" then
+        msg.added = {}
+        msg.added[1] = {}
+        msg.added[1].username = msg.from.username
+        msg.added[1].first_name = msg.from.fist_name
+        msg.added[1].last_name = msg.from.last_name
     end
     return msg
 end
@@ -150,9 +159,7 @@ function reply_data(msg, data)
     if data.username_ then
         msg.replied.username = data.username_
     end
-    if data.first_name_ then
-        msg.replied.first_name = data.first_name_
-    end
+    msg.replied.first_name = data.first_name_
     if data.last_name_ then
         msg.replied.last_name = data.last_name_
     end
