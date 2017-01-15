@@ -285,12 +285,7 @@ local function run(msg, matches)
 	    
 	  	set_text(LANG, 'settings:24', '#setlink <link>: saves the link of the chat.')
 	  	set_text(LANG, 'settings:25', '#link: to get the link of the chat.')
-	    
 
-		-- version.lua --
-		set_text(LANG, 'version:0', 1)
-		set_text(LANG, 'version:1', '#version: shows bot version.')
-		
 
 		if matches[1] == 'install' then
 			return '`>` *English* was successfully installed on your bot.'
