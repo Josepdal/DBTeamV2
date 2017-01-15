@@ -43,12 +43,11 @@ function ok_cb(extra, success, result)
 end
 
 function oldtg(data)
-    local new_members = data.message_.content_.members_
     local msg = {}
     msg.to = {}
     msg.from = {}
     msg.replied = {}
-    msg.added = {}
+    
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
     if data.message_.content_.ID == "MessageText" then
@@ -112,14 +111,23 @@ function oldtg(data)
     else
         msg.service = false
     end
+    local new_members = data.message_.content_.members_
     if new_members then
+        msg.added = {}
         for i = 0, #new_members, 1 do
-            msg.added[i] = {
-                    id = new_members[i].id_,
-                    username = new_members[i].username_,
-                    first_name = new_members[i].first_name_,
-                    last_name = new_members[i].last_name_,
-            }
+            k = i+1
+            msg.added[k] = {}
+            if new_members[i].username_ then
+                msg.added[k].username = new_members[i].username_
+            else
+                msg.added[k].username = false
+            end
+            msg.added[k].first_name = new_members[i].first_name_
+            if new_members[i].last_name_ then
+                msg.added[k].last_name = new_members[i].last_name_
+            else
+                msg.added[k].last_name = false
+            end
         end
     end
     return msg
