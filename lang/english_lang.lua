@@ -39,7 +39,7 @@ local function run(msg, matches)
 		set_text(LANG, 'bye1', 'Bye ')
 		set_text(LANG, 'bye2', ' thank you for your visit.')
 		set_text(LANG, 'welnew', 'Welcome saved! is')
-
+		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
