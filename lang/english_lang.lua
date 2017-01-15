@@ -194,34 +194,28 @@ local function run(msg, matches)
 		set_text(LANG, 'commands:2', '#commands [plugin]: Commands for that plugin.')
 
 		-- export_gban.lua --
-		set_text(LANG, 'export_gban:0', 2)
-		set_text(LANG, 'export_gban:1', '#gbans installer: Return a lua file installer to share gbans and add those in another bot in just one command.')
-		set_text(LANG, 'export_gban:2', '#gbans list: Return an archive with a list of gbans.')
+	--	set_text(LANG, 'export_gban:0', 2)
+	--	set_text(LANG, 'export_gban:1', '#gbans installer: Return a lua file installer to share gbans and add those in another bot in just one command.')
+	--	set_text(LANG, 'export_gban:2', '#gbans list: Return an archive with a list of gbans.')
 
 		-- gban_installer.lua --
-		set_text(LANG, 'gban_installer:0', 1)
-		set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
+	--	set_text(LANG, 'gban_installer:0', 1)
+	--	set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
 		
 		-- welcome.lua --
         set_text(LANG, 'welcome:0', 6)
-        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat')
-        set_text(LANG, 'welcome:2', '#setbye [text for farewell]. You can make a custom farewell for this chat')
-        set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')
-        set_text(LANG, 'welcome:4', '#getbye - returns the current welcome in this chat')
+        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a '0' to set the default welcome.')
+        set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')     
         set_text(LANG, 'welcome:5', '#welcome on/off - enable/disable welcome in this chat')
-        set_text(LANG, 'welcome:6', '#bye on/off - enable/disable farewell in this chat')
-
+       
 		-- giverank.lua --
-		set_text(LANG, 'giverank:0', 9)
-		set_text(LANG, 'giverank:1', '#rank admin (reply): add admin by reply.')
-		set_text(LANG, 'giverank:2', '#rank admin <user_id>/<user_name>: add admin by user ID/Username.')
-		set_text(LANG, 'giverank:3', '#rank mod (reply): add mod by reply.')
-		set_text(LANG, 'giverank:4', '#rank mod <user_id>/<user_name>: add mod by user ID/Username.')
-		set_text(LANG, 'giverank:5', '#rank guest (reply): remove admin by reply.')
-		set_text(LANG, 'giverank:6', '#rank guest <user_id>/<user_name>: remove admin by user ID/Username.')
-		set_text(LANG, 'giverank:7', '#admins: list of all admin members.')
-		set_text(LANG, 'giverank:8', '#mods: list of all mod members.')
-		set_text(LANG, 'giverank:9', '#members: list of all chat members.')
+		set_text(LANG, 'giverank:0', 6)
+		set_text(LANG, 'giverank:1', '#admin (reply): add admin by reply.')
+		set_text(LANG, 'giverank:2', '#admin <user_id>/<user_name>: add admin by user ID/Username.')
+		set_text(LANG, 'giverank:3', '#mod (reply): add mod by reply.')
+		set_text(LANG, 'giverank:4', '#mod <user_id>/<user_name>: add mod by user ID/Username.')
+		set_text(LANG, 'giverank:5', '#user (reply): remove admin by reply.')
+		set_text(LANG, 'giverank:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')		
 
 		-- id.lua --
 		set_text(LANG, 'id:0', 6)
@@ -232,31 +226,20 @@ local function run(msg, matches)
 		set_text(LANG, 'id:6', '#whois (reply): Return user id.')
 
 		-- moderation.lua --
-		set_text(LANG, 'moderation:0', 18)
-		set_text(LANG, 'moderation:1', '#add: replying to a message, the user will be added to the current chat.')
-		set_text(LANG, 'moderation:2', '#add <id>/<username>: adds a user by its ID/Username to the current chat.')
-		set_text(LANG, 'moderation:3', '#kick: replying to a message, the user will be kicked in the current chat.')
-		set_text(LANG, 'moderation:4', '#kick <id>/<username>: the user will be kicked by its ID/Username in the current chat.')
-		set_text(LANG, 'moderation:5', '#kickme: kick yourself.')
-		set_text(LANG, 'moderation:6', '#ban: replying to a message, the user will be kicked and banned in the current chat.')
-		set_text(LANG, 'moderation:7', '#ban <id>/<username>: the user will be banned by its ID/Username in the current chat and it wont be able to return.')
-		set_text(LANG, 'moderation:8', '#unban: replying to a message, the user will be unbanned in the current chat.')
-		set_text(LANG, 'moderation:9', '#unban <id>/<username>: the user will be unbanned by its ID/Username in the current chat.')
-		set_text(LANG, 'moderation:10', '#gban: replying to a message, the user will be kicked and banned from all chat.')
-		set_text(LANG, 'moderation:11', '#gban <id>/<username>: the user will be banned by its ID/Username from all chat and it wont be able to enter.')
-		set_text(LANG, 'moderation:12', '#ungban: replying to a message, the user will be unbanned from all chat.')
-		set_text(LANG, 'moderation:13', '#ungban <id>/<username>: the user will be unbanned by its ID/Username from all chat.')
-		set_text(LANG, 'moderation:14', '#mute: replying to a message, the user will be silenced in the current chat, erasing all its messages.')
-		set_text(LANG, 'moderation:15', '#mute <id>/<username>: the user will be silenced by its ID/Username inthe current chat, erasing all its messages.')
-		set_text(LANG, 'moderation:16', '#unmute: replying to a message, the user will be unsilenced in the current chat.')
-		set_text(LANG, 'moderation:17', '#unmute <id>/<username>: the user will be unsilenced by its ID/Username in the current chat.')
-		set_text(LANG, 'moderation:18', '#rem: replying to a message, the message will be removed.')
+		set_text(LANG, 'moderation:0', 7)
+		
+		set_text(LANG, 'moderation:1', '#kick <reply>/<id>/<username>: the user will be kicked in the current chat.')
+		set_text(LANG, 'moderation:2', '#ban <reply>/<id>/<username>: the user will be banned in the current chat and it wont be able to return.')
+		set_text(LANG, 'moderation:3', '#unban <reply>/<id>/<username>: the user will be unbanned in the current chat.')
+		set_text(LANG, 'moderation:4', '#gban <reply>/<id>/<username>: the user will be banned from all chats and it wont be able to enter.')
+		set_text(LANG, 'moderation:5', '#ungban <reply>/<id>/<username>: the user will be unbanned from all chats.')
+		set_text(LANG, 'moderation:6', '#mute <reply>/<id>/<username>: the user will be silenced in the current chat, erasing all its messages.')
+		set_text(LANG, 'moderation:7', '#unmute <reply>/<id>/<username>: the user will be unsilenced in the current chat.')
 		
 		-- settings.lua --
-	    set_text(LANG, 'settings:0', 25)
+	    set_text(LANG, 'settings:0', 21)
 		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
 		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
-		set_text(LANG, 'settings:3', '#info on/off: when enabled, if a user changes the chat photo/title, the bot will revert to the previous photo/title.')
 		set_text(LANG, 'settings:4', '#lang <language (en, es...)>: changes the language of the bot.')
 		---- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
 		
@@ -278,14 +261,6 @@ local function run(msg, matches)
 	    set_text(LANG, 'settings:19', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
 		set_text(LANG, 'settings:20', '#english on/off: when disabled, all messages with english letters will be cleared.')
 	    set_text(LANG, 'settings:21', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
-		
-	   
-	    set_text(LANG, 'settings:22', '#setname <chat title>: the bot will change chat title.')
-	    set_text(LANG, 'settings:23', '#setphoto <then send photo>: the bot will change chat photo.')
-	    
-	  	set_text(LANG, 'settings:24', '#setlink <link>: saves the link of the chat.')
-	  	set_text(LANG, 'settings:25', '#link: to get the link of the chat.')
-
 
 		if matches[1] == 'install' then
 			return '`>` *English* was successfully installed on your bot.'
