@@ -40,18 +40,6 @@ local function run(msg, matches)
 		set_text(LANG, 'bye2', ' thank you for your visit.')
 		set_text(LANG, 'welnew', 'Welcome saved! is')
 
-		-- Spam.lua --
-		set_text(LANG, 'reportUser', 'USER')
-		set_text(LANG, 'reportReason', 'Report reason')
-		set_text(LANG, 'reportGroup', 'Group')
-		set_text(LANG, 'reportMessage', 'Message')
-
-		set_text(LANG, 'allowedSpamT', 'Spam is now allowed in this chat.')
-		set_text(LANG, 'notAllowedSpamT', 'Spam is not allowed in this chat.')
-
-		-- bot.lua --
-		set_text(LANG, 'botOn', 'I\'m back. Let\'s do this')
-		set_text(LANG, 'botOff', 'Nothing to do here')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
@@ -155,43 +143,7 @@ local function run(msg, matches)
 		set_text(LANG, 'allowedMedia', 'A̲l̲l̲o̲w̲e̲d̲ m̲e̲d̲i̲a̲')
 		set_text(LANG, 'settingsText', 'T̲e̲x̲t̲')
 
-
-		set_text(LANG, 'photoSaved', 'Photo saved!')
-		set_text(LANG, 'photoFailed', 'Failed, please try again!')
-		set_text(LANG, 'setPhotoAborted', 'Stopping setphoto process...')
-		set_text(LANG, 'sendPhoto', 'Please, send a photo')
-
-		set_text(LANG, 'chatSetphoto', 'Now you can setphoto in this chat.')
-		set_text(LANG, 'notChatSetphoto', 'Now you can\'t setphoto in this chat.')
-		set_text(LANG, 'setPhotoError', 'Please, enable setphoto settings.')
-
-		set_text(LANG, 'linkSaved', 'New link saved.')
-		set_text(LANG, 'chat', 'Chat Link')
-		set_text(LANG, 'noLinkSet', 'There is not link set yet. Please add one by #setlink [Link].')
-
-		set_text(LANG, 'chatRename', 'Now you can rename the chat.')
-		set_text(LANG, 'notChatRename', 'Now you can\'t rename the chat.')
-
-		set_text(LANG, 'lockMembersT', 'The number of members has been locked on this chat.')
-		set_text(LANG, 'notLockMembersT', 'The number of members now is not locked on this chat.')
-
 		set_text(LANG, 'langUpdated', 'Your language has been updated to: ')
-
-		set_text(LANG, 'chatUpgrade', 'Chat Upgraded Successfully.')
-		set_text(LANG, 'notInChann', 'You can\'t do this in a supergroup.')
-
-		set_text(LANG, 'notInChann', 'You can\'t do this in a supergroup.')
-		set_text(LANG, 'desChanged', 'Chat description has been changed.')
-		set_text(LANG, 'desOnlyChannels', 'Description only can be changed in channels.')
-
-		set_text(LANG, 'muteAll', 'Everyone is muted now.')
-		set_text(LANG, 'unmuteAll', 'Everyone can talk now.')
-		set_text(LANG, 'muteAllX:1', 'This chat has been muted for')
-		set_text(LANG, 'muteAllX:2', 'seconds.')
-
-		set_text(LANG, 'createGroup:1', 'chat')
-		set_text(LANG, 'createGroup:2', 'created.')
-		set_text(LANG, 'newGroupWelcome', 'Welcome to your new chat.')
 
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
@@ -225,50 +177,17 @@ local function run(msg, matches)
 		set_text(LANG, 'unmuteUser', '`>` The user *can talk now.*')
 		set_text(LANG, 'unmuteChat', '`>` The users *can talk now.*')
 		
-		-- plugins.lua --
-		set_text(LANG, 'plugins', 'Plugins')
-		set_text(LANG, 'installedPlugins', 'plugins installed.')
-		set_text(LANG, 'pEnabled', 'enabled.')
-		set_text(LANG, 'pDisabled', 'disabled.')
-
-		set_text(LANG, 'isEnabled:1', 'Plugin')
-		set_text(LANG, 'isEnabled:2', 'is enabled.')
-
-		set_text(LANG, 'notExist:1', 'Plugin')
-		set_text(LANG, 'notExist:2', 'does not exists.')
-
-		set_text(LANG, 'notEnabled:1', 'Plugin')
-		set_text(LANG, 'notEnabled:2', 'not enabled.')
-
-		set_text(LANG, 'pNotExists', 'Plugin doesn\'t exists.')
-
-		set_text(LANG, 'pDisChat:1', 'Plugin')
-		set_text(LANG, 'pDisChat:2', 'disabled on this chat.')
-
-		set_text(LANG, 'anyDisPlugin', 'There aren\'t any disabled plugins.')
-		set_text(LANG, 'anyDisPluginChat', 'There aren\'t any disabled plugins for this chat.')
-		set_text(LANG, 'notDisabled', 'This plugin is not disabled')
-
-		set_text(LANG, 'enabledAgain:1', 'Plugin')
-		set_text(LANG, 'enabledAgain:2', 'is enabled again')
-
+		
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'Commands')
 		set_text(LANG, 'errorNoPlug', 'This plugin does not exists or has not usages.')
 
-		-- rules.lua --
-		set_text(LANG, 'setRules', 'Chat rules have been updated.')
-		set_text(LANG, 'remRules', 'Chat rules have been removed.')
-
+	
 		------------
 		-- Usages --
 		------------
 
-		-- bot.lua --
-		set_text(LANG, 'bot:0', 2)
-		set_text(LANG, 'bot:1', '#bot on: enable bot in current chat.')
-		set_text(LANG, 'bot:2', '#bot off: disable bot in current chat.')
-
+	
 		-- commands.lua --
 		set_text(LANG, 'commands:0', 2)
 		set_text(LANG, 'commands:1', '#commands: Show all commands for every plugin.')
@@ -334,7 +253,7 @@ local function run(msg, matches)
 		set_text(LANG, 'moderation:18', '#rem: replying to a message, the message will be removed.')
 		
 		-- settings.lua --
-	    	set_text(LANG, 'settings:0', 25)
+	    set_text(LANG, 'settings:0', 25)
 		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
 		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
 		set_text(LANG, 'settings:3', '#info on/off: when enabled, if a user changes the chat photo/title, the bot will revert to the previous photo/title.')
@@ -346,42 +265,32 @@ local function run(msg, matches)
 		set_text(LANG, 'settings:8', '#stickers on/off: when disabled, all stickers will be cleared.')
 		set_text(LANG, 'settings:9', '#gifs on/off: when disabled, all gifs will be cleared.')
 	   	set_text(LANG, 'settings:10', '#voice on/off: when disabled, all voicess will be cleared.')
-	    	set_text(LANG, 'settings:11', '#audios on/off: when disabled, all audios will be cleared.')
+	    set_text(LANG, 'settings:11', '#audios on/off: when disabled, all audios will be cleared.')
 		set_text(LANG, 'settings:12', '#documents on/off: when disabled, all documents will be cleared.')
 		set_text(LANG, 'settings:13', '#location on/off: when disabled, all locations will be cleared.')
 		set_text(LANG, 'settings:14', '#games on/off: when disabled, all games will be cleared.')
 		
-	    	set_text(LANG, 'settings:15', '#spam on/off: when disabled, all spam messages will be cleared.')
+	    set_text(LANG, 'settings:15', '#spam on/off: when disabled, all spam messages will be cleared.')
 		set_text(LANG, 'settings:16', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
-	    	set_text(LANG, 'settings:17', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
+	    set_text(LANG, 'settings:17', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
 		
-	    	set_text(LANG, 'settings:18', '#links on/off: when disabled, all links will be cleared.')
-	    	set_text(LANG, 'settings:19', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
+	    set_text(LANG, 'settings:18', '#links on/off: when disabled, all links will be cleared.')
+	    set_text(LANG, 'settings:19', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
 		set_text(LANG, 'settings:20', '#english on/off: when disabled, all messages with english letters will be cleared.')
-	    	set_text(LANG, 'settings:21', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
+	    set_text(LANG, 'settings:21', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
 		
 	   
-	    	set_text(LANG, 'settings:22', '#setname <chat title>: the bot will change chat title.')
-	    	set_text(LANG, 'settings:23', '#setphoto <then send photo>: the bot will change chat photo.')
+	    set_text(LANG, 'settings:22', '#setname <chat title>: the bot will change chat title.')
+	    set_text(LANG, 'settings:23', '#setphoto <then send photo>: the bot will change chat photo.')
 	    
 	  	set_text(LANG, 'settings:24', '#setlink <link>: saves the link of the chat.')
 	  	set_text(LANG, 'settings:25', '#link: to get the link of the chat.')
 	    
 
-		-- plugins.lua --
-		set_text(LANG, 'plugins:0', 4)
-		set_text(LANG, 'plugins:1', '#plugins: shows a list of all plugins.')
-		set_text(LANG, 'plugins:2', '#plugins <enable>/<disable> [plugin]: enable/disable the specified plugin.')
-		set_text(LANG, 'plugins:3', '#plugins <enable>/<disable> [plugin] chat: enable/disable the specified plugin, only in the current chat.')
-		set_text(LANG, 'plugins:4', '#plugins reload: reloads all plugins.')
-
 		-- version.lua --
 		set_text(LANG, 'version:0', 1)
 		set_text(LANG, 'version:1', '#version: shows bot version.')
-
-		-- rules.lua --
-		set_text(LANG, 'rules:0', 1)
-		set_text(LANG, 'rules:1', '#rules: shows chat rules.')
+		
 
 		if matches[1] == 'install' then
 			return '`>` *English* was successfully installed on your bot.'
