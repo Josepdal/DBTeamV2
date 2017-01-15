@@ -6,37 +6,40 @@
 --                                                --
 ----------------------------------------------------
 
-local function get_added_users(msg, username, id)
-	user = {}
-	user[0] = no_markdown(msg.added[0].first_name)
-	if username then
-		user[0] = user[0].." @"..no_markdown(msg.added[0].username)
-	end
-	if id then
-		user[0] = user[0].." ("..msg.added[0].id..")"
-	end
+local function get_added_users(msg)
+	local users = ""
 	for i = 1, #msg.added, 1 do
-		user[i] = no_markdown(msg.added[i].first_name)
-		if username then
-			user[i] = user[i].." @"..no_markdown(msg.added[i].username)
+		if msg.added[i].username then
+			users = users .. " `@"..msg.added[i].username .."`"
+		elseif msg.added[0].first_name then
+			users = users .. " `@"..msg.added[i].username .."`"
 		end
-		if id then
-			user[i] =  user[i].." ("..msg.added[i].id..")"
+		if i == (#msg.added - 1) then
+			users = users .. " and "
+		elseif i ~= #msg.added then
+			users = users .. ", "
 		end
 	end
-	return user
+	return users
 end
 
 local function pre_process(msg)
 	--send_msg(msg.to.id, return_media(msg), 'md')
 	if msg.added then
-		if redis:get("settings:welcome:"..msg.to.id) then
-			user = get_added_users(msg, true, true)
-			user_list = user[0]
-			for i=1, #user, 1 do
-				user_list = user_list.." "..user[i]
+		if not redis:get("settings:welcome:"..msg.to.id) then
+			local users
+			if #msg.added > 0 then
+				users = get_added_users(msg)
+			else
+				users = msg.added[1]
 			end
-			send_msg(msg.to.id, "*Welcome* "..user_list, 'md')
+			local welcomeText
+			if redis:get("settings:welcome:msg:" .. msg.to.id) then
+				welcomeText = redis:get("settings:welcome:msg:" .. msg.to.id):gsub("$users", users)
+			else
+				welcomeText = lang_text(msg.to.id, 'defaultWelcome'):gsub("$users", users)
+			end
+			send_msg(msg.to.id, welcomeText, 'md')
 		end
 	end
 	if permissions(msg.from.id, msg.to.id, "settings") then
@@ -398,12 +401,20 @@ local function run(msg, matches)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'floodT'), 'md')
 			end
 		elseif matches[1] == "welcome" then
-			if matches[2] == 'on' then
+			if matches[2] == 'off' then
 				redis:set("settings:welcome:" .. msg.to.id, true)
-				send_msg(msg.to.id, "Welcome off", 'md')
-			elseif matches[2] == 'off' then
+				send_msg(msg.to.id, lang_text(msg.to.id, 'noWelcomeT'), 'md')
+			elseif matches[2] == 'on' then
 				redis:del("settings:welcome:" .. msg.to.id)
-				send_msg(msg.to.id, "Welcome on", 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'welcomeT'), 'md')
+			end
+		elseif matches[1] == "setwelcome" then
+			if tonumber(matches[2]) == 0 then
+				redis:del("settings:welcome:msg:" .. msg.to.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'defaultWelcomeT'), 'md')
+			else
+				redis:set("settings:welcome:msg:" .. msg.to.id, matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'setWelcomeT'), 'md')
 			end
 		elseif matches[1] == "max" and is_number(matches[2]) then
 			if tonumber(matches[2]) == 0 then
@@ -448,6 +459,7 @@ return {
 		'^[!/#](emojis) (.*)$',
 		'^[!/#](flood) (.*)$',
 		'^[!/#](welcome) (.*)$',
+		'^[!/#](setwelcome) (.*)$',
 		'^[!/#](max) (.*)$',
 		'^[!/#](time) (.*)$'
   	},
