@@ -19,7 +19,7 @@ local function run(msg, matches)
 				if new_is_sudo(msg.from.id) then
 					redis:del('mod:' .. msg.to.id .. ':' .. msg.replied.id)
 					redis:del('admin:' .. msg.replied.id)
-				else
+				elseif is_admin(msg.to.id) then
 					redis:del('mod:' .. msg.to.id .. ':' .. msg.replied.id)
 				end
 				send_msg(msg.to.id, lang_text(msg.to.id, '>') .. " @" .. msg.replied.username .. lang_text(msg.to.id, 'nowUser'), "md")
@@ -30,9 +30,9 @@ end
 
 return {
   patterns = {
-	"^[!/#](admin)$",
-	"^[!/#](mod)$",
-	"^[!/#](user)$"
+  	"^[!/#](admin)$",
+    "^[!/#](mod)$",
+    "^[!/#](user)$"
   },
   run = run
 }
