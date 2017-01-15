@@ -154,7 +154,7 @@ function redisunban_by_reply(channel_id, message_id)
 end
 
 function redisban_resolve_cb(extra, user)
-    if compare_permissions(chat_id, extra.superior, user.id_) then
+    if compare_permissions(extra.chat_id, extra.superior, user.id_) then
         redis:set("ban:" .. extra.chat_id .. ":" .. user.id_, true)
     end
 end
@@ -172,12 +172,14 @@ function redisgban_resolve(chat_id, username)
     resolve_username(username, redisgban_resolve_cb, chat_id)
 end
 
-function redisunban_resolve_cb(chat_id, user)
-    redis:del("ban:" .. chat_id .. ":" .. user.id_)
+function redisunban_resolve_cb(extra, user)
+    if compare_permissions(extra.chat_id, extra.superior, user.id_) then
+        redis:del("ban:" .. extra.chat_id .. ":" .. user.id_)
+    end
 end
 
-function redisunban_resolve(chat_id, username)
-    resolve_username(username, redisunban_resolve_cb, chat_id)
+function redisunban_resolve(chat_id, username, superior)
+    resolve_username(username, redisunban_resolve_cb, {chat_id = chat_id, superior = superior})
 end
 
 function redismute_resolve_cb(chat_id, user)
@@ -196,3 +198,29 @@ function redisunmute_resolve(chat_id, username)
     resolve_username(username, redisunmute_resolve_cb, chat_id)
 end
 
+local function getInputFile(file)
+    if file:match('/') then
+        infile = {ID = "InputFileLocal", path_ = file}
+    elseif file:match('^%d+$') then
+        infile = {ID = "InputFileId", id_ = file}
+    else
+        infile = {ID = "InputFilePersistentId", persistent_id_ = file}
+    end
+    return infile
+end
+
+function send_document(chat_id, document)
+    tdcli_function ({
+    ID = "SendMessage",
+    chat_id_ = chat_id,
+    reply_to_message_id_ = 0,
+    disable_notification_ = 0,
+    from_background_ = 1,
+    reply_markup_ = nil,
+    input_message_content_ = {
+            ID = "InputMessageDocument",
+            document_ = getInputFile(document),
+            caption_ = nil
+        },
+    }, dl_cb, cmd)
+end
