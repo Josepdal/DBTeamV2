@@ -101,6 +101,14 @@ function oldtg(data)
     else
         msg.game = false
     end
+	if data.message_.forward_info_ then
+		msg.forward = true
+		msg.forward = {}
+		msg.forward.from_id = data.message_.forward_info_.sender_user_id_
+		msg.forward.msg_id = data.message_.forward_info_.data_
+	else
+		msg.forward = false
+	end
     if data.message_.content_.ID then
         msg.action = data.message_.content_.ID
     end

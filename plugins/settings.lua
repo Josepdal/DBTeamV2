@@ -77,6 +77,10 @@ local function pre_process(msg)
         if redis:get("settings:documents:" .. msg.to.id) then
         	delete_msg(msg.to.id, msg.id)
         end
+    elseif msg.forward then
+        if redis:get("settings:forward:" .. msg.to.id) then
+        	delete_msg(msg.to.id, msg.forward.msg_id)
+        end
     elseif msg.text then
     	if redis:get("settings:spam:" .. msg.to.id) then
 	    	local list = require("data/spam_data")
@@ -211,6 +215,12 @@ local function run(msg, matches)
 
 			settings = settings.. "\n*" .. lang_text(msg.to.id, 'settingsText') .. ":*\n"
 
+			-- Check Forward
+			if redis:get("settings:forward:" .. msg.to.id) then
+				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'forward') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+			else
+				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'forward') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+			end
 			-- Check Spam
 			if redis:get("settings:spam:" .. msg.to.id) then
 				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
@@ -357,6 +367,14 @@ local function run(msg, matches)
 				redis:del("settings:games:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'gamesT'), 'md')
 			end
+		elseif matches[1] == "forward" then
+			if matches[2] == 'off' then
+				redis:set("settings:forward:" .. msg.to.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'noForwardT'), 'md')
+			elseif matches[2] == 'on' then
+				redis:del("settings:forward:" .. msg.to.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'forwardT'), 'md')
+			end
 		elseif matches[1] == "spam" then
 			if matches[2] == 'off' then
 				redis:set("settings:spam:" .. msg.to.id, true)
@@ -452,6 +470,7 @@ return {
 		'^[!/#](documents) (.*)$',
 		'^[!/#](location) (.*)$',
 		'^[!/#](games) (.*)$',
+		'^[!/#](forward) (.*)$',
 		'^[!/#](spam) (.*)$',
 		'^[!/#](setspam) (.*)$',
 		'^[!/#](arabic) (.*)$',

@@ -93,7 +93,7 @@ local function run(msg, matches)
 		set_text(LANG, 'tFlood', 'زمان پيام مکرر')
 		set_text(LANG, 'setphoto', 'تغيير عکس گروه')
 
-		set_text(LANG, 'welcome', 'Welcome')
+		set_text(LANG, 'forward', 'Forward')
 		set_text(LANG, 'videos', 'ويديو')
 		set_text(LANG, 'invite', 'دعوت')
 		set_text(LANG, 'games', 'بازي اينلاين')
