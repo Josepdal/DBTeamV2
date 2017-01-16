@@ -58,9 +58,7 @@ function create_config()
             "english_lang"
         },
         our_id = {0},
-        sudo_users = {our_id},
-        admin_users = {{}},
-        disabled_channels = {}
+        sudo_users = {our_id}
     }
     serialize_to_file(config, './data/config.lua')
     print ('saved config into ./data/config.lua')
