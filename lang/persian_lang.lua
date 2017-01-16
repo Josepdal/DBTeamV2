@@ -13,7 +13,7 @@ local function run(msg, matches)
 		-- Translation version --
 		-------------------------
 		set_text(LANG, 'version', '2.0')
-		set_text(LANG, 'versionExtended', 'Translation version 2.0')
+		set_text(LANG, 'versionExtended', 'ترجمه شده ورژن 2')
 		-------------
 		-- Plugins --
 		-------------
@@ -93,14 +93,14 @@ local function run(msg, matches)
 		set_text(LANG, 'tFlood', 'زمان پيام مکرر')
 		set_text(LANG, 'setphoto', 'تغيير عکس گروه')
 
-		set_text(LANG, 'forward', 'Forward')
+		set_text(LANG, 'forward', 'نقل قول')
 		set_text(LANG, 'videos', 'ويديو')
 		set_text(LANG, 'invite', 'دعوت')
 		set_text(LANG, 'games', 'بازي اينلاين')
 		set_text(LANG, 'documents', 'فايل')
 		set_text(LANG, 'location', 'مکان')
 		set_text(LANG, 'voice', 'صداي ظبط شده')
-		set_text(LANG, 'icontitle', 'Change icon/title')
+		set_text(LANG, 'icontitle', 'تغییر ایکون گروه')
 		set_text(LANG, 'english', 'متون انگليسي')
 		set_text(LANG, 'emojis', 'ايموجي')
 		--Made with @TgTextBot by @iicc1
@@ -196,7 +196,7 @@ local function run(msg, matches)
 		set_text(LANG, 'settings:13', '#location on/off:ارسال مکان')
 		set_text(LANG, 'settings:14', '#games on/off: شروع کردن بازي .')
 		set_text(LANG, 'settings:15', '#spam on/off: هرزنامه.')
-		set_text(LANG, 'settings:16', '#forward on/off: when disabled, all forwarded messages will be cleared.')
+		set_text(LANG, 'settings:16', '#forward on/off: قفل کردن فوروارد  یا باز کردن')
 		set_text(LANG, 'settings:17', '#floodtime <secs>: تعيين کردن حساسيت زمان فلود.')
 		set_text(LANG, 'settings:18', '#maxflood <msgs>: تعيين حساسيت فلود کردن.')
 		set_text(LANG, 'settings:19', '#links on/off: ارسال لينک.')
