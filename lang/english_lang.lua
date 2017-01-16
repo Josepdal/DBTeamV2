@@ -204,7 +204,7 @@ local function run(msg, matches)
 		
 		-- welcome.lua --
         set_text(LANG, 'welcome:0', 6)
-        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a '0' to set the default welcome.')
+        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a "0" to set the default welcome.')
         set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')     
         set_text(LANG, 'welcome:5', '#welcome on/off - enable/disable welcome in this chat')
        
