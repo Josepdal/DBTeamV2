@@ -199,10 +199,10 @@ local function run(msg, matches)
 	--	set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
 		
 		-- welcome.lua --
-        set_text(LANG, 'welcome:0', 6)
+        set_text(LANG, 'welcome:0', 3)
         set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a "0" to set the default welcome.')
-        set_text(LANG, 'welcome:3', '#getwelcome - returns the current welcome in this chat')     
-        set_text(LANG, 'welcome:5', '#welcome on/off - enable/disable welcome in this chat')
+        set_text(LANG, 'welcome:2', '#getwelcome - returns the current welcome in this chat')     
+        set_text(LANG, 'welcome:3', '#welcome on/off - enable/disable welcome in this chat')
        
 		-- giverank.lua --
 		set_text(LANG, 'giverank:0', 6)
@@ -214,12 +214,12 @@ local function run(msg, matches)
 		set_text(LANG, 'giverank:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')		
 
 		-- id.lua --
-		set_text(LANG, 'id:0', 6)
+		set_text(LANG, 'id:0', 5)
 		set_text(LANG, 'id:1', '#id: Return your ID and the chat id if you are in one.')
 		set_text(LANG, 'id:2', '#ids chat: Return the IDs of the current chat members.')
-		set_text(LANG, 'id:4', '#id <user_name>: Return the member username ID from the current chat.')
-		set_text(LANG, 'id:5', '#whois <user_id>/<user_name>: Return username.')
-		set_text(LANG, 'id:6', '#whois (reply): Return user id.')
+		set_text(LANG, 'id:3', '#id <user_name>: Return the member username ID from the current chat.')
+		set_text(LANG, 'id:4', '#whois <user_id>/<user_name>: Return username.')
+		set_text(LANG, 'id:5', '#whois (reply): Return user id.')
 
 		-- moderation.lua --
 		set_text(LANG, 'moderation:0', 7)
@@ -233,31 +233,28 @@ local function run(msg, matches)
 		set_text(LANG, 'moderation:7', '#unmute <reply>/<id>/<username>: the user will be unsilenced in the current chat.')
 		
 		-- settings.lua --
-	    set_text(LANG, 'settings:0', 22)
+	    set_text(LANG, 'settings:0', 20)
 		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
 		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
-		set_text(LANG, 'settings:4', '#lang <language (en, es...)>: changes the language of the bot.')
-		---- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
-		
-		set_text(LANG, 'settings:6', '#photos on/off: when disabled, all photos will be cleared.')
-		set_text(LANG, 'settings:7', '#videos on/off: when disabled, all videos will be cleared.')
-		set_text(LANG, 'settings:8', '#stickers on/off: when disabled, all stickers will be cleared.')
-		set_text(LANG, 'settings:9', '#gifs on/off: when disabled, all gifs will be cleared.')
-	   	set_text(LANG, 'settings:10', '#voice on/off: when disabled, all voicess will be cleared.')
-	    set_text(LANG, 'settings:11', '#audios on/off: when disabled, all audios will be cleared.')
-		set_text(LANG, 'settings:12', '#documents on/off: when disabled, all documents will be cleared.')
-		set_text(LANG, 'settings:13', '#location on/off: when disabled, all locations will be cleared.')
-		set_text(LANG, 'settings:14', '#games on/off: when disabled, all games will be cleared.')
-		
-	    set_text(LANG, 'settings:15', '#spam on/off: when disabled, all spam messages will be cleared.')
-		set_text(LANG, 'settings:16', '#forward on/off: when disabled, all forwarded messages will be cleared.')
-		set_text(LANG, 'settings:17', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
-	    set_text(LANG, 'settings:18', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
-		
-	    set_text(LANG, 'settings:19', '#links on/off: when disabled, all links will be cleared.')
-	    set_text(LANG, 'settings:20', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
-		set_text(LANG, 'settings:21', '#english on/off: when disabled, all messages with english letters will be cleared.')
-	    set_text(LANG, 'settings:22', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
+		set_text(LANG, 'settings:3', '#lang <language (en, es...)>: changes the language of the bot.')
+		set_text(LANG, 'settings:4', '#photos on/off: when disabled, all photos will be cleared.')
+		set_text(LANG, 'settings:5', '#videos on/off: when disabled, all videos will be cleared.')
+		set_text(LANG, 'settings:6', '#stickers on/off: when disabled, all stickers will be cleared.')
+		set_text(LANG, 'settings:7', '#gifs on/off: when disabled, all gifs will be cleared.')
+	   	set_text(LANG, 'settings:8', '#voice on/off: when disabled, all voicess will be cleared.')
+	    set_text(LANG, 'settings:9', '#audios on/off: when disabled, all audios will be cleared.')
+		set_text(LANG, 'settings:10', '#documents on/off: when disabled, all documents will be cleared.')
+		set_text(LANG, 'settings:11', '#location on/off: when disabled, all locations will be cleared.')
+		set_text(LANG, 'settings:12', '#games on/off: when disabled, all games will be cleared.')
+	    set_text(LANG, 'settings:13', '#spam on/off: when disabled, all spam messages will be cleared.')
+		set_text(LANG, 'settings:14', '#forward on/off: when disabled, all forwarded messages will be cleared.')
+		set_text(LANG, 'settings:15', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
+	    set_text(LANG, 'settings:16', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
+	    set_text(LANG, 'settings:17', '#links on/off: when disabled, all links will be cleared.')
+	    set_text(LANG, 'settings:18', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
+		set_text(LANG, 'settings:19', '#english on/off: when disabled, all messages with english letters will be cleared.')
+	    set_text(LANG, 'settings:20', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
+	    -- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
 
 		if matches[1] == 'install' then
 			return '`>` *English* was successfully installed on your bot.'
