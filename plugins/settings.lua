@@ -45,7 +45,21 @@ local function pre_process(msg)
 	if permissions(msg.from.id, msg.to.id, "settings") then
 		return msg
 	end
-	if msg.photo then
+	if msg.text then
+    	if redis:get("settings:spam:" .. msg.to.id) then
+	    	local list = require("data/spam_data")
+	    	local blacklist = redis:get("settings:setspam:" .. msg.to.id) or "default"
+		    for number, pattern in pairs(list.blacklist[blacklist]) do
+		        local matches = match_pattern(pattern, msg.text)
+		        if matches then
+		        	reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
+		            delete_msg(msg.to.id, msg.id)
+		            msg.text = ""
+		            return msg
+		        end
+		    end
+		end
+	elseif msg.photo then
         if redis:get("settings:photos:" .. msg.to.id) then
         	delete_msg(msg.to.id, msg.id)
         end
@@ -81,20 +95,6 @@ local function pre_process(msg)
         if redis:get("settings:forward:" .. msg.to.id) then
         	delete_msg(msg.to.id, msg.forward.msg_id)
         end
-    elseif msg.text then
-    	if redis:get("settings:spam:" .. msg.to.id) then
-	    	local list = require("data/spam_data")
-	    	local blacklist = redis:get("settings:setspam:" .. msg.to.id) or "default"
-		    for number, pattern in pairs(list.blacklist[blacklist]) do
-		        local matches = match_pattern(pattern, msg.text)
-		        if matches then
-		        	reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
-		            delete_msg(msg.to.id, msg.id)
-		            msg.text = ""
-		            return msg
-		        end
-		    end
-		end
     end
     if redis:get("settings:flood:" .. msg.to.id) then
 	    local maxFlood = tonumber(redis:get("settings:maxFlood:" .. msg.to.id)) or 5

@@ -53,6 +53,9 @@ function oldtg(data)
     if data.message_.content_.ID == "MessageText" then
         msg.text = data.message_.content_.text_
     end
+    if data.message_.content_.caption_ then
+        msg.text = data.message_.content_.caption_
+    end
     msg.date = data.message_.date_
     msg.id = data.message_.id_
     msg.unread = false
