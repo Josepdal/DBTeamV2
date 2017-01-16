@@ -85,8 +85,8 @@ function configure() {
     tar zxpf luarocks-2.2.2.tar.gz
     cd luarocks-2.2.2
     ./configure --prefix=$dir/.luarocks --sysconfdir=$dir/.luarocks/luarocks --force-config; make bootstrap; cd ..; rm -rf luarocks*
-    download_libs_lua
     if [[ ${1} != "--no-download" ]]; then
+		download_libs_lua
         printf "Downloading telegram-cli v${tgcli_version}... [0%%]"
         wget https://valtman.name/files/telegram-cli-${tgcli_version} &>/dev/null
         printf "\r                                                    "
