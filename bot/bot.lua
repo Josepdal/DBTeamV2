@@ -51,7 +51,8 @@ function create_config()
             "settings",
             "id",
             "promote",
-            "moderation"
+            "moderation",
+            "commands"
         },
         enabled_lang = {
             "english_lang"
