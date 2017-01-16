@@ -1,3 +1,11 @@
+----------------------------------------------------
+--      ___  ___ _____            __   _____      --
+--     |   \| _ )_   _|__ __ _ _ _\ \ / /_  )     --
+--     | |) | _ \ | |/ -_) _` | '  \ V / / /      --
+--     |___/|___/ |_|\___\__,_|_|_|_\_/ /___|     --
+--                                                --
+----------------------------------------------------
+
 package.path = package.path ..';.luarocks/share/lua/5.2/?.lua' .. ';./bot/?.lua'
 package.cpath = package.cpath .. ';.luarocks/lib/lua/5.2/?.so'
 
@@ -100,7 +108,6 @@ function bot_init(msg)
     if _config.our_id == msg.from.id then
         msg.from.id = 0
     end
-
     if msg_valid(msg) then
         msg = pre_process_msg(msg)
         if msg then
@@ -108,6 +115,7 @@ function bot_init(msg)
             mark_as_read(msg.to.id, {[0] = msg.id})
         end
     end
+
 end
 
 function user_reply_callback(msg, message)
