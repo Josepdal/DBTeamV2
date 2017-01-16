@@ -205,25 +205,20 @@ local function run(msg, matches)
         set_text(LANG, 'welcome:3', '#welcome on/off - enable/disable welcome in this chat')
        
 		-- giverank.lua --
-		set_text(LANG, 'giverank:0', 6)
-		set_text(LANG, 'giverank:1', '#admin (reply): add admin by reply.')
-		set_text(LANG, 'giverank:2', '#admin <user_id>/<user_name>: add admin by user ID/Username.')
-		set_text(LANG, 'giverank:3', '#mod (reply): add mod by reply.')
-		set_text(LANG, 'giverank:4', '#mod <user_id>/<user_name>: add mod by user ID/Username.')
-		set_text(LANG, 'giverank:5', '#user (reply): remove admin by reply.')
-		set_text(LANG, 'giverank:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')		
+		set_text(LANG, 'promote:0', 6)
+		set_text(LANG, 'promote:1', '#admin (reply): add admin by reply.')
+		set_text(LANG, 'promote:2', '#admin <user_id>/<user_name>: add admin by user ID/Username.')
+		set_text(LANG, 'promote:3', '#mod (reply): add mod by reply.')
+		set_text(LANG, 'promote:4', '#mod <user_id>/<user_name>: add mod by user ID/Username.')
+		set_text(LANG, 'promote:5', '#user (reply): remove admin by reply.')
+		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')		
 
 		-- id.lua --
-		set_text(LANG, 'id:0', 5)
-		set_text(LANG, 'id:1', '#id: Return your ID and the chat id if you are in one.')
-		set_text(LANG, 'id:2', '#ids chat: Return the IDs of the current chat members.')
-		set_text(LANG, 'id:3', '#id <user_name>: Return the member username ID from the current chat.')
-		set_text(LANG, 'id:4', '#whois <user_id>/<user_name>: Return username.')
-		set_text(LANG, 'id:5', '#whois (reply): Return user id.')
+		set_text(LANG, 'id:0', 1)
+		set_text(LANG, 'id:1', '#id (or reply): Return your ID and the chat id if you are in one.')
 
 		-- moderation.lua --
-		set_text(LANG, 'moderation:0', 7)
-		
+		set_text(LANG, 'moderation:0', 7)		
 		set_text(LANG, 'moderation:1', '#kick <reply>/<id>/<username>: the user will be kicked in the current chat.')
 		set_text(LANG, 'moderation:2', '#ban <reply>/<id>/<username>: the user will be banned in the current chat and it wont be able to return.')
 		set_text(LANG, 'moderation:3', '#unban <reply>/<id>/<username>: the user will be unbanned in the current chat.')
