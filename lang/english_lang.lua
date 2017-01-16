@@ -29,15 +29,9 @@ local function run(msg, matches)
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'Welcome enabled.')
 		set_text(LANG, 'welon', 'Welcome disabled.')
-		set_text(LANG, 'byeon', 'Goodbye enabled.')
-		set_text(LANG, 'byeoff', 'Goodbye disabled.')
 		set_text(LANG, 'welcome1', 'Hi ')
 		set_text(LANG, 'welcome2', 'Welcome to ')
 		set_text(LANG, 'weldefault', 'The welcome is the default.')
-		set_text(LANG, 'byedefault', 'The goodbye is the default.')
-		set_text(LANG, 'newbye', 'Goodbye saved! is')
-		set_text(LANG, 'bye1', 'Bye ')
-		set_text(LANG, 'bye2', ' thank you for your visit.')
 		set_text(LANG, 'welnew', 'Welcome saved! is')
 		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')
 
@@ -97,7 +91,9 @@ local function run(msg, matches)
 		set_text(LANG, 'spamT', '`>` *Spam* is now *allowed* in this chat.')
 		set_text(LANG, 'noSpamT', '`>` *Spam* is *not allowed* in this chat.')
 		set_text(LANG, 'setSpam', '`>` Changed blacklist to ')
-	
+		
+		set_text(LANG, 'forwardT', '`>` *Forward messages* is now *allowed* in this chat.')
+		set_text(LANG, 'noForwardT', '`>` *Forward messages* is not *allowed* in this chat.')
 	
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
@@ -237,7 +233,7 @@ local function run(msg, matches)
 		set_text(LANG, 'moderation:7', '#unmute <reply>/<id>/<username>: the user will be unsilenced in the current chat.')
 		
 		-- settings.lua --
-	    set_text(LANG, 'settings:0', 21)
+	    set_text(LANG, 'settings:0', 22)
 		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
 		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
 		set_text(LANG, 'settings:4', '#lang <language (en, es...)>: changes the language of the bot.')
@@ -254,13 +250,14 @@ local function run(msg, matches)
 		set_text(LANG, 'settings:14', '#games on/off: when disabled, all games will be cleared.')
 		
 	    set_text(LANG, 'settings:15', '#spam on/off: when disabled, all spam messages will be cleared.')
-		set_text(LANG, 'settings:16', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
-	    set_text(LANG, 'settings:17', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
+		set_text(LANG, 'settings:16', '#forward on/off: when disabled, all forwarded messages will be cleared.')
+		set_text(LANG, 'settings:17', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
+	    set_text(LANG, 'settings:18', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
 		
-	    set_text(LANG, 'settings:18', '#links on/off: when disabled, all links will be cleared.')
-	    set_text(LANG, 'settings:19', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
-		set_text(LANG, 'settings:20', '#english on/off: when disabled, all messages with english letters will be cleared.')
-	    set_text(LANG, 'settings:21', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
+	    set_text(LANG, 'settings:19', '#links on/off: when disabled, all links will be cleared.')
+	    set_text(LANG, 'settings:20', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
+		set_text(LANG, 'settings:21', '#english on/off: when disabled, all messages with english letters will be cleared.')
+	    set_text(LANG, 'settings:22', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
 
 		if matches[1] == 'install' then
 			return '`>` *English* was successfully installed on your bot.'
