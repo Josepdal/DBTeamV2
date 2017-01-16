@@ -66,7 +66,6 @@ function do_file() {
         lines+=${config_lines[$i]}"\n"
     done
 	if [[ ! -d ~/.telegram-cli ]]; then mkdir ~/.telegram-cli; fi
-	if [ ! -f "~/.telegram-cli/${1}" ]; then touch ~/.telegram-cli/${1}; fi
     echo -e $lines > ~/.telegram-cli/${1}
 }
 
