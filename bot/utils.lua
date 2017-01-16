@@ -315,3 +315,21 @@ function no_markdown(text, replace)
     end
     return false
 end
+
+function send_large_msg(chat_id, text)
+    local text_len = string.len(text)
+    local text_max = 4096
+    local times = text_len/text_max
+    local text = text
+    for i = 1, times, 1 do
+        local text = string.sub(text, 1, 4096)
+        local rest = string.sub(text, 4096, text_len)
+        local destination = chat_id        
+        local num_msg = math.ceil(text_len / text_max)
+        if num_msg <= 1 then
+            send_msg(destination, text, 'md')
+        else
+        text = rest 
+    end
+  end
+end
