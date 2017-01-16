@@ -124,7 +124,7 @@ local function run(msg, matches)
 		set_text(LANG, 'tFlood', 'Flood time')
 		set_text(LANG, 'setphoto', 'Set photo')
 
-		--DBTEAMV2
+		set_text(LANG, 'welcome', 'Welcome')
 		set_text(LANG, 'videos', 'Videos')
 		set_text(LANG, 'invite', 'Invite')
 		set_text(LANG, 'games', 'Games')
