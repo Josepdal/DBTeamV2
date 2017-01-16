@@ -11,7 +11,8 @@ local mods = {
 	"set_lang",
 	"settings",
 	"muteBan",
-	"moderation"
+	"moderation",
+	"mod_commands"
 }
 
 local function get_tag(plugin_tag)
