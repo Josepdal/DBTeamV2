@@ -36,7 +36,13 @@ local function pre_process(msg)
 end
 
 local function run(msg, matches)
-	if matches[1] == "ban" then
+	if matches[1] == "del" then
+		if not matches[2] and msg.reply_id then
+			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
+				delete_msg(msg.to.id, msg.reply_id)
+			end
+		end
+	elseif matches[1] == "ban" then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
@@ -141,6 +147,7 @@ end
 
 return {
   	patterns = {
+		"^[!/#](del)$",
 	    "^[!/#](ban) (.*)$",
 	    "^[!/#](ban)$",
 	    "^[!/#](gban) (.*)$",
