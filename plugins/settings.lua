@@ -421,10 +421,10 @@ local function run(msg, matches)
 		elseif matches[1] == "welcome" then
 			if matches[2] == 'off' then
 				redis:set("settings:welcome:" .. msg.to.id, true)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'noWelcomeT'), 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'weloff'), 'md')
 			elseif matches[2] == 'on' then
 				redis:del("settings:welcome:" .. msg.to.id)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'welcomeT'), 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'welon'), 'md')
 			end
 		elseif matches[1] == "setwelcome" then
 			if tonumber(matches[2]) == 0 then

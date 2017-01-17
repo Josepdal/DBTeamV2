@@ -27,8 +27,8 @@ local function run(msg, matches)
 		set_text(LANG, 'require_mod', 'This plugin requires mod privileges or higher.')
 		
 		-- welcome.lua
-		set_text(LANG, 'weloff', 'Welcome enabled.')
-		set_text(LANG, 'welon', 'Welcome disabled.')
+		set_text(LANG, 'weloff', 'Welcome disabled.')
+		set_text(LANG, 'welon', 'Welcome enabled.')
 		set_text(LANG, 'welcome1', 'Hi ')
 		set_text(LANG, 'welcome2', 'Welcome to ')
 		set_text(LANG, 'weldefault', 'The welcome is the default.')
