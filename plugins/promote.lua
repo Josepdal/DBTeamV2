@@ -22,7 +22,7 @@ local function run(msg, matches)
 				elseif is_admin(msg.to.id) then
 					redis:del('mod:' .. msg.to.id .. ':' .. msg.replied.id)
 				end
-				send_msg(msg.to.id, lang_text(msg.to.id, '>') .. " @" .. msg.replied.username .. lang_text(msg.to.id, 'nowUser'), "md")
+				send_msg(msg.to.id, "'>' @" .. msg.replied.username .. lang_text(msg.to.id, 'nowUser'), "md")
 			end
 		end
 	end

@@ -150,7 +150,7 @@ local function run(msg, matches)
 
 		set_text(LANG, 'newAdmin', '`>` *New admin*')
 		set_text(LANG, 'newMod', '`>` *New mod*')
-		set_text(LANG, 'nowUser', '`>` *is now an user.*')
+		set_text(LANG, 'nowUser', ' *is now an user.*')
 
 		set_text(LANG, 'modList', '`>` *Mods list*')
 		set_text(LANG, 'adminList', '`>` *Admins list')
