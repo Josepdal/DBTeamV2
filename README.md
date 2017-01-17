@@ -55,4 +55,4 @@ vysheng and his new tg-cli
 [![https://telegram.me/telegram-cli](https://img.shields.io/badge/%F0%9F%92%AC_WebPage-valtman.name-red.svg)](https://valtman.name/telegram-cli)
 [![https://github.com/yagop/vysheng](https://img.shields.io/badge/%F0%9F%92%AC_GitHub-vysheng-green.svg)](https://github.com/vysheng)
 
-Thanks to [@Reload_Life](https://t.me/Reload_Life) for settings design.
+Thanks to [@Reload_Life](https://t.me/Reload_Life) for [settings design](https://github.com/Reload-Life).
