@@ -39,6 +39,9 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'isFlooding', '*is flooding.*')
 		set_text(LANG, 'isSpamming', '*is spamming.*')
+		
+		set_text(LANG, 'welcomeT', '> *Welcome messages* are now *enabled* in this chat.')
+		set_text(LANG, 'noWelcomeT', '> *Welcome messages* are *disabled* in this chat.')
 
 		set_text(LANG, 'noStickersT', '`>` *Stickers* are *not allowed* in this chat.')
 		set_text(LANG, 'stickersT', '`>` *Stickers* are now *allowed* in this chat.')

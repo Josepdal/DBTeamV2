@@ -32,6 +32,10 @@ local function run(msg, matches)
 		-- settings.lua --
 		set_text(LANG, 'user', 'کاربر')
 		set_text(LANG, 'isFlooding', '*در حال فرستادن پيام هاي مکرر و سريع است*')
+		
+		set_text(LANG, 'welcomeT', '> پیام خوش آمد در این گروه فعال شد')
+		set_text(LANG, 'noWelcomeT', '> پیام خوش آمد در این گروه غیر فعال شد')
+		
 		set_text(LANG, 'isSpamming', '*در حال فرستادن هرزنامه است.*')
 		set_text(LANG, 'noStickersT', '`>` `استيکر مجاز نيست در اين گروه`.')
 		set_text(LANG, 'stickersT', '`>` استيکر فرستادن در حال حاظر مجاز است.')
