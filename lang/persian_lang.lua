@@ -24,8 +24,6 @@ local function run(msg, matches)
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'خوش آمد گويي روشن')
 		set_text(LANG, 'welon', 'خوش آمد گويي خاموش.')
-		set_text(LANG, 'welcome1', 'سلام ')
-		set_text(LANG, 'welcome2', 'خوش آمديد به')
 		set_text(LANG, 'weldefault', 'خوش امد گويي بصورت پيشفرض')
 		set_text(LANG, 'welnew', 'پيام خوش آمد گويي تعيين شد به')
 		set_text(LANG, 'defaultWelcome', 'خوش آمديد $users به گروه')

@@ -29,8 +29,6 @@ local function run(msg, matches)
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'Welcome enabled.')
 		set_text(LANG, 'welon', 'Welcome disabled.')
-		set_text(LANG, 'welcome1', 'Hi ')
-		set_text(LANG, 'welcome2', 'Welcome to ')
 		set_text(LANG, 'weldefault', 'The welcome is the default.')
 		set_text(LANG, 'welnew', 'Welcome saved! is')
 		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')

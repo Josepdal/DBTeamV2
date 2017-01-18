@@ -34,16 +34,17 @@ local function run(msg, matches)
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'Bienvenida activada.')
 		set_text(LANG, 'welon', 'Bienvenida desactivada.')
-		set_text(LANG, 'welcome1', '¡Hola ')
-		set_text(LANG, 'welcome2', '¡Bienvenido a ')
 		set_text(LANG, 'weldefault', 'La bienvenida activada es la que está por defecto.')
 		set_text(LANG, 'welnew', 'La nueva bienvenida asignada es')
-		set_text(LANG, 'defaultWelcome', 'Bienvenido $ usuarios al chat!')
+		set_text(LANG, 'defaultWelcome', 'Bienvenido/s $users al chat!')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'Usuario')
 		set_text(LANG, 'isFlooding', '*está haciendo flood.*')
 		set_text(LANG, 'isSpamming', '*está haciendo spam.*')
+
+		set_text(LANG, 'welcomeT', '> Los *mensajes de bienvenida* están ahora *activados* en este chat.')
+		set_text(LANG, 'noWelcomeT', '> Los *mensajes de bienvenida* están *desactivados* en este chat.')
 
 		set_text(LANG, 'noStickersT', '`>` *Stickers* no permitidos en este chat.')
 		set_text(LANG, 'stickersT', '`>` *Stickers* permitidos en este chat.')
