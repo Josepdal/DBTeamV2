@@ -50,7 +50,8 @@ function character() {
 
 function update() {
     git checkout .
-    git pull
+	git pull
+	chmod +x launch.sh
 }
 
 function configure() {
