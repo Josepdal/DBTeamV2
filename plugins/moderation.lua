@@ -59,6 +59,7 @@ local function run(msg, matches)
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
 	    	redisban_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 	    end
 	elseif matches[1] == "unban" then
 		if not matches[2] and msg.reply_id ~= 0 then
@@ -73,6 +74,7 @@ local function run(msg, matches)
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redisunban_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 	    end
 	elseif matches[1] == "kick" then
 		if not matches[2] and msg.reply_id ~= 0 then
@@ -87,6 +89,7 @@ local function run(msg, matches)
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
+			send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 	    end
 	elseif matches[1] == "gban" then
 		if not matches[2] and msg.reply_id then
@@ -104,6 +107,7 @@ local function run(msg, matches)
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
 	    	redisgban_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'gbanUser'), "md")
 	    end
 	elseif matches[1] == "ungban" then
 		if not matches[2] and msg.reply_id then
@@ -121,6 +125,7 @@ local function run(msg, matches)
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2])
 	    	redisgban_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'ungbanUser'), "md")
 	    end
 	elseif matches[1] == "mute" then
 		if not matches[2] and msg.reply_id then
@@ -135,6 +140,7 @@ local function run(msg, matches)
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redismute_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'muteUser'), "md")
 	    end
 	elseif matches[1] == "unmute" then
 		if not matches[2] and msg.reply_id then
@@ -149,6 +155,7 @@ local function run(msg, matches)
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redisunmute_resolve(msg.to.id, matches[2])
+			send_msg(msg.to.id, lang_text(msg.to.id, 'unmuteUser'), "md")
 	    end
 	end
 end
