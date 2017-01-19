@@ -1,23 +1,6 @@
 #!/bin/bash
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
-LOGFILE_MAXSIZE=10000 # Size max of bot/log.txt in KB
-CACHE_FOLDER_MAXSIZE=100000 # Size max of bot/data/* in KB
-dbteam_dir="DBTeamV2"
-config_lines=(
-'default_profile = "dbteam";'
-''
-'dbteam = {'
-'	config_directory = "../'${dbteam_dir}'/bot";'
-'	test = false;'
-'	msg_num = true;'
-'	lua_script = "bot.lua";'
-'	log_level = 2;'
-'	logname = "log.txt";'
-'	verbosity = 100;'
-'	wait_dialog_list = true;'
-'}'
-)
 
 lualibs=(
 'luasec'
@@ -60,15 +43,6 @@ function install() {
     fi
 }
 
-function do_file() {
-    local lines
-    for i in ${!config_lines[@]}; do
-        lines+=${config_lines[$i]}"\n"
-    done
-	if [[ ! -d ~/.telegram-cli ]]; then mkdir ~/.telegram-cli; fi
-    echo -e $lines > ~/.telegram-cli/${1}
-}
-
 function character() {
     string=`echo "$2"`
     echo ${string:${letter}:1}
@@ -98,7 +72,6 @@ function configure() {
         sleep 0.5
     done
     printf "\nDone\n"
-    do_file config
 }
 
 function start_bot() {
@@ -109,7 +82,7 @@ function start_bot() {
         ./bin/telegram-cli -${1:1}
         exit
     else
-        ./bin/telegram-cli
+        ./bin/telegram-cli -s ./bot/bot.lua
     fi
 }
 
@@ -140,39 +113,6 @@ function show_logo() {
     echo -e "\t|____/|____/ |_|\____/\_____|_/\/\_|  v2"
     echo -e "\n\e[36m"
 }
-
-function delete_log() {
-    LOG_FILE="bot/log.txt"
-    if [ -f "$LOG_FILE" ]; then
-        LOG_FILE_SIZE=`echo $(du -s $LOG_FILE)`
-        VV=`echo ${LOG_FILE_SIZE//[a-Z\ \/.]/}`
-        if [[ `echo $LOG_FILE_SIZE | grep -E "^[0-9]+"` ]]; then
-            if [[ $VV -gt $LOGFILE_MAXSIZE ]]; then
-                rm -rf $LOG_FILE
-                echo -e "\033[1;36mLogfile (`pwd`/bot/log.txt) is greater than ${LOGFILE_MAXSIZE}K (${VV}K), deleted.\033[0m"
-            fi
-        fi
-    fi
-}
-
-function delete_cache() {
-    CACHE_FOLDER="bot/data"
-    if [ -d "${CACHE_FOLDER}" ]; then
-        CACHE_SIZE=`echo $(du -s $CACHE_FOLDER)`
-        VV=`echo ${CACHE_SIZE//[a-Z\ \/.]/}`
-        if [[ `echo $CACHE_SIZE | grep -E "^[0-9]+"` ]]; then
-            if [[ $VV -gt $CACHE_FOLDER_MAXSIZE ]]; then
-                list_dir=( `ls -1 -d bot/data/*/` )
-                for ((i=0; i<${#list_dir[@]}; i++)); do
-                    rm -rf ${list_dir[$i]}
-                done
-                echo -e "\033[1;36mCache folder (`pwd`/bot/data) is greater than ${CACHE_FOLDER_MAXSIZE}K (${VV}K), deleted.\033[0m"
-            fi
-        fi
-    fi
-}
-delete_log
-delete_cache
 
 case $1 in
     install)
