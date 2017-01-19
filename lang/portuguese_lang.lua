@@ -150,17 +150,17 @@ local function run(msg, matches)
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
 
 		-- promote.lua --
-		set_text(LANG, 'alreadyAdmin', 'This user is already *admin.*')
-		set_text(LANG, 'alreadyMod', 'This user is already *mod.*')
+		set_text(LANG, 'alreadyAdmin', 'Este usuário já é um *admin.*')
+		set_text(LANG, 'alreadyMod', 'Este usuário já é um *mod.*')
 
-		set_text(LANG, 'newAdmin', '`>` *New admin*')
-		set_text(LANG, 'newMod', '`>` *New mod*')
-		set_text(LANG, 'nowUser', ' *is now an user.*')
+		set_text(LANG, 'newAdmin', '`>` *Novo admin*')
+		set_text(LANG, 'newMod', '`>` *Novo mod*')
+		set_text(LANG, 'nowUser', ' *agora é um usuário.*')
 
-		set_text(LANG, 'modList', '`>` *Mods list*')
-		set_text(LANG, 'adminList', '`>` *Admins list')
-		set_text(LANG, 'modEmpty', '*Mod list is empty* in this chat.')
-		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
+		set_text(LANG, 'modList', '`>` *Lista de Moderadores*')
+		set_text(LANG, 'adminList', '`>` *Lista de Administradores')
+		set_text(LANG, 'modEmpty', '*Lista de moderadores está vazia* neste grupo.')
+		set_text(LANG, 'adminEmpty', '*Lista de administradores vazia.*')
 
 		-- id.lua --
 		set_text(LANG, 'user', 'Usuário')
