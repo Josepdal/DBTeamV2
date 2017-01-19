@@ -40,6 +40,7 @@ local function run(msg, matches)
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				delete_msg(msg.to.id, msg.reply_id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 			end
 		end
 	elseif matches[1] == "ban" then
@@ -47,101 +48,108 @@ local function run(msg, matches)
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
 				redis:set("ban:" .. msg.to.id .. ":" .. msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
 		    	redis:set("ban:" .. msg.to.id .. ":" .. matches[2], true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
 	    	redisban_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 	elseif matches[1] == "unban" then
 		if not matches[2] and msg.reply_id ~= 0 then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				redis:del("ban:" .. msg.to.id .. ":" .. msg.replied.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	redis:del("ban:" .. msg.to.id .. ":" .. matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redisunban_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 	elseif matches[1] == "kick" then
 		if not matches[2] and msg.reply_id ~= 0 then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 	elseif matches[1] == "gban" then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
 				redis:set("gban:" .. msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'gbanUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
 		    	redis:set("gban:" .. matches[2], true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'gbanUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
 	    	redisgban_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'gbanUser'), "md")
 	elseif matches[1] == "ungban" then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
 				redis:del("gban:" .. msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'ungbanUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
 		    	redis:set("gban:" .. matches[2], true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'ungbanUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2])
 	    	redisgban_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'ungbanUser'), "md")
 	elseif matches[1] == "mute" then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
-				redis:set("muted:" .. msg.to.id .. ":" .. msg.replied.id, true)	
+				redis:set("muted:" .. msg.to.id .. ":" .. msg.replied.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'muteUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	redis:set("muted:" .. msg.to.id .. ":" .. matches[2], true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'muteUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redismute_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'muteUser'), "md")
 	elseif matches[1] == "unmute" then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				redis:del("muted:" .. msg.to.id .. ":" .. msg.replied.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'unmuteUser'), "md")
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	redis:del("muted:" .. msg.to.id .. ":" .. matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'unmuteUser'), "md")
 		    end
 	    elseif not is_number(matches[2]) then
 	    	redisunmute_resolve(msg.to.id, matches[2])
 	    end
-	    send_msg(msg.to.id, lang_text(msg.to.id, 'unmuteUser'), "md")
 	end
 end
 
