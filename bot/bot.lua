@@ -145,18 +145,19 @@ end
 
 -- This function is called when tg receive a msg
 function tdcli_update_callback(data)
-    local msgb = data.message_
-    local d = data.disable_notification_
-    local chat = chats[msgb.chat_id_]
-
-    if ((not d) and chat) then
-        if msgb.content_.ID == "MessageText" then
-            do_notify(chat.title_, msgb.content_.text_)
-        else
-            do_notify(chat.title_, msgb.content_.ID)
-        end
-    end
     if (data.ID == "UpdateNewMessage") then
+        local msgb = data.message_
+        local d = data.disable_notification_
+        local chat = chats[msgb.chat_id_]
+
+        if ((not d) and chat) then
+            if msgb.content_.ID == "MessageText" then
+                do_notify(chat.title_, msgb.content_.text_)
+            else
+                do_notify(chat.title_, msgb.content_.ID)
+            end
+        end
+    
         msg = oldtg(data)
         tdcli_function ({
             ID = "GetUser",
