@@ -26,9 +26,9 @@ local function run(msg, matches)
 		-------------
 
 		-- global plugins --
-		set_text(LANG, 'require_sudo', 'This plugin requires sudo privileges.')
-		set_text(LANG, 'require_admin', 'This plugin requires admin privileges or higher.')
-		set_text(LANG, 'require_mod', 'This plugin requires mod privileges or higher.')
+		set_text(LANG, 'require_sudo', 'Este plugin requer privilégios de sudo.')
+		set_text(LANG, 'require_admin', 'Este plugin requer privilégios de administrador ou superior.')
+		set_text(LANG, 'require_mod', 'Este plugin requer privilégios de moderador ou superior.')
 
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'Welcome enabled.')
