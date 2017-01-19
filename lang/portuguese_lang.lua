@@ -31,11 +31,11 @@ local function run(msg, matches)
 		set_text(LANG, 'require_mod', 'Este plugin requer privilégios de moderador ou superior.')
 
 		-- welcome.lua
-		set_text(LANG, 'weloff', 'Welcome enabled.')
-		set_text(LANG, 'welon', 'Welcome disabled.')
-		set_text(LANG, 'weldefault', 'The welcome is the default.')
-		set_text(LANG, 'welnew', 'Welcome saved! is')
-		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')
+		set_text(LANG, 'weloff', 'Bem-vindo ativado.')
+		set_text(LANG, 'welon', 'Bem-vindo desativado.')
+		set_text(LANG, 'weldefault', 'O bem-vindo é o padrão.')
+		set_text(LANG, 'welnew', 'Bem-vindo salvo! é')
+		set_text(LANG, 'defaultWelcome', 'Bem-vindo $users ao grupo!')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
