@@ -163,9 +163,9 @@ local function run(msg, matches)
 		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
 
 		-- id.lua --
-		set_text(LANG, 'user', 'User')
-		set_text(LANG, 'chatName', 'Chat Name')
-		set_text(LANG, 'chat', 'Chat')
+		set_text(LANG, 'user', 'Usuário')
+		set_text(LANG, 'chatName', 'Nome do Grupo')
+		set_text(LANG, 'chat', 'Grupo')
 
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` The user has been *kicked out.*')
