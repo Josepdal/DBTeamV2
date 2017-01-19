@@ -257,19 +257,19 @@ local function run(msg, matches)
 	    -- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
 
 		if matches[1] == 'install' then
-			return '`>` *English* was successfully installed on your bot.'
+			return '`>` *Português* foi instalado com êxito no seu bot.'
 		elseif matches[1] == 'update' then
-			return '`>` *English* was successfully updated on your bot.'
+			return '`>` *Português* foi atualizado com sucesso em seu bot.'
 		end
 	else
-		return "`>` This plugin *requires sudo* privileged user."
+		return "`>` Este plugin *requer* o uso de privilégios *sudo*."
 	end
 end
 
 return {
 	patterns = {
-		'[!/#](install) (english_lang)$',
-		'[!/#](update) (english_lang)$'
+		'[!/#](install) (portuguese_lang)$',
+		'[!/#](update) (portuguese_lang)$'
 	},
 	run = run
 }
