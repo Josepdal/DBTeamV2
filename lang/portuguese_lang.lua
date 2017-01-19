@@ -180,8 +180,8 @@ local function run(msg, matches)
 
 
 		-- commands.lua --
-		set_text(LANG, 'commandsT', 'Commands')
-		set_text(LANG, 'errorNoPlug', 'This plugin does not exists or has not usages.')
+		set_text(LANG, 'commandsT', 'Comando')
+		set_text(LANG, 'errorNoPlug', 'Este plugin não existe ou não tem comandos.')
 
 
 		------------
