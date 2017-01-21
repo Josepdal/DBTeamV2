@@ -49,9 +49,9 @@ function character() {
 }
 
 function update() {
-    git checkout .
+    git checkout launch.sh plugins/ lang/ bot/ libs/
 	git pull
-	chmod +x launch.sh
+	echo chmod +x launch.sh | /bin/bash
 }
 
 function configure() {
@@ -90,7 +90,7 @@ function start_bot() {
 function show_logo_slowly() {
     declare -A logo
     seconds="0.008"
-    logo[1]="____  ____ ______"
+    logo[1]=" ____  ____ _____"
     logo[2]="|    \|  _ )_   _|___ ____   __  __"
     logo[3]="| |_  )  _ \ | |/ .__|  _ \_|  \/  |"
     logo[4]="|____/|____/ |_|\____/\_____|_/\/\_|  v2"
@@ -108,7 +108,7 @@ function show_logo_slowly() {
 function show_logo() {
     #Adding some color. By @iicc1 :D
     echo -e "\033[38;5;208m"
-    echo -e "\t____  ____ ______"
+    echo -e "\t ____  ____ _____"
     echo -e "\t|    \|  _ )_   _|___ ____   __  __"
     echo -e "\t| |_  )  _ \ | |/ .__|  _ \_|  \/  |"
     echo -e "\t|____/|____/ |_|\____/\_____|_/\/\_|  v2"
