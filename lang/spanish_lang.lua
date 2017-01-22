@@ -147,6 +147,9 @@ local function run(msg, matches)
 
 		set_text(LANG, 'langUpdated', 'Su idioma ha sido actualizado a: ')
 
+		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
+		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'cuentas globalmente baneadas.')
 

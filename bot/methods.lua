@@ -222,5 +222,12 @@ function send_document(chat_id, document)
             document_ = getInputFile(document),
             caption_ = nil
         },
-    }, dl_cb, cmd)
+    }, dl_cb, cb_extra)
+end
+
+function export_link(chat_id, cb_function, cb_extra)
+    tdcli_function ({
+        ID = "ExportChatInviteLink",
+        chat_id_ = chat_id
+    }, cb_function, cb_extra)
 end

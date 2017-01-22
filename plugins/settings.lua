@@ -23,6 +23,17 @@ local function get_added_users(msg)
 	return users
 end
 
+local function get_exported_link(arg, data)
+	vardump(data)
+	vardump(arg)
+	if data.message_ then
+		send_msg(arg, lang_text(arg, 'linkError'), 'md')
+	else
+		redis:set("settings:link:" .. msg.to.id, data.invite_link_)
+		send_msg(arg, lang_text(arg, 'linkSet'), 'md')
+	end
+end
+
 local function pre_process(msg)
 	--send_msg(msg.to.id, return_media(msg), 'md')
 	if msg.added then
@@ -450,6 +461,17 @@ local function run(msg, matches)
 				redis:set("settings:floodTime:" .. msg.to.id, tonumber(matches[2]))
 				send_msg(msg.to.id, lang_text(msg.to.id, 'floodMax') .. ": `" .. matches[2] .. "`", 'md')
 			end
+		elseif matches[1]:lower() == "setlink" and matches[2] then
+			if permissions(msg.from.id, msg.to.id, "settings") then
+				redis:set("settings:link:" .. msg.to.id, matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'linkSet'), 'md')
+			end
+		elseif matches[1]:lower() == "newlink" and not matches[2] then
+			if permissions(msg.from.id, msg.to.id, "settings") then
+				export_link(msg.to.id, get_exported_link, msg.to.id)
+			end
+		elseif matches[1]:lower() == "link" and not matches[2] then
+			send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
 		end
 	end
 end
@@ -480,7 +502,10 @@ return {
 		'^[!/#](welcome) (.*)$',
 		'^[!/#](setwelcome) (.*)$',
 		'^[!/#](max) (.*)$',
-		'^[!/#](time) (.*)$'
+		'^[!/#](time) (.*)$',
+		'^[!/#]([Ss]et[Ll]ink) (.*)$',
+		'^[!/#]([Nn]ew[Ll]ink)$',
+		'^[!/#]([Ll]ink)$'
   	},
   	run = run,
   	pre_process = pre_process

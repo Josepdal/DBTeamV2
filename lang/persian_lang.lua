@@ -105,11 +105,16 @@ local function run(msg, matches)
 		set_text(LANG, 'icontitle', 'تغییر ایکون گروه')
 		set_text(LANG, 'english', 'متون انگليسي')
 		set_text(LANG, 'emojis', 'ايموجي')
+
 		--Made with @TgTextBot by @iicc1
 		set_text(LANG, 'groupSettings', 'تنظيمات گروه')
 		set_text(LANG, 'allowedMedia', 'رسانه هاي مجاز')
 		set_text(LANG, 'settingsText', 'متن ')
 		set_text(LANG, 'langUpdated', 'زبان شما تغيير يافت به : ')
+
+		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
+		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+		
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'کاربران بن گلوبال')
 		-- promote.lua --
