@@ -6,12 +6,17 @@ Installation
 
 Debian/Ubuntu and derivatives:
 ```bash
-# Tested on Ubuntu 16.04. (please use release "stable", isn't working on stretch/testing)
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove && sudo apt-get autoclean && sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 make libstdc++6 g++-4.9 unzip -y
+# Tested on Ubuntu 16.04 and Debian 8.7.1 stable. (please use release "stable", isn't working on stretch/testing)
+sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 make libstdc++6 g++-4.9 unzip -y
+
+# If you have errors (maybe you'll need this on Ubuntu)
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; sudo apt-get autoclean; sudo apt-get update
+sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 make libstdc++6 g++-4.9 unzip -y libreadline-gplv2-dev libreadline5-dev
 ```
 
 Arch:
 ```bash
+sudo pacman -S yaourt
 sudo yaourt -S git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0
 ```
 
@@ -25,7 +30,7 @@ After those dependencies, lets install the bot
  git clone https://github.com/Josepdal/DBTeamV2.git
  cd DBTeamV2
  chmod +x launch.sh
- ./launch.sh install
+ ./launch.sh install # you can use the option --no-download and only configure DBTeam
  ./launch.sh # Will ask you for a phone number & confirmation code.
 ```
 
