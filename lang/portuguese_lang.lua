@@ -148,6 +148,10 @@ local function run(msg, matches)
 
 		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
 		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+		
+		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
+		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
+		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
 
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
