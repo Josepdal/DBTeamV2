@@ -472,6 +472,31 @@ local function run(msg, matches)
 			end
 		elseif matches[1]:lower() == "link" and not matches[2] then
 			send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
+		elseif matches[1]:lower() == "rules" and not matches[2] then
+			if not redis:get("settings:norules:" .. msg.to.id) then
+				if redis:get("settings:rules:" .. msg.to.id) then
+					send_msg(msg.to.id, redis:get("settings:rules:" .. msg.to.id), 'md')
+				else
+					send_msg(msg.to.id, lang_text(msg.to.id, 'defaultRules'), 'md')
+				end
+			end
+		elseif matches[1]:lower() == "setrules" and matches[2] then
+			if permissions(msg.from.id, msg.to.id, "settings") then
+				redis:set("settings:rules:" .. msg.to.id, matches[2])
+				redis:del("settings:norules:" .. msg.to.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newRules'), 'md')
+			end
+		elseif matches[1]:lower() == "norules" and not matches[2] then
+			if permissions(msg.from.id, msg.to.id, "settings") then
+				redis:del("settings:rules:" .. msg.to.id, matches[2])
+				redis:set("settings:norules:" .. msg.to.id, true)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'noRules'), 'md')
+			end
+		elseif matches[1]:lower() == "remrules" and not matches[2] then
+			if permissions(msg.from.id, msg.to.id, "settings") then
+				redis:del("settings:rules:" .. msg.to.id, matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'rulesDefault'), 'md')
+			end
 		end
 	end
 end
@@ -505,7 +530,11 @@ return {
 		'^[!/#](time) (.*)$',
 		'^[!/#]([Ss]et[Ll]ink) (.*)$',
 		'^[!/#]([Nn]ew[Ll]ink)$',
-		'^[!/#]([Ll]ink)$'
+		'^[!/#]([Ll]ink)$',
+		'^[!/#]([Rr]ules)$',
+		'^[!/#]([Ss]et[Rr]ules) (.*)$',
+		'^[!/#]([Rr]em[Rr]ules)$',
+		'^[!/#]([Nn]o[Rr]ules)$'
   	},
   	run = run,
   	pre_process = pre_process
