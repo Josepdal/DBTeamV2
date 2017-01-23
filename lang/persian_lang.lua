@@ -118,6 +118,7 @@ local function run(msg, matches)
 		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
 		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
 		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
+		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
 		
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'کاربران بن گلوبال')
