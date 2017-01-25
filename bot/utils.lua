@@ -128,6 +128,7 @@ function oldtg(data)
         for i = 0, #new_members, 1 do
             k = i+1
             msg.added[k] = {}
+            msg.added[k].id = new_members[i].id_
             if new_members[i].username_ then
                 msg.added[k].username = new_members[i].username_
             else
@@ -159,6 +160,7 @@ function user_data(msg, data)
     if msg.action == "MessageChatJoinByLink" then
         msg.added = {}
         msg.added[1] = {}
+        msg.added[1].id = msg.from.id
         msg.added[1].username = msg.from.username
         msg.added[1].first_name = msg.from.fist_name
         msg.added[1].last_name = msg.from.last_name
@@ -258,21 +260,11 @@ function set_text(lang, keyword, text)
 end
 
 function is_mod(chat_id, user_id)
-    local hash = 'mod:'..chat_id..':'..user_id
-    if redis:get(hash) then
-        return true
-    else
-        return false
-    end
+    return redis:sismember('mods:'..chat_id, user_id)
 end
 
 function is_admin(user_id)
-    local hash = 'admin:' .. user_id
-    if redis:get(hash) then
-        return true
-    else
-        return false
-    end
+    return redis:sismember('admins', user_id)
 end
 
 function new_is_sudo(user_id)
@@ -343,4 +335,24 @@ function send_large_msg(chat_id, text)
         text = rest 
     end
   end
+end
+
+function scandir(directory)
+    local i, t, popen = 0, {}, io.popen
+    for filename in popen('ls -a "'..directory..'"'):lines() do
+        i = i + 1
+        t[i] = filename
+    end
+    return t
+end
+
+function plugins_names( )
+    local files = {}
+    for k, v in pairs(scandir("plugins")) do
+        -- Ends with .lua
+        if (v:match(".lua$")) then
+            table.insert(files, v)
+        end
+    end
+    return files
 end

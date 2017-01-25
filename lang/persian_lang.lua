@@ -120,6 +120,8 @@ local function run(msg, matches)
 		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
 		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
 		
+		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
+		
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'کاربران بن گلوبال')
 		-- promote.lua --
@@ -146,9 +148,22 @@ local function run(msg, matches)
 		set_text(LANG, 'muteChat', '`>` اين گروه در حال حاظر در حالت سکوت قرار دارد*')
 		set_text(LANG, 'unmuteUser', '`>` کاربر از ليست سکوت خارج شد و ميتواند صحبت کند.*')
 		set_text(LANG, 'unmuteChat', '`>` گروه از حالت سکوت خارج شد و همه کاربران ميتوانند چت کنند*')
+
+		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
+		
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'دستور ها')
 		set_text(LANG, 'errorNoPlug', 'اين پلاگين وجود ندارد.')
+
+		-- plugins.lua -- 
+
+		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
+		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
+		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
+
+		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
+		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
+
 		------------
 		-- Usages --
 		------------

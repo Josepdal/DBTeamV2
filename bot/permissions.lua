@@ -1,6 +1,7 @@
 local sudos = {
     "lang_install",
-    "promote_admin"
+    "promote_admin",
+    "plugins"
 }
 local admins = {
 	"promote_mod",
@@ -12,7 +13,8 @@ local mods = {
 	"settings",
 	"muteBan",
 	"moderation",
-	"mod_commands"
+	"mod_commands",
+	"rem_history"
 }
 
 local function get_tag(plugin_tag)

@@ -151,6 +151,8 @@ local function run(msg, matches)
 
 		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
 		
+		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
+
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
 
@@ -182,12 +184,21 @@ local function run(msg, matches)
 		set_text(LANG, 'muteChat', '`>` The chat has been *muted.*')
 		set_text(LANG, 'unmuteUser', '`>` The user *can talk now.*')
 		set_text(LANG, 'unmuteChat', '`>` The users *can talk now.*')
-		
+
+		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
 		
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'Commands')
-		set_text(LANG, 'errorNoPlug', 'This plugin does not exists or has not usages.')
+		set_text(LANG, 'errorNoPlug', 'The plugin does not exists or has not usages.')
 
+		-- plugins.lua -- 
+
+		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
+		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
+		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
+
+		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
+		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
 	
 		------------
 		-- Usages --

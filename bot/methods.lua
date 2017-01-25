@@ -231,3 +231,24 @@ function export_link(chat_id, cb_function, cb_extra)
         chat_id_ = chat_id
     }, cb_function, cb_extra)
 end
+
+function chat_history(chat_id, from_message_id, offset, limit, cb_function, cb_extra)
+    if not limit or limit > 100 then
+        limit = 100
+    end
+    tdcli_function ({
+        ID = "GetChatHistory",
+        chat_id_ = chat_id,
+        from_message_id_ = from_message_id,
+        offset_ = offset or 0,
+        limit_ = limit
+    }, cb_function, cb_extra)
+end
+
+function delete_msg_user(chat_id, user_id)
+    tdcli_function ({
+        ID = "DeleteMessagesFromUser",
+        chat_id_ = chat_id,
+        user_id_ = user_id
+    }, cb or dl_cb, nil)
+end

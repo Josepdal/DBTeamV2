@@ -28,6 +28,11 @@ function do_notify (user, msg)
     n:show ()
 end
 
+function save_config( )
+    serialize_to_file(_config, './data/config.lua')
+    print ('saved config into ./data/config.lua')
+end
+
 function load_config( )
     local f = io.open('./data/config.lua', "r")
     -- If config.lua doesn't exist
@@ -52,7 +57,8 @@ function create_config()
             "id",
             "promote",
             "moderation",
-            "commands"
+            "commands",
+            "plugins"
         },
         enabled_lang = {
             "english_lang"
@@ -104,9 +110,31 @@ load_lang()
 function bot_init(msg)
     receiver = msg.to.id
 
+    --Idea from https://github.com/RememberTheAir/GroupButler/blob/master/bot.lua
+    if msg.from then
+        if msg.from.username then
+            redis:hset('bot:usernames', '@'..msg.from.username:lower(), msg.from.id)
+            redis:hset('bot:ids', msg.from.id, '@'.. (msg.from.username:lower() or msg.from.first_name:lower()))
+        end
+        redis:sadd('chat:' .. msg.to.id .. ':members', msg.from.id)
+    end
+
+    if msg.added then
+        for i = 1, #msg.added, 1 do
+            redis:sadd('chat:' .. msg.to.id .. ':members', msg.added[i].id)
+        end
+    end
+
+    if msg.reply_id then
+        redis:sadd('chat:' .. msg.to.id .. ':members', msg.replied.id)
+        redis:hset('bot:usernames', '@'..(msg.replied.username:lower() or msg.replied.first_name:lower()), msg.replied.id)
+        redis:hset('bot:ids', msg.replied.id, '@'.. (msg.replied.username:lower() or msg.replied.first_name:lower()))
+    end
+
     if _config.our_id == msg.from.id then
         msg.from.id = 0
     end
+
     if msg_valid(msg) then
         msg = pre_process_msg(msg)
         if msg then

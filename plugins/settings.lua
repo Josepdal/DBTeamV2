@@ -24,8 +24,6 @@ local function get_added_users(msg)
 end
 
 local function get_exported_link(arg, data)
-	vardump(data)
-	vardump(arg)
 	if data.message_ then
 		send_msg(arg, lang_text(arg, 'linkError'), 'md')
 	else
