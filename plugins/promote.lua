@@ -3,7 +3,7 @@ local function run(msg, matches)
 		if permissions(msg.from.id, msg.to.id, "promote_admin") then
 			if msg.reply_id then
 				redis:sadd('admins', msg.replied.id)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": `@" .. (msg.replied.username or msg.replied.first_name) .. "`", "md")
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
 			end
 		end
 	elseif matches[1] == "mod" then
@@ -14,7 +14,7 @@ local function run(msg, matches)
 				print(1)
 				redis:sadd('mods:'..msg.to.id, msg.replied.id)
 				print(2)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": `@" .. (msg.replied.username or msg.replied.first_name) .. "`", "md")
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
 				print(3)
 			end
 		end
@@ -27,25 +27,24 @@ local function run(msg, matches)
 				elseif is_admin(msg.to.id) then
 					redis:srem('mods:'..msg.to.id, msg.replied.id)
 				end
-				send_msg(msg.to.id, "'>' `@" .. (msg.replied.username or msg.replied.first_name) .. "`" ..  lang_text(msg.to.id, 'nowUser'), "md")
+				send_msg(msg.to.id, "<code>></code> @" .. (msg.replied.username or msg.replied.first_name) .. "" ..  lang_text(msg.to.id, 'nowUser'), "html")
 			end
 		end
 	elseif matches[1] == "admins" then
 		if permissions(msg.from.id, msg.to.id, "promote_user") then
-			local text = "*Admins:*\n"
+			local text = "<b>Admins:</b>\n"
 			for k, v in pairs(redis:smembers("admins")) do
-				text = text .. "`>` `" .. redis:hget('bot:ids', v) .. "` (" .. v .. ")\n"
+				text = text .. "<code>></code> " .. redis:hget('bot:ids', v) .. " <code>(" .. v .. ")</code>\n"
 			end
-			send_msg(msg.to.id, text, 'md')
+			send_msg(msg.to.id, text, 'html')
 		end
 	elseif matches[1] == "mods" then
 		if permissions(msg.from.id, msg.to.id, "promote_user") then
-			local text = "*Mods:*\n"
+			local text = "<b>Mods:</b>\n"
 			for k, v in pairs(redis:smembers("mods:" .. msg.to.id)) do
-
-				text = text .. "`>` `" .. redis:hget('bot:ids', v) .. "` (" .. v .. ")\n"
+				text = text .. "<code>></code> " .. redis:hget('bot:ids', v) .. " <code>(" .. v .. ")</code>\n"
 			end
-			send_msg(msg.to.id, text, 'md')
+			send_msg(msg.to.id, text, 'html')
 		end
 	end
 end

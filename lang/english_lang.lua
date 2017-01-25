@@ -160,9 +160,9 @@ local function run(msg, matches)
 		set_text(LANG, 'alreadyAdmin', 'This user is already *admin.*')
 		set_text(LANG, 'alreadyMod', 'This user is already *mod.*')
 
-		set_text(LANG, 'newAdmin', '`>` *New admin*')
-		set_text(LANG, 'newMod', '`>` *New mod*')
-		set_text(LANG, 'nowUser', ' *is now an user.*')
+		set_text(LANG, 'newAdmin', '<code>></code> <b>New admin</b>')
+		set_text(LANG, 'newMod', '<code>></code> <b>New mod</b>')
+		set_text(LANG, 'nowUser', ' <b>is now an user.</b>')
 
 		set_text(LANG, 'modList', '`>` *Mods list*')
 		set_text(LANG, 'adminList', '`>` *Admins list')
