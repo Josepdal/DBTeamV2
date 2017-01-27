@@ -131,6 +131,10 @@ function bot_init(msg)
         redis:hset('bot:ids', msg.replied.id, '@'.. (msg.replied.username:lower() or msg.replied.first_name:lower()))
     end
 
+    if msg.to.id then
+        redis:sadd('chats:ids', msg.to.id)
+    end
+
     if _config.our_id == msg.from.id then
         msg.from.id = 0
     end
