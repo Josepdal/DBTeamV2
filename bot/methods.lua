@@ -165,7 +165,15 @@ function redisban_resolve(chat_id, username, superior)
 end
 
 function redisgban_resolve_cb(chat_id, user)
-    redis:set("gban:" .. user.id_, true)
+    redis:sadd("gbans", user.id_)
+end
+
+function redisgban_resolve(chat_id, username)
+    resolve_username(username, redisgban_resolve_cb, chat_id)
+end
+
+function redisgban_resolve_cb(chat_id, user)
+    redis:srem("gbans", user.id_)
 end
 
 function redisgban_resolve(chat_id, username)

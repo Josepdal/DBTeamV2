@@ -34,7 +34,7 @@ local function pre_process(msg)
 	end
 
 	-- Check if user is global-banned
-	if redis:get("gban:" .. msg.from.id) then
+	if redis:sismember("gbans", msg.from.id) then
 		kick_user(msg.to.id, msg.from.id)
 	end
 
@@ -103,12 +103,12 @@ local function run(msg, matches)
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
-				redis:set("gban:" .. msg.replied.id, true)
+				redis:sadd("gbans", msg.replied.id)
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
-		    	redis:set("gban:" .. matches[2], true)
+		    	redis:sadd("gbans", matches[2])
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2], msg.from.id)
@@ -119,16 +119,16 @@ local function run(msg, matches)
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				kick_user(msg.to.id, msg.replied.id)
-				redis:del("gban:" .. msg.replied.id, true)
+				redis:srem("gbans", msg.replied.id)
 			end
 	    elseif is_number(matches[2]) then
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	kick_user(msg.to.id, matches[2])
-		    	redis:set("gban:" .. matches[2], true)
+		    	redis:srem("gbans", matches[2])
 		    end
 	    elseif not is_number(matches[2]) then
 	    	kick_resolve(msg.to.id, matches[2])
-	    	redisgban_resolve(msg.to.id, matches[2])
+	    	redisungban_resolve(msg.to.id, matches[2])
 	    end
 	    send_msg(msg.to.id, lang_text(msg.to.id, 'ungbanUser'), "md")
 	elseif matches[1] == "mute" then
