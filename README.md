@@ -34,6 +34,14 @@ After those dependencies, lets install the bot
  ./launch.sh # Will ask you for a phone number & confirmation code.
 ```
 
+Execute DBTeam anywhere:
+```bash
+echo "alias dbteam='cd; cd DBTeamV2; bash `pwd`/launch.sh; cd'" >> ~/.bashrc
+# Then... you can execute DBTeam easily:
+dbteam
+```
+
+
 Tmux:
 ```bash
 ./launch.sh tmux # create a session tmux
