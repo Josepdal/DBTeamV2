@@ -36,9 +36,12 @@ After those dependencies, lets install the bot
 
 Execute DBTeam anywhere:
 ```bash
-echo "alias dbteam='cd; cd DBTeamV2; bash `pwd`/launch.sh; cd'" >> ~/.bashrc
+folder="DBTeamV2" # If that isn't the folder, change it
+echo "alias dbteam='cd; cd ${folder}; bash `pwd`/${folder}/launch.sh; cd'" >> ~/.bashrc && source .bashrc
 # Then... you can execute DBTeam easily:
 dbteam
+dbteam update #update dbteam
+dbteam tmux # .. etc
 ```
 
 
