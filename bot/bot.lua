@@ -58,7 +58,8 @@ function create_config()
             "promote",
             "moderation",
             "commands",
-            "plugins"
+            "plugins",
+            "stats"
         },
         enabled_lang = {
             "english_lang"
@@ -189,7 +190,7 @@ function tdcli_update_callback(data)
                 do_notify(chat.title_, msgb.content_.ID)
             end
         end
-    
+
         msg = oldtg(data)
         tdcli_function ({
             ID = "GetUser",
