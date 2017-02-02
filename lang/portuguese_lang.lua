@@ -37,6 +37,12 @@ local function run(msg, matches)
 		set_text(LANG, 'welnew', 'Bem-vindo salvo! é')
 		set_text(LANG, 'defaultWelcome', 'Bem-vindo $users ao grupo!')
 
+
+
+		-- stats.lua
+		set_text(LANG, 'stats', '*Chat stats*')
+
+
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'isFlooding', '*is flooding.*')
@@ -148,14 +154,14 @@ local function run(msg, matches)
 
 		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
 		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
-		
+
 		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
 		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
 		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
 		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
-		
+
 		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
-		
+
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'accounts globally banned.')
 
@@ -194,7 +200,7 @@ local function run(msg, matches)
 		set_text(LANG, 'commandsT', 'Comando')
 		set_text(LANG, 'errorNoPlug', 'Este plugin não existe ou não tem comandos.')
 
-		-- plugins.lua -- 
+		-- plugins.lua --
 
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')

@@ -25,7 +25,7 @@ local function run(msg, matches)
 		set_text(LANG, 'require_sudo', 'This plugin requires sudo privileges.')
 		set_text(LANG, 'require_admin', 'This plugin requires admin privileges or higher.')
 		set_text(LANG, 'require_mod', 'This plugin requires mod privileges or higher.')
-		
+
 		-- welcome.lua
 		set_text(LANG, 'weloff', 'Welcome enabled.')
 		set_text(LANG, 'welon', 'Welcome disabled.')
@@ -33,17 +33,20 @@ local function run(msg, matches)
 		set_text(LANG, 'welnew', 'Welcome saved! is')
 		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')
 
+		-- stats.lua
+		set_text(LANG, 'stats', '*Chat stats*')
+
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'isFlooding', '*is flooding.*')
 		set_text(LANG, 'isSpamming', '*is spamming.*')
-		
+
 		set_text(LANG, 'welcomeT', '> *Welcome messages* are now *enabled* in this chat.')
 		set_text(LANG, 'noWelcomeT', '> *Welcome messages* are *disabled* in this chat.')
 
 		set_text(LANG, 'noStickersT', '`>` *Stickers* are *not allowed* in this chat.')
 		set_text(LANG, 'stickersT', '`>` *Stickers* are now *allowed* in this chat.')
-		
+
 		set_text(LANG, 'noTgservicesT', '`>` *Telegram services disabled* in this chat.')
 		set_text(LANG, 'tgservicesT', '`>` *Telegram services enabled* in this chat.')
 
@@ -61,16 +64,16 @@ local function run(msg, matches)
 
 		set_text(LANG, 'audiosT', '`>` *Audios* are now *allowed* in this chat.')
 		set_text(LANG, 'noAudiosT', '`>` *Audios* are *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'documentsT', '`>` *Documents* are now *allowed* in this chat.')
 		set_text(LANG, 'noDocumentsT', '`>` *Documents* are *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'videosT', '`>` *Videos* are now *allowed* in this chat.')
 		set_text(LANG, 'noVideosT', '`>` *Videos* are *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'locationT', '`>` *Location* is now *allowed* in this chat.')
 		set_text(LANG, 'noLocationT', '`>` *Location* is *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'emojisT', '`>` *Emojis* are now *allowed* in this chat.')
 		set_text(LANG, 'noEmojisT', '`>` *Emojis* are *not allowed* in this chat.')
 
@@ -82,20 +85,20 @@ local function run(msg, matches)
 
 		set_text(LANG, 'voiceT', '`>` *Voice messages* are now *allowed* in this chat.')
 		set_text(LANG, 'noVoiceT', '`>` *Voice messages* are *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'infoT', '`>` *Photo/title* can be changed in this chat.')
 		set_text(LANG, 'noInfoT', '`>` *Photo/title* can\'t be changed in this chat.')
-		
+
 		set_text(LANG, 'gamesT', '`>` *Games* are now *allowed* in this chat.')
 		set_text(LANG, 'noGamesT', '`>` *Games* are *not allowed* in this chat.')
-		
+
 		set_text(LANG, 'spamT', '`>` *Spam* is now *allowed* in this chat.')
 		set_text(LANG, 'noSpamT', '`>` *Spam* is *not allowed* in this chat.')
 		set_text(LANG, 'setSpam', '`>` Changed blacklist to ')
-		
+
 		set_text(LANG, 'forwardT', '`>` *Forward messages* is now *allowed* in this chat.')
 		set_text(LANG, 'noForwardT', '`>` *Forward messages* is not *allowed* in this chat.')
-	
+
 		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
 
@@ -144,13 +147,13 @@ local function run(msg, matches)
 
 		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
 		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
-		
+
 		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
 		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
 		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
 
 		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
-		
+
 		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
 
 		-- export_gban.lua --
@@ -186,12 +189,12 @@ local function run(msg, matches)
 		set_text(LANG, 'unmuteChat', '`>` The users *can talk now.*')
 
 		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
-		
+
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'Commands')
 		set_text(LANG, 'errorNoPlug', 'The plugin does not exists or has not usages.')
 
-		-- plugins.lua -- 
+		-- plugins.lua --
 
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
@@ -199,12 +202,12 @@ local function run(msg, matches)
 
 		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
 		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
-	
+
 		------------
 		-- Usages --
 		------------
 
-	
+
 		-- commands.lua --
 		set_text(LANG, 'commands:0', 2)
 		set_text(LANG, 'commands:1', '#commands: Show all commands for every plugin.')
@@ -218,13 +221,13 @@ local function run(msg, matches)
 		-- gban_installer.lua --
 	--	set_text(LANG, 'gban_installer:0', 1)
 	--	set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
-		
+
 		-- welcome.lua --
         set_text(LANG, 'welcome:0', 3)
         set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a "0" to set the default welcome.')
-        set_text(LANG, 'welcome:2', '#getwelcome - returns the current welcome in this chat')     
+        set_text(LANG, 'welcome:2', '#getwelcome - returns the current welcome in this chat')
         set_text(LANG, 'welcome:3', '#welcome on/off - enable/disable welcome in this chat')
-       
+
 		-- giverank.lua --
 		set_text(LANG, 'promote:0', 6)
 		set_text(LANG, 'promote:1', '#admin (reply): add admin by reply.')
@@ -232,14 +235,14 @@ local function run(msg, matches)
 		set_text(LANG, 'promote:3', '#mod (reply): add mod by reply.')
 		set_text(LANG, 'promote:4', '#mod <user_id>/<user_name>: add mod by user ID/Username.')
 		set_text(LANG, 'promote:5', '#user (reply): remove admin by reply.')
-		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')		
+		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')
 
 		-- id.lua --
 		set_text(LANG, 'id:0', 1)
 		set_text(LANG, 'id:1', '#id (or reply): Return your ID and the chat id if you are in one.')
 
 		-- moderation.lua --
-		set_text(LANG, 'moderation:0', 7)		
+		set_text(LANG, 'moderation:0', 7)
 		set_text(LANG, 'moderation:1', '#kick <reply>/<id>/<username>: the user will be kicked in the current chat.')
 		set_text(LANG, 'moderation:2', '#ban <reply>/<id>/<username>: the user will be banned in the current chat and it wont be able to return.')
 		set_text(LANG, 'moderation:3', '#unban <reply>/<id>/<username>: the user will be unbanned in the current chat.')
@@ -247,7 +250,7 @@ local function run(msg, matches)
 		set_text(LANG, 'moderation:5', '#ungban <reply>/<id>/<username>: the user will be unbanned from all chats.')
 		set_text(LANG, 'moderation:6', '#mute <reply>/<id>/<username>: the user will be silenced in the current chat, erasing all its messages.')
 		set_text(LANG, 'moderation:7', '#unmute <reply>/<id>/<username>: the user will be unsilenced in the current chat.')
-		
+
 		-- settings.lua --
 	    set_text(LANG, 'settings:0', 20)
 		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')

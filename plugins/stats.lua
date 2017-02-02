@@ -13,6 +13,10 @@ local function get_name(chatid, id)
         hash = "statsn:"..chatid
         ok = redis:hget(hash, tostring(id))
         if ok then
+                to_space = string.find(ok, " ")
+                if to_space then
+                        return string.sub(ok, 0, to_space)
+                end
                 return ok
         end
         return false
@@ -27,8 +31,8 @@ local function get_msgs(chatid, id)
         return tonumber(0)
 end
 
-local function get_ranking(chatid)
-        local user = "*Chat stats*"
+local function get_ranking(chatid, first_message)
+        local user = first_message
         hash = "stats:"..chatid
         local reg = redis:hkeys(hash)
         local lista = {}
@@ -65,7 +69,7 @@ end
 
 local function run(msg, matches)
         if matches[1] == "stats" then
-                ranking = get_ranking(msg.to.id)
+                ranking = get_ranking(msg.to.id, lang_text(msg.to.id, 'stats'))
                 send_msg(msg.to.id, ranking, "md")
         end
 end

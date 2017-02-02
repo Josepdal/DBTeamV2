@@ -27,13 +27,17 @@ local function run(msg, matches)
 		set_text(LANG, 'weldefault', 'خوش امد گويي بصورت پيشفرض')
 		set_text(LANG, 'welnew', 'پيام خوش آمد گويي تعيين شد به')
 		set_text(LANG, 'defaultWelcome', 'خوش آمديد $users به گروه')
+
+		-- stats.lua
+		set_text(LANG, 'stats', '*Chat stats*')
+
 		-- settings.lua --
 		set_text(LANG, 'user', 'کاربر')
 		set_text(LANG, 'isFlooding', '*در حال فرستادن پيام هاي مکرر و سريع است*')
-		
+
 		set_text(LANG, 'welcomeT', '> پیام خوش آمد در این گروه فعال شد')
 		set_text(LANG, 'noWelcomeT', '> پیام خوش آمد در این گروه غیر فعال شد')
-		
+
 		set_text(LANG, 'isSpamming', '*در حال فرستادن هرزنامه است.*')
 		set_text(LANG, 'noStickersT', '`>` `استيکر مجاز نيست در اين گروه`.')
 		set_text(LANG, 'stickersT', '`>` استيکر فرستادن در حال حاظر مجاز است.')
@@ -114,14 +118,14 @@ local function run(msg, matches)
 
 		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
 		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
-		
+
 		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
 		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
 		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
 		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
-		
+
 		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
-		
+
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'کاربران بن گلوبال')
 		-- promote.lua --
@@ -150,12 +154,12 @@ local function run(msg, matches)
 		set_text(LANG, 'unmuteChat', '`>` گروه از حالت سکوت خارج شد و همه کاربران ميتوانند چت کنند*')
 
 		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
-		
+
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'دستور ها')
 		set_text(LANG, 'errorNoPlug', 'اين پلاگين وجود ندارد.')
 
-		-- plugins.lua -- 
+		-- plugins.lua --
 
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
