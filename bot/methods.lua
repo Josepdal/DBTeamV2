@@ -132,6 +132,24 @@ function resolve_cb(extra, user)
 		elseif extra.command == "unmute" then
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unmuteUser'), "md")
 			redis:del("muted:" .. extra.chat_id .. ":" .. user.id_)
+		elseif extra.command == "admin" then
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'newAdmin') .. ": @" .. (user.type_.user_.username_ or user.type_.user_.first_name_), "html")
+			redis:sadd('admins', user.id_)
+			redis:srem('mods:'..extra.chat_id, user.id_)
+		elseif extra.command == "mod" then
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'newMod') .. ": @" .. (user.type_.user_.username_ or user.type_.user_.first_name_), "html")
+			redis:sadd('mods:'..extra.chat_id, user.id_)
+			if new_is_sudo(extra.superior) then
+				redis:srem('admins', user.id_)
+			end
+		elseif extra.command == "user" then
+			if new_is_sudo(extra.superior) then
+				redis:srem('mods:'..extra.chat_id, user.id_)
+				redis:srem('admins', user.id_)
+			elseif is_admin(extra.superior) then
+				redis:srem('mods:'..extra.chat_id, user.id_)
+			end
+			send_msg(extra.chat_id, "<code>></code> @" .. (user.type_.user_.username_ or user.type_.user_.first_name_) .. "" ..  lang_text(extra.chat_id, 'nowUser'), "html")
 		end
 	else
 		permissions(extra.superior, extra.chat_id, extra.plugin_tag)
