@@ -107,6 +107,38 @@ function resolve_username(username, cb_function, cb_extra)
     }, cb_function, cb_extra)
 end
 
+function resolve_cb(extra, user)
+	if compare_permissions(extra.chat_id, extra.superior, user.id_) then
+		if extra.command == "ban" then
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'banUser'), "md")
+			kick_user(extra.chat_id, user.id_)
+			redis:set("ban:" .. extra.chat_id .. ":" .. user.id_, true)
+		elseif extra.command == "unban" then		
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
+			redis:del("ban:" .. extra.chat_id .. ":" .. user.id_)
+		elseif extra.command == "kick" then		
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'kickUser'), "md")
+			kick_user(extra.chat_id, user.id_)
+		elseif extra.command == "gban" then		
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'gbanUser'), "md")
+			kick_user(extra.chat_id, user.id_)
+			redis:sadd("gbans", user.id_)
+		elseif extra.command == "ungban" then		
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
+			redis:srem("gbans", user.id_)		
+		elseif extra.command == "mute" then
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'muteUser'), "md")
+			redis:set("muted:" .. extra.chat_id .. ":" .. user.id_, true)
+		elseif extra.command == "unmute" then
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unmuteUser'), "md")
+			redis:del("muted:" .. extra.chat_id .. ":" .. user.id_)
+		end
+	else
+		permissions(extra.superior, extra.chat_id, extra.plugin_tag)
+		
+	end
+end
+
 function resolve_id(user_id, cb_function, cb_extra)
     tdcli_function ({
         ID = "GetUserFull",
