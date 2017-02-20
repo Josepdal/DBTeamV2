@@ -53,7 +53,7 @@ local function send_warning(user_id, chat_id, user_need)
 		send_msg(chat_id, lang_text(chat_id, 'require_sudo'), 'md')
 	elseif user_need == 2 then
 		send_msg(chat_id, lang_text(chat_id, 'require_admin'), 'md')
-	elseif user_need == 3 then
+	elseif user_need == 1 then
 		send_msg(chat_id, lang_text(chat_id, 'require_mod'), 'md')
 	end
 end
@@ -66,13 +66,15 @@ function compare_permissions(chat_id, user_id, user_id2)
 	end
 end
 
-function permissions(user_id, chat_id, plugin_tag)
+function permissions(user_id, chat_id, plugin_tag, option)
 	local user_need = get_tag(plugin_tag)
 	local user_is = user_num(user_id, chat_id)
 	if user_is >= user_need then
 		return true
 	else
-		send_warning(user_id, chat_id, user_need)
+		if option ~= "silent" then
+			send_warning(user_id, chat_id, user_need)
+		end
 		return false
 	end
 end
