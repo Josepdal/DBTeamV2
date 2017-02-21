@@ -3,19 +3,22 @@ local function run(msg, matches)
 		if permissions(msg.from.id, msg.to.id, "promote_admin") then
 			if msg.reply_id then
 				redis:sadd('admins', msg.replied.id)
+				redis:srem('mods:'..msg.to.id, msg.replied.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
+			elseif matches[2] then
+				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_admin", command = "admin"})
 			end
 		end
 	elseif matches[1] == "mod" then
-		print(is_mod(msg.to.id, msg.from.id))
 		if permissions(msg.from.id, msg.to.id, "promote_mod") then
-			print(0)
 			if msg.reply_id then
-				print(1)
 				redis:sadd('mods:'..msg.to.id, msg.replied.id)
-				print(2)
+				if new_is_sudo(msg.from.id) then
+					redis:srem('admins', msg.replied.id)
+				end
 				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
-				print(3)
+			elseif matches[2] then
+				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_mod", command = "mod"})
 			end
 		end
 	elseif matches[1] == "user" then
@@ -28,6 +31,8 @@ local function run(msg, matches)
 					redis:srem('mods:'..msg.to.id, msg.replied.id)
 				end
 				send_msg(msg.to.id, "<code>></code> @" .. (msg.replied.username or msg.replied.first_name) .. "" ..  lang_text(msg.to.id, 'nowUser'), "html")
+			elseif matches[2] then
+				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_user", command = "user"})
 			end
 		end
 	elseif matches[1] == "admins" then
@@ -52,10 +57,14 @@ end
 return {
   patterns = {
   	"^[!/#](admin)$",
+	"^[!/#](admin) (.*)$",
     "^[!/#](mod)$",
+	"^[!/#](mod) (.*)$",
     "^[!/#](user)$",
+	"^[!/#](user) (.*)$",
     "^[!/#](admins)$",
     "^[!/#](mods)$"
+
   },
   run = run
 }
