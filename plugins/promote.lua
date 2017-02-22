@@ -51,7 +51,7 @@ local function run(msg, matches)
 			end
 			send_msg(msg.to.id, text, 'html')
 		end
-	elseif matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall"then
+	elseif matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall" then
 		if permissions(msg.from.id, msg.to.id, "tagall") then
 			if matches[2] then
 				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = matches[2]})
@@ -59,6 +59,14 @@ local function run(msg, matches)
 				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
 			end
 		end	
+	elseif matches[1] == "bots" then
+		if permissions(msg.from.id, msg.to.id, "tagall") then --------translations
+			getChannelMembers(msg.to.id, 0, 'Bots', 200, bots_cb, msg.to.id)
+		end
+	elseif matches[1] == "kicked" then
+		if permissions(msg.from.id, msg.to.id, "tagall") then--------translations
+			getChannelMembers(msg.to.id, 0, 'Kicked', 200, kicked_cb, msg.to.id)
+		end			
 	end
 end
 
@@ -74,11 +82,56 @@ function members_cb(extra, data)
 	end
 end
 
+function bots_cb(extra, data)
+	local count = data.total_count_
+	local count2 = count
+	text = "<b>Bots in chat (</b>"..count.."<b>):</b> \n"
+	for k,v in pairs(data.members_) do
+		if v.user_id_ then	
+			count2 = count2 - 1	
+			resolve_id(v.user_id_, resolveid_cb, {userid = v.user_id_ , send = count2, chat = extra, text = nil})
+		end
+	end
+end
+
+function kicked_cb(extra, data)
+	local count = data.total_count_
+	local count2 = count
+	text = "<b>Banned users in chat (</b>"..count.."<b>):</b> \n"
+	for k,v in pairs(data.members_) do
+		if v.user_id_ then	
+			count2 = count2 - 1
+			resolve_id(v.inviter_user_id_, resolveid_kicked_cb, {userid = v.inviter_user_id_ , send = count2, chat = extra, status = "kicker", idkicked = v.user_id_})
+		end
+	end
+end
+
+function resolveid_kicked_cb(extra,info)
+	if extra.status == "kicker" then
+		if info.user_.username_ then
+			info_from_kicker  = '<code>></code>@'..info.user_.username_..' '
+		else
+			info_from_kicker  = '<code>></code>'..info.user_.first_name_..' '
+		end
+		resolve_id(extra.idkicked, resolveid_kicked_cb, {userid = extra.idkicked , send = extra.send, chat = extra.chat, status = "kicked", infokicker = info_from_kicker })		
+	else
+		if info.user_.username_ then
+			text  = text..extra.infokicker..'banned @'..info.user_.username_..'\n'
+			print(text)
+		else
+			text  = text..extra.infokicker..'banned '..info.user_.first_name_..'\n'
+		end
+		if extra.send == 0 then
+		send_msg(extra.chat, text, 'html')
+		end
+	end
+end
+
 function resolveid_cb(extra,info)
 	if info.user_.username_ then
-		text  = text..'<code>></code> @'..info.user_.username_.."<code> ("..extra.userid..')</code>\n'
+		text  = text..'<code>></code> @'..info.user_.username_.."<code>("..extra.userid..')</code>\n'
 	else
-		text  = text..'<code>></code> '..info.user_.first_name_.."<code> ("..extra.userid..')</code>\n'
+		text  = text..'<code>></code> '..info.user_.first_name_.."<code>("..extra.userid..')</code>\n'
 	end
 	
 	if extra.send == 0 then
@@ -108,7 +161,9 @@ return {
 	"^[!/#](tagall)$",
 	"^[!/#](users) (.*)$",
 	"^[!/#](members) (.*)$",
-	"^[!/#](tagall) (.*)$"
+	"^[!/#](tagall) (.*)$",
+	"^[!/#](bots)$",
+	"^[!/#](kicked)$"
   },
   run = run
 }
