@@ -23,6 +23,13 @@ local function get_added_users(msg)
 	return users
 end
 
+function send_report(msg,reason)
+    local text = '*Spam report:*\n*User:* @'..msg.from.username..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* _'..msg.text..'_\n*Pattern:* _'..reason..'_' ---put translattions
+    for v,user in pairs(_config.sudo_users) do
+        send_msg(user, text, 'md')
+    end
+end
+
 local function get_exported_link(arg, data)
 	if data.message_ then
 		send_msg(arg, lang_text(arg, 'linkError'), 'md')
@@ -33,7 +40,6 @@ local function get_exported_link(arg, data)
 end
 
 local function pre_process(msg)
-	--send_msg(msg.to.id, return_media(msg), 'md')
 	if msg.added then
 		if not redis:get("settings:welcome:"..msg.to.id) then
 			local users
@@ -60,10 +66,13 @@ local function pre_process(msg)
 	    	local blacklist = redis:get("settings:setspam:" .. msg.to.id) or "default"
 		    for number, pattern in pairs(list.blacklist[blacklist]) do
 		        local matches = match_pattern(pattern, msg.text)
-		        if matches then
+		        if matches then			
 		        	reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
 		            delete_msg(msg.to.id, msg.id)
-		            msg.text = ""
+					if redis:get("settings:reports:" .. msg.to.id) then
+						send_report(msg,matches[1])
+					end	
+					msg.text = ""
 		            return msg
 		        end
 		    end
@@ -239,7 +248,13 @@ local function run(msg, matches)
 			if redis:get("settings:spam:type" .. msg.to.id) then
 				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* `" .. redis:get("settings:spam:type" .. msg.to.id) .. "`\n"
 			else
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* ` default `\n"
+				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'spam') .. ":* `default `\n"
+			end
+			-- Send report
+			if redis:get("settings:reports:" .. msg.to.id) then
+				settings = settings .. "`>` *Reports:* `activated`\n" --translations
+			else
+				settings = settings .. "`>` *Reports:* `disabled`\n" --translations
 			end
 			-- Check Flood
 			if redis:get("settings:flood:" .. msg.to.id) then
@@ -394,6 +409,14 @@ local function run(msg, matches)
 		elseif matches[1] == "setspam" and permissions(msg.from.id, msg.to.id, "settings") and matches[2] then
 			redis:set("settings:setspam:" .. msg.to.id, matches[2])
 			send_msg(msg.to.id, lang_text(msg.to.id, 'setSpam') .. "*" .. matches[2] .. "*.", 'md')
+		elseif matches[1] == "reports" and permissions(msg.from.id, msg.to.id, "settings") then
+			if matches[2] == 'on' then
+				redis:set("settings:reports:" .. msg.to.id, true)
+				send_msg(msg.to.id, "`>` *Spam reports* are now *activated* in this chat.", 'md') -- translations
+			elseif matches[2] == 'off' then
+				redis:del("settings:reports:" .. msg.to.id)
+				send_msg(msg.to.id, "`>` *Spam reports* are *disabled* in this chat.", 'md') -- translations
+			end			
 		elseif matches[1] == "arabic" and permissions(msg.from.id, msg.to.id, "settings") then
 			if matches[2] == 'off' then
 				redis:set("settings:arabic:" .. msg.to.id, true)
@@ -507,6 +530,7 @@ return {
 		'^[!/#](forward) (.*)$',
 		'^[!/#](spam) (.*)$',
 		'^[!/#](setspam) (.*)$',
+		'^[!/#](reports) (.*)$',
 		'^[!/#](arabic) (.*)$',
 		'^[!/#](english) (.*)$',
 		'^[!/#](emojis) (.*)$',
