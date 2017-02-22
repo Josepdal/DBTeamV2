@@ -14,6 +14,7 @@ local mods = {
 	"muteBan",
 	"moderation",
 	"mod_commands",
+	"tagall",
 	"rem_history"
 }
 

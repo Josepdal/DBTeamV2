@@ -164,6 +164,22 @@ function resolve_id(user_id, cb_function, cb_extra)
     }, cb_function, cb_extra)
 end
 
+function getChannelMembers(channel_id, offset, filter, limit, cb_function, cb_extra)
+  if not limit or limit > 200 then
+    limit = 200
+  end
+
+  tdcli_function ({
+    ID = "GetChannelMembers",
+    channel_id_ = getChatId(channel_id).ID,
+    filter_ = {
+      ID = "ChannelMembers" .. filter
+    },
+    offset_ = offset,
+    limit_ = limit
+  }, cb_function or cb_function, cb_extra)
+end
+
 function forward_msg(chat_id, from_chat_id, message_id)
     message_id = {[0] = message_id}
     tdcli_function ({

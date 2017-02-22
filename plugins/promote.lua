@@ -51,8 +51,47 @@ local function run(msg, matches)
 			end
 			send_msg(msg.to.id, text, 'html')
 		end
+	elseif matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall"then
+		if permissions(msg.from.id, msg.to.id, "tagall") then
+			if matches[2] then
+				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = matches[2]})
+			else
+				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
+			end
+		end	
 	end
 end
+
+function members_cb(extra, data)
+	local count = data.total_count_
+	local count2 = count
+	text = "<b>Chat users (</b>"..count.."<b>):</b> \n"
+	for k,v in pairs(data.members_) do
+		if v.user_id_ then	
+			count2 = count2 - 1	
+			resolve_id(v.user_id_, resolveid_cb, {userid = v.user_id_ , send = count2, chat = extra.chat, text = extra.text})
+		end
+	end
+end
+
+function resolveid_cb(extra,info)
+	if info.user_.username_ then
+		text  = text..'<code>></code> @'..info.user_.username_.."<code> ("..extra.userid..')</code>\n'
+	else
+		text  = text..'<code>></code> '..info.user_.first_name_.."<code> ("..extra.userid..')</code>\n'
+	end
+	
+	if extra.send == 0 then
+		if extra.text then	
+			text  = text..'\n<b>'..extra.text..'</b>'
+			send_msg(extra.chat, text, 'html')
+		else
+		text  = text
+			send_msg(extra.chat, text, 'html')
+		end
+	end
+end
+
 
 return {
   patterns = {
@@ -63,8 +102,13 @@ return {
     "^[!/#](user)$",
 	"^[!/#](user) (.*)$",
     "^[!/#](admins)$",
-    "^[!/#](mods)$"
-
+    "^[!/#](mods)$",
+	"^[!/#](users)$",
+	"^[!/#](members)$",
+	"^[!/#](tagall)$",
+	"^[!/#](users) (.*)$",
+	"^[!/#](members) (.*)$",
+	"^[!/#](tagall) (.*)$"
   },
   run = run
 }
