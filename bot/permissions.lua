@@ -15,7 +15,8 @@ local mods = {
 	"moderation",
 	"mod_commands",
 	"tagall",
-	"rem_history"
+	"rem_history",
+	"spam"
 }
 
 local function get_tag(plugin_tag)
