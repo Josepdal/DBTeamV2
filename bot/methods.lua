@@ -80,6 +80,13 @@ function get_msg_info(chat_id, message_id, cb_function, extra)
   	}, cb_function, extra)
 end
 
+function openChat(chat_id, cb, cmd)
+  tdcli_function ({
+    ID = "OpenChat",
+    chat_id_ = chat_id
+  }, cb or dl_cb, cmd)
+end
+
 function pin_msg(channel_id, message_id, disable_notification)
   	tdcli_function ({
     	ID = "PinChannelMessage",

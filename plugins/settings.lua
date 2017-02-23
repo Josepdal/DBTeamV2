@@ -41,7 +41,7 @@ end
 
 local function pre_process(msg)
 	if msg.added then
-		if not redis:get("settings:welcome:"..msg.to.id) then
+		if redis:get("settings:welcome:"..msg.to.id) then
 			local users
 			if #msg.added > 0 then
 				users = get_added_users(msg)
@@ -451,10 +451,10 @@ local function run(msg, matches)
 			end
 		elseif matches[1] == "welcome" and permissions(msg.from.id, msg.to.id, "settings") then
 			if matches[2] == 'off' then
-				redis:set("settings:welcome:" .. msg.to.id, true)
+				redis:del("settings:welcome:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'noWelcomeT'), 'md')
 			elseif matches[2] == 'on' then
-				redis:del("settings:welcome:" .. msg.to.id)
+				redis:set("settings:welcome:" .. msg.to.id, true)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'welcomeT'), 'md')
 			end
 		elseif matches[1] == "setwelcome" and permissions(msg.from.id, msg.to.id, "settings") then

@@ -1,4 +1,5 @@
 local function run(msg, matches)
+
 	if matches[1] == "admin" then
 		if permissions(msg.from.id, msg.to.id, "promote_admin") then
 			if msg.reply_id then
@@ -66,11 +67,21 @@ local function run(msg, matches)
 	elseif matches[1] == "kicked" then
 		if permissions(msg.from.id, msg.to.id, "tagall") then--------translations
 			getChannelMembers(msg.to.id, 0, 'Kicked', 200, kicked_cb, msg.to.id)
-		end			
+		end
+	elseif matches[1] == "banall" then
+		if permissions(msg.from.id, msg.to.id, "banall") then--------translations
+			getChannelMembers(msg.to.id, 0, 'Recent', 200, banall_cb, msg.to.id)
+		end
+	elseif matches[1] == "leave" then
+		if permissions(msg.from.id, msg.to.id, "leave") then--------translations
+			send_msg(msg.to.id, "<b>Bye!</b>", 'html')------translations
+			kick_user(msg.to.id, _config.our_id[1])
+		end	
 	end
 end
 
 function members_cb(extra, data)
+	openChat(msg.to.id, opencb)
 	local count = data.total_count_
 	local count2 = count
 	text = "<b>Chat users (</b>"..count.."<b>):</b> \n"
@@ -78,6 +89,17 @@ function members_cb(extra, data)
 		if v.user_id_ then	
 			count2 = count2 - 1	
 			resolve_id(v.user_id_, resolveid_cb, {userid = v.user_id_ , send = count2, chat = extra.chat, text = extra.text})
+		end
+	end
+end
+
+function banall_cb(extra, data)
+	send_msg(extra, "<b>Trying to ban all users...</b>", 'html')------translations
+	for k,vv in pairs(data.members_) do
+		for v,user in pairs(_config.sudo_users) do
+			if vv.user_id_ ~= user and  vv.user_id_ ~= _config.our_id[1] then
+				kick_user(extra, vv.user_id_)		
+			end
 		end
 	end
 end
@@ -97,6 +119,9 @@ end
 function kicked_cb(extra, data)
 	local count = data.total_count_
 	local count2 = count
+	if not count then
+		send_msg(extra, "<b>Error:</b> bot must be admin of the chat.", 'html') ----translations
+	end
 	text = "<b>Banned users in chat (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
 		if v.user_id_ then	
@@ -117,12 +142,11 @@ function resolveid_kicked_cb(extra,info)
 	else
 		if info.user_.username_ then
 			text  = text..extra.infokicker..'banned @'..info.user_.username_..'\n'
-			print(text)
 		else
 			text  = text..extra.infokicker..'banned '..info.user_.first_name_..'\n'
 		end
 		if extra.send == 0 then
-		send_msg(extra.chat, text, 'html')
+			send_msg(extra.chat, text, 'html')
 		end
 	end
 end
@@ -146,6 +170,7 @@ function resolveid_cb(extra,info)
 end
 
 
+
 return {
   patterns = {
   	"^[!/#](admin)$",
@@ -163,7 +188,9 @@ return {
 	"^[!/#](members) (.*)$",
 	"^[!/#](tagall) (.*)$",
 	"^[!/#](bots)$",
-	"^[!/#](kicked)$"
+	"^[!/#](kicked)$",
+	"^[!/#](banall)$",
+	"^[!/#](leave)$"
   },
   run = run
 }

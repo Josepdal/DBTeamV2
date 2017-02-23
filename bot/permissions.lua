@@ -1,7 +1,9 @@
 local sudos = {
     "lang_install",
     "promote_admin",
-    "plugins"
+    "plugins",
+	"banall",
+	"leave"
 }
 local admins = {
 	"promote_mod",
