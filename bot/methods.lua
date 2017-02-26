@@ -80,6 +80,38 @@ function get_msg_info(chat_id, message_id, cb_function, extra)
   	}, cb_function, extra)
 end
 
+function getMe(cb, cmd)
+  tdcli_function ({
+    ID = "GetMe",
+  }, cb or dl_cb, cmd)
+end
+
+function getMeCb(extra, result)
+	our_id = result.id_
+	print("Our id: "..our_id)
+	file = io.open("./data/config.lua", "r")
+	config = ''
+	repeat
+		line = file:read ("*l")
+		if line then
+			line = string.gsub(line, "0", our_id)
+			config = config.."\n"..line
+		end
+	until not line
+		
+	file:close()
+	file = io.open("./data/config.lua", "w")
+	file:write(config)
+	file:close()	
+end
+
+function changeAbout(about, cb, cmd)
+  tdcli_function ({
+    ID = "ChangeAbout",
+    about_ = about
+  }, cb or dl_cb, cmd)
+end
+
 function openChat(chat_id, cb, cmd)
   tdcli_function ({
     ID = "OpenChat",

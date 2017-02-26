@@ -76,13 +76,21 @@ local function run(msg, matches)
 		if permissions(msg.from.id, msg.to.id, "leave") then--------translations
 			send_msg(msg.to.id, "<b>Bye!</b>", 'html')------translations
 			kick_user(msg.to.id, _config.our_id[1])
-		end	
+		end
+	elseif matches[1] == "setabout" and matches[2] then
+		if permissions(msg.from.id, msg.to.id, "setabout") then--------translations
+			changeAbout(matches[2], ok_cb)
+			send_msg(msg.to.id, "<b>About changed to:</b>" .. matches[2], 'html')------translations
+		end			
 	end
 end
 
 function members_cb(extra, data)
 	openChat(msg.to.id, opencb)
 	local count = data.total_count_
+	if not count then
+		send_msg(extra.chat, "<b>Error:</b> must be a supergroup.", 'html')
+	end
 	local count2 = count
 	text = "<b>Chat users (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
@@ -118,6 +126,9 @@ end
 
 function kicked_cb(extra, data)
 	local count = data.total_count_
+	if not count then
+		send_msg(extra, "<b>Error:</b> must be a supergroup.", 'html')
+	end
 	local count2 = count
 	if not count then
 		send_msg(extra, "<b>Error:</b> bot must be admin of the chat.", 'html') ----translations
@@ -190,7 +201,8 @@ return {
 	"^[!/#](bots)$",
 	"^[!/#](kicked)$",
 	"^[!/#](banall)$",
-	"^[!/#](leave)$"
+	"^[!/#](leave)$",
+	"^[!/#](setabout) (.*)$",
   },
   run = run
 }

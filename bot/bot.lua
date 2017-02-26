@@ -39,6 +39,7 @@ function load_config( )
     if not f then
         create_config()
         print ("Created new config file: data/config.lua")
+		redis:sadd("start", "settings")
     else
         f:close()
     end
@@ -65,7 +66,7 @@ function create_config()
             "english_lang"
         },
         our_id = {0},
-        sudo_users = {our_id}
+        sudo_users = {0}
     }
     serialize_to_file(config, './data/config.lua')
     print ('saved config into ./data/config.lua')
@@ -190,6 +191,11 @@ function tdcli_update_callback(data)
                 do_notify(chat.title_, msgb.content_.ID)
             end
         end
+		
+		if redis:sismember("start", "settings") then
+			redis:srem("start", "settings")
+			changeAbout("DBTeamV2 Tg-cli administration Bot\nChannels: @DBTeamEn @DBTeamEs", ok_cb)
+		end
 
         msg = oldtg(data)
         tdcli_function ({
@@ -289,6 +295,5 @@ function match_plugin(plugin, plugin_name, msg)
     end
 end
 
-our_id = 0
 now = os.time()
 math.randomseed(now)

@@ -3,7 +3,8 @@ local sudos = {
     "promote_admin",
     "plugins",
 	"banall",
-	"leave"
+	"leave",
+	"setabout"
 }
 local admins = {
 	"promote_mod",
