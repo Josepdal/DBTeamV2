@@ -356,3 +356,18 @@ function plugins_names( )
     end
     return files
 end
+
+function get_multimatch_byspace(str, regex, cut)
+    list = {}
+    for wrd in str:gmatch("%S+") do
+        if (regex and wrd:match(regex)) then
+            table.insert(list, wrd:sub(wrd:find(regex)+cut))
+        elseif (not regex) then
+            table.insert(list, wrd)
+        end
+    end
+    if (#list > 0) then
+        return list
+    end
+    return false
+end
