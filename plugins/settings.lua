@@ -63,17 +63,24 @@ local function pre_process(msg)
 	if msg.text then
     	if redis:get("settings:spam:" .. msg.to.id) then
 	    	local list = require("data/spam_data")
-	    	local blacklist = redis:get("settings:setspam:" .. msg.to.id) or "default"
-		    for number, pattern in pairs(list.blacklist[blacklist]) do
-		        local matches = match_pattern(pattern, msg.text)
-		        if matches then			
-		        	reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
-		            delete_msg(msg.to.id, msg.id)
-					if redis:get("settings:reports:" .. msg.to.id) then
-						send_report(msg,matches[1])
-					end	
-					msg.text = ""
-		            return msg
+	    	local customlist = redis:get("settings:setspam:" .. msg.to.id) or "default"
+		    for number, pattern in pairs(list.blacklist[customlist]) do
+		        matches = match_pattern(pattern, msg.text)
+				spam = true
+		        if matches then	
+					for number, pattern1 in pairs(list.whitelist[customlist]) do
+						local matches1 = match_pattern(pattern1, msg.text)
+						if matches1 then
+							spam = false
+						end
+					end					
+					if spam then
+						reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. msg.from.username .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
+						delete_msg(msg.to.id, msg.id)
+						if redis:get("settings:reports:" .. msg.to.id) then
+							send_report(msg,pattern)
+						end
+					end
 		        end
 		    end
 		end
