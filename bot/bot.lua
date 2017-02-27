@@ -195,6 +195,7 @@ function tdcli_update_callback(data)
 		if redis:sismember("start", "settings") then
 			redis:srem("start", "settings")
 			changeAbout("DBTeamV2 Tg-cli administration Bot\nChannels: @DBTeamEn @DBTeamEs", ok_cb)
+			getMe(getMeCb)
 		end
 
         msg = oldtg(data)

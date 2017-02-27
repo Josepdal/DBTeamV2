@@ -127,12 +127,9 @@ end
 function kicked_cb(extra, data)
 	local count = data.total_count_
 	if not count then
-		send_msg(extra, "<b>Error:</b> must be a supergroup.", 'html')
+		send_msg(extra, "<b>Error:</b> must be a supergroup and admin of the chat.", 'html')
 	end
 	local count2 = count
-	if not count then
-		send_msg(extra, "<b>Error:</b> bot must be admin of the chat.", 'html') ----translations
-	end
 	text = "<b>Banned users in chat (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
 		if v.user_id_ then	
