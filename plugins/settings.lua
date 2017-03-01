@@ -76,9 +76,9 @@ local function pre_process(msg)
 					end					
 					if spam then
 						if msg.from.username then
-							local user_ = msg.from.username
+							user_ = msg.from.username
 						else
-							local user_ = msg.from.first_name
+							user_ = msg.from.first_name
 						end
 						reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. user_ .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
 						delete_msg(msg.to.id, msg.id)
