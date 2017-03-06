@@ -41,6 +41,7 @@ function load_config( )
         print ("Created new config file: data/config.lua")
 		redis:sadd("start", "settings")
     else
+		redis:sadd("load", "settings")
         f:close()
     end
     local config = loadfile ("./data/config.lua")()
@@ -201,6 +202,10 @@ function tdcli_update_callback(data)
 			redis:srem("start", "settings")
 			changeAbout("DBTeamV2 Tg-cli administration Bot\nChannels: @DBTeamEn @DBTeamEs", ok_cb)
 			getMe(getMeCb)
+		elseif redis:sismember("load", "settings") then
+			redis:srem("load", "settings")
+			-- This loads to cache most of users, chats, channels .. that are removed in every reboot
+			getChats(2^63 - 1, 0, 20, ok_cb)
 		end
 
         msg = oldtg(data)

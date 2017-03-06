@@ -80,6 +80,19 @@ function get_msg_info(chat_id, message_id, cb_function, extra)
   	}, cb_function, extra)
 end
 
+function getChats(offset_order, offset_chat_id, limit, cb, cmd)
+  if not limit or limit > 20 then
+    limit = 20
+  end
+
+  tdcli_function ({
+    ID = "GetChats",
+    offset_order_ = offset_order or 9223372036854775807,
+    offset_chat_id_ = offset_chat_id or 0,
+    limit_ = limit
+  }, cb or dl_cb, cmd)
+end
+
 function getMe(cb, cmd)
   tdcli_function ({
     ID = "GetMe",
@@ -109,13 +122,6 @@ function changeAbout(about, cb, cmd)
   tdcli_function ({
     ID = "ChangeAbout",
     about_ = about
-  }, cb or dl_cb, cmd)
-end
-
-function openChat(chat_id, cb, cmd)
-  tdcli_function ({
-    ID = "OpenChat",
-    chat_id_ = chat_id
   }, cb or dl_cb, cmd)
 end
 
