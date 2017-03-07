@@ -134,6 +134,13 @@ function pin_msg(channel_id, message_id, disable_notification)
   	}, dl_cb, nil)
 end
 
+function openChat(chat_id, cb, cmd)
+  tdcli_function ({
+    ID = "OpenChat",
+    chat_id_ = chat_id
+  }, cb or dl_cb, cmd)
+end
+
 function kick_user(chat_id, user_id)
   	tdcli_function ({
     	ID = "ChangeChatMemberStatus",
