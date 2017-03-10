@@ -1,8 +1,36 @@
-DBTeamV2
-========
+# **DBTeamV2** #
 
-Installation
-------------
+
+
+[![Library](https://img.shields.io/badge/TDLib-beta-brightgreen.svg)](https://core.telegram.org/tdlib)
+[![Telegram-cli](https://img.shields.io/badge/TDCli-Bitbucket-green.svg)](https://bitbucket.org/vysheng/tdcli)
+[![Lua](https://img.shields.io/badge/Lua-5.2-blue.svg)](https://www.lua.org/)
+[![Redis](https://img.shields.io/badge/Redis-3.2.8-red.svg)](https://redis.io/)
+[![License](https://img.shields.io/badge/License-GNU%20GPL--3-yellow.svg)](https://github.com/Josepdal/DBTeamV1/blob/master/LICENSE)
+
+
+### An administration Telegram bot using Telegram-cli
+
+DBTeamV2 is a a powerful administration userbot that uses [Telegram-Cli](https://valtman.name/telegram-cli).  
+It is programmed in [Lua](https://www.lua.org/) and uses the rapid [Redis](https://redis.io/) database.
+
+The difference among the old [DBTeamV1](https://github.com/Josepdal/DBTeamV1) and [DBTeamV2](https://github.com/Josepdal/DBTeamV2) is that this one uses a much newer *Tg-Cli* with new stuff and also the bot has improved in usability, stability and has new functions.
+
+# Summary
+
+- Easy to setup and to update, no compilation needed.
+- Uses a plugins system so you can easily configure or add what you need.
+- Multilanguage and easy to add new languages.
+- Has many funtions that normal bots are not able to do, e.g., remove messages.
+- Advanced moderation system.
+- Has privilege ranges (sudo, admin, mod, user).
+- Simple and intuitive command usages.
+- Compatible with most of recent added telegram additions.
+- Really fast and stable.
+- Up-to-date documentation at http://telegra.ph/DBTeamV2-Tutorial-English-02-26
+
+
+# Installation
 
 Debian/Ubuntu and derivatives:
 ```bash
@@ -23,9 +51,10 @@ sudo yaourt -S git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-d
 Fedora:
 ```bash
 sudo dnf install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 tmux
-```
+```                   
+---------------------------------
 
-After those dependencies, lets install the bot
+After installing the dependencies, lets install the bot:
 ```bash
  git clone https://github.com/Josepdal/DBTeamV2.git
  cd DBTeamV2
@@ -34,7 +63,17 @@ After those dependencies, lets install the bot
  ./launch.sh # Will ask you for a phone number & confirmation code.
 ```
 
-Tmux:
+To update the bot, you must exit the Tg-Cli console:
+```bash
+quit
+```
+And execute the following command:
+```bash
+./launch.sh update
+```
+The code will be updated if there is something new.
+
+You can also run the bot in a Tmux session if you want:
 ```bash
 ./launch.sh tmux # create a session tmux
 
