@@ -37,6 +37,15 @@ get_sub() {
     done
 }
 
+make_progress() {
+exe=`lua <<-EOF
+    print(tonumber($1)/tonumber($2)*100)
+EOF
+`
+    echo ${exe:0:4}
+}
+
+
 
 function download_libs_lua() {
     if [[ ! -d "logs" ]]; then mkdir logs; fi
@@ -44,11 +53,11 @@ function download_libs_lua() {
     local i
     for ((i=0;i<${#lualibs[@]};i++)); do
         printf "\r\33[2K"
-        printf "\rDBTeam: downloading libs... [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
+        printf "\rDBTeam: wait... [`make_progress $(($i+1)) ${#lualibs[@]}`%%] [$(($i+1))/${#lualibs[@]}] ${lualibs[$i]}"
         ./.luarocks/bin/luarocks install ${lualibs[$i]} &>> logs/logluarocks_${today}.txt
     done
     sleep 0.2
-    printf "\nLogfile created: `pwd`/logs/logluarocks_${today}.txt\nDone\n"
+    printf "\nLogfile created: $PWD/logs/logluarocks_${today}.txt\nDone\n"
     rm -rf luarocks-2.2.2*
 }
 
