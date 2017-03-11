@@ -61,26 +61,26 @@ local function run(msg, matches)
 			end
 		end	
 	elseif matches[1] == "bots" then
-		if permissions(msg.from.id, msg.to.id, "tagall") then --------translations
+		if permissions(msg.from.id, msg.to.id, "tagall") then
 			getChannelMembers(msg.to.id, 0, 'Bots', 200, bots_cb, msg.to.id)
 		end
 	elseif matches[1] == "kicked" then
-		if permissions(msg.from.id, msg.to.id, "tagall") then--------translations
+		if permissions(msg.from.id, msg.to.id, "tagall") then
 			getChannelMembers(msg.to.id, 0, 'Kicked', 200, kicked_cb, msg.to.id)
 		end
 	elseif matches[1] == "banall" then
-		if permissions(msg.from.id, msg.to.id, "banall") then--------translations
+		if permissions(msg.from.id, msg.to.id, "banall") then
 			getChannelMembers(msg.to.id, 0, 'Recent', 200, banall_cb, msg.to.id)
 		end
 	elseif matches[1] == "leave" then
-		if permissions(msg.from.id, msg.to.id, "leave") then--------translations
-			send_msg(msg.to.id, "<b>Bye!</b>", 'html')------translations
+		if permissions(msg.from.id, msg.to.id, "leave") then
+			send_msg(msg.to.id, lang_text(msg.to.id, 'leave'), 'html')
 			kick_user(msg.to.id, _config.our_id[1])
 		end
 	elseif matches[1] == "setabout" and matches[2] then
-		if permissions(msg.from.id, msg.to.id, "setabout") then--------translations
+		if permissions(msg.from.id, msg.to.id, "setabout") then
 			changeAbout(matches[2], ok_cb)
-			send_msg(msg.to.id, "<b>About changed to:</b>" .. matches[2], 'html')------translations
+			send_msg(msg.to.id, lang_text(msg.to.id, 'setAbout') .. matches[2], 'html')
 		end			
 	end
 end
@@ -89,10 +89,10 @@ function members_cb(extra, data)
 	openChat(msg.to.id, opencb)
 	local count = data.total_count_
 	if not count then
-		send_msg(extra.chat, "<b>Error:</b> must be a supergroup.", 'html')
+		send_msg(extra.chat, lang_text(msg.to.id, 'error1'), 'html')
 	end
 	local count2 = count
-	text = "<b>Chat users (</b>"..count.."<b>):</b> \n"
+	text = "<b>Users (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
 		if v.user_id_ then	
 			count2 = count2 - 1	
@@ -102,7 +102,7 @@ function members_cb(extra, data)
 end
 
 function banall_cb(extra, data)
-	send_msg(extra, "<b>Trying to ban all users...</b>", 'html')------translations
+	send_msg(extra, lang_text(msg.to.id, 'banall'), 'html')
 	for k,vv in pairs(data.members_) do
 		for v,user in pairs(_config.sudo_users) do
 			if vv.user_id_ ~= user and  vv.user_id_ ~= _config.our_id[1] then
@@ -115,7 +115,7 @@ end
 function bots_cb(extra, data)
 	local count = data.total_count_
 	local count2 = count
-	text = "<b>Bots in chat (</b>"..count.."<b>):</b> \n"
+	text = "<b>Bots: (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
 		if v.user_id_ then	
 			count2 = count2 - 1	
@@ -127,10 +127,10 @@ end
 function kicked_cb(extra, data)
 	local count = data.total_count_
 	if not count then
-		send_msg(extra, "<b>Error:</b> must be a supergroup and admin of the chat.", 'html')
+		send_msg(extra, lang_text(msg.to.id, 'error2'), 'html')
 	end
 	local count2 = count
-	text = "<b>Banned users in chat (</b>"..count.."<b>):</b> \n"
+	text = "<b>Bans (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
 		if v.user_id_ then	
 			count2 = count2 - 1
@@ -181,19 +181,19 @@ end
 
 return {
   patterns = {
-  	"^[!/#](admin)$",
-	"^[!/#](admin) (.*)$",
-    "^[!/#](mod)$",
-	"^[!/#](mod) (.*)$",
-    "^[!/#](user)$",
-	"^[!/#](user) (.*)$",
-    "^[!/#](admins)$",
-    "^[!/#](mods)$",
-	"^[!/#](users)$",
-	"^[!/#](members)$",
+  	"^[!/#]([Aa]dmin)$",
+	"^[!/#]([Aa]dmin) (.*)$",
+    "^[!/#]([Mm]od)$",
+	"^[!/#]([Mm]od) (.*)$",
+    "^[!/#]([Uu]ser)$",
+	"^[!/#]([Uu]ser) (.*)$",
+    "^[!/#]([Aa]dmins)$",
+    "^[!/#]([Mm]ods)$",
+	"^[!/#]([Uu]sers)$",
+	"^[!/#]([Mm]embers)$",
 	"^[!/#](tagall)$",
-	"^[!/#](users) (.*)$",
-	"^[!/#](members) (.*)$",
+	"^[!/#]([Uu]sers) (.*)$",
+	"^[!/#]([Mm]embers) (.*)$",
 	"^[!/#](tagall) (.*)$",
 	"^[!/#](bots)$",
 	"^[!/#](kicked)$",

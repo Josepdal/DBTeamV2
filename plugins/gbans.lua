@@ -11,7 +11,7 @@ local function run(msg, matches)
    if permissions(msg.from.id, msg.to.id, "gban") then
 		if not matches[2] then
 			local count =(redis:scard("gbans"))
-			local text = "<b>Globally banned users (</b>"..count.."<b>) :</b>\n"
+			local text = lang_text(msg.to.id, 'gbans')..count.."<b>) :</b>\n"
 			for k, v in pairs (redis:smembers("gbans")) do
 				text = text .. "<code>></code> " .. v .. "\n"
 			end
@@ -44,14 +44,14 @@ local function run(msg, matches)
 		elseif matches[2] == "install" then	
 			t = scandir("data/")
 			for k, v in pairs(t) do
-				if string.match(v, "^gbans%.[Ll][uU][Aa]$") then		
+				if string.match(v, "^gbans%.[Ll]ua$") then		
 					local count = 0
 					local gbanst = load_gbans("data/"..v)
 					for k, v in pairs (gbanst) do
 						count = count + 1
 						redis:sadd("gbans", v)
 					end
-					send_msg(msg.to.id, count.. " users globally banned from LUA file!", "html")
+					send_msg(msg.to.id, count .. lang_text(msg.to.id, 'gbanLua'), "html")
 					
 				elseif string.match(v, "^gbans%.[Jj][sS][Oo][nN]$") then
 					local count = 0
@@ -68,13 +68,13 @@ local function run(msg, matches)
 					until not line	
 					
 					f:close()
-					send_msg(msg.to.id, count.. " users globally banned from JSON file!", "html")
+					send_msg(msg.to.id, count .. lang_text(msg.to.id, 'gbanJson'), "html")
 				end	
 			end
 			
 		elseif matches[2] == "delete" then
 			redis:del("gbans")
-			send_msg(msg.to.id, "Gbans database removed.", "html")
+			send_msg(msg.to.id, lang_text(msg.to.id, 'gbanDel'), "html")
 		end
    end
 end
@@ -91,8 +91,8 @@ end
 
 return {
         patterns = {
-                "^[!/#](gbans)$",
-				"^[!/#](gbans) (.*)$"
+                "^[!/#]([Gg]bans)$",
+				"^[!/#]([Gg]bans) (.*)$"
 					},
     run = run,
 }

@@ -75,6 +75,8 @@ local function run(msg, matches)
 		set_text(LANG, 'noSpamT', '`>` ارسال هرزنامه هم اکنون غير مجاز است .')
 		set_text(LANG, 'setSpam', '`>` حساسيت هرزنامه ')
 		set_text(LANG, 'floodT', '`>` ارسال پيام هاي مکرر مجاز است.')
+		set_text(LANG, 'forwardT', '`>` *Forward messages* is now *allowed* in this chat.')
+		set_text(LANG, 'noForwardT', '`>` *Forward messages* is not *allowed* in this chat.')
 		set_text(LANG, 'noFloodT', '`>` ارسال پيام هاي مکرر غير مجاز است.')
 		set_text(LANG, 'floodTime', '`>` زمان ارسال پيام مکرر و سريع تغيير يافت به : ')
 		set_text(LANG, 'floodMax', '`>` حساسيت ارسال پيام مکرر تغير يافت به: ')
@@ -137,7 +139,21 @@ local function run(msg, matches)
 		set_text(LANG, 'modList', '`>` *ليست مديران*')
 		set_text(LANG, 'adminList', '`>` *ليست ادمين ها')
 		set_text(LANG, 'modEmpty', '*هيچ مديري در اين گروه وجود ندارد .')
-		set_text(LANG, 'adminEmpty', '*هيچ ادميني وجود ندارد.*')
+		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
+		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
+		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
+		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
+		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
+		set_text(LANG, 'leave', '<b>Bye!</b>')
+		
+		
+		-- gban.lua --
+		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
+		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanDel', 'Gbans database removed.')
+
 		-- id.lua --
 		set_text(LANG, 'user', 'کابر')
 		set_text(LANG, 'chatName', 'نام گروه')
@@ -152,7 +168,8 @@ local function run(msg, matches)
 		set_text(LANG, 'muteChat', '`>` اين گروه در حال حاظر در حالت سکوت قرار دارد*')
 		set_text(LANG, 'unmuteUser', '`>` کاربر از ليست سکوت خارج شد و ميتواند صحبت کند.*')
 		set_text(LANG, 'unmuteChat', '`>` گروه از حالت سکوت خارج شد و همه کاربران ميتوانند چت کنند*')
-
+		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
+		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
 		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
 
 		-- commands.lua --
@@ -161,9 +178,11 @@ local function run(msg, matches)
 
 		-- plugins.lua --
 
+		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
 		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
+		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
 
 		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
 		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')

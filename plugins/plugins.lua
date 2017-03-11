@@ -24,7 +24,7 @@ do
 	end
 
 	local function list_plugins(only_enabled)
-	    local text = '*'..lang_text(to_id, 'plugins')..':*\n'
+	    local text = '*'..lang_text(to_id, 'pluginsActivated')..':*\n'
 	    local psum = 0
 	    for k, v in pairs( plugins_names( )) do
 	        --  ✅ enabled, ❎ disabled
@@ -112,6 +112,7 @@ do
 	        end
 	        -- Reload all the plugins!
 	        if matches[1] == 'reload' then
+				send_msg(msg.to.id, lang_text(msg.to.id, 'pluginsReload'), "md")
 	            return reload_plugins(true)
 	        end
 

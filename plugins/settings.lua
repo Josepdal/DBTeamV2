@@ -472,10 +472,10 @@ local function run(msg, matches)
 		elseif matches[1] == "setwelcome" and permissions(msg.from.id, msg.to.id, "settings") then
 			if tonumber(matches[2]) == 0 then
 				redis:del("settings:welcome:msg:" .. msg.to.id)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'defaultWelcomeT'), 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'weldefault'), 'md')
 			else
 				redis:set("settings:welcome:msg:" .. msg.to.id, matches[2])
-				send_msg(msg.to.id, lang_text(msg.to.id, 'setWelcomeT'), 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'welnew') .. matches[2], 'md')
 			end
 		elseif matches[1] == "max" and is_number(matches[2]) and permissions(msg.from.id, msg.to.id, "settings") then
 			if tonumber(matches[2]) == 0 then

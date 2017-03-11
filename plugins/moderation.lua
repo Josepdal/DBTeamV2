@@ -162,7 +162,7 @@ local function run(msg, matches)
 			end
 		elseif is_number(matches[2]) and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
-				send_msg(msg.to.id, "*User muted for *`" .. matches[2] .. "` *seconds.*", "md")
+				send_msg(msg.to.id, lang_text(msg.to.id, 'muteUserSec') .. matches[2] .. " *secs.*", "md")
 				redis:setex("muted:" .. msg.to.id .. ":" .. msg.replied.id, matches[2], true)
 			else
 				permissions(msg.from.id, msg.to.id, "moderation")
@@ -198,18 +198,18 @@ local function run(msg, matches)
 	elseif matches[1] == "muteall" then
 		if is_number(matches[2]) then
 			if permissions(msg.from.id, msg.to.id, "moderation") then
-				send_msg(msg.to.id, "*Chat muted for *`" .. matches[2] .. "` *seconds.*", "md")
+				send_msg(msg.to.id, lang_text(msg.to.id, 'muteChatSec') .. matches[2] .. " *secs.*", "md")
 				redis:setex("muteall:" .. msg.to.id, matches[2], true)
 			end
 		else
 			if permissions(msg.from.id, msg.to.id, "moderation") then
-				send_msg(msg.to.id, "*Chat currently muted.*", "md")
+				send_msg(msg.to.id, lang_text(msg.to.id, 'muteChat'), "md")
 				redis:set("muteall:" .. msg.to.id, true)
 			end
 		end
 	elseif matches[1] == "unmuteall" then
 		if permissions(msg.from.id, msg.to.id, "moderation") then
-			send_msg(msg.to.id, "*All users can talk now.*", "md")
+			send_msg(msg.to.id, lang_text(msg.to.id, 'unmuteChat'), "md")
 			redis:del("muteall:" .. msg.to.id)
 		end
 	elseif matches[1] == "delall" and not msg.reply_id then

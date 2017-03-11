@@ -176,7 +176,20 @@ local function run(msg, matches)
 		set_text(LANG, 'modList', '`>` *Lista de Mods*')
 		set_text(LANG, 'adminList', '`>` *Lista de Admins')
 		set_text(LANG, 'modEmpty', '*La lista de mods está vacia* en este chat.')
-		set_text(LANG, 'adminEmpty', '*La lista de admins está vacia.*')
+		set_text(LANG, 'adminEmpty', '*La lista de admins está vacia*.')
+		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
+		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
+		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
+		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
+		set_text(LANG, 'leave', '<b>Bye!</b>')
+		
+		
+		-- gban.lua --
+		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
+		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanDel', 'Gbans database removed.')
 
 		-- id.lua --
 		set_text(LANG, 'user', 'Usuario')
@@ -191,6 +204,8 @@ local function run(msg, matches)
 		set_text(LANG, 'ungbanUser', '`>` El usuario ha sido * eliminado * de * lista de baneados globales. *')
 		set_text(LANG, 'muteUser', '`>` El usuario ha sido *silenciado.*')
 		set_text(LANG, 'muteChat', '`>` El chat ha sido *silenciado.*')
+		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
+		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
 		set_text(LANG, 'unmuteUser', '`>` El usuario *puede hablar ahora.*')
 		set_text(LANG, 'unmuteChat', '`>` Los usuarios *pueden hablar ahora.*')
 
@@ -202,9 +217,11 @@ local function run(msg, matches)
 
 		-- plugins.lua --
 
+		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
 		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
+		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
 
 		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
 		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')

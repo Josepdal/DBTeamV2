@@ -30,7 +30,7 @@ local function run(msg, matches)
 		set_text(LANG, 'weloff', 'Welcome enabled.')
 		set_text(LANG, 'welon', 'Welcome disabled.')
 		set_text(LANG, 'weldefault', 'The welcome is the default.')
-		set_text(LANG, 'welnew', 'Welcome saved! is')
+		set_text(LANG, 'welnew', 'Welcome saved! Actual welcome:\n')
 		set_text(LANG, 'defaultWelcome', 'Welcome $users to the chat!')
 
 		-- stats.lua
@@ -171,6 +171,19 @@ local function run(msg, matches)
 		set_text(LANG, 'adminList', '`>` *Admins list')
 		set_text(LANG, 'modEmpty', '*Mod list is empty* in this chat.')
 		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
+		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
+		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
+		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
+		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
+		set_text(LANG, 'leave', '<b>Bye!</b>')
+		
+		
+		-- gban.lua --
+		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
+		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
+		set_text(LANG, 'gbanDel', 'Gbans database removed.')
 
 		-- id.lua --
 		set_text(LANG, 'user', 'User')
@@ -185,6 +198,8 @@ local function run(msg, matches)
 		set_text(LANG, 'ungbanUser', '`>` The user has been *removed* from *global ban list.*')
 		set_text(LANG, 'muteUser', '`>` The user has been *muted.*')
 		set_text(LANG, 'muteChat', '`>` The chat has been *muted.*')
+		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
+		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
 		set_text(LANG, 'unmuteUser', '`>` The user *can talk now.*')
 		set_text(LANG, 'unmuteChat', '`>` The users *can talk now.*')
 
@@ -195,10 +210,12 @@ local function run(msg, matches)
 		set_text(LANG, 'errorNoPlug', 'The plugin does not exists or has not usages.')
 
 		-- plugins.lua --
-
+		
+		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
 		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
 		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
 		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
+		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
 
 		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
 		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
