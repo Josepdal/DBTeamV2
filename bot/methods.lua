@@ -152,6 +152,17 @@ function kick_user(chat_id, user_id)
   	}, dl_cb, nil)
 end
 
+function promoteToAdmin(chat_id, user_id)
+  	tdcli_function ({
+    	ID = "ChangeChatMemberStatus",
+    	chat_id_ = chat_id,
+    	user_id_ = user_id,
+    	status_ = {
+      		ID = "ChatMemberStatusModerator"
+    	},
+  	}, dl_cb, nil)
+end
+
 function resolve_username(username, cb_function, cb_extra)
     tdcli_function ({
         ID = "SearchPublicChat",

@@ -41,6 +41,26 @@ end
 
 local function pre_process(msg)
 	if msg.added then
+		for k, user in pairs (msg.added) do 
+			for k,gbanned in pairs (redis:smembers("gbans")) do          --checks if user is gbanned
+				if tonumber(gbanned) == user.id then
+					kick_user(msg.to.id, user.id)
+				end
+			end
+			for k, mod in pairs(redis:smembers("mods:" .. msg.to.id)) do --checks if user is mod
+				if tonumber(mod) == user.id then
+					promoteToAdmin(msg.to.id, user.id)
+				end
+			end
+			for k, admin in pairs(redis:smembers("admins")) do           --checks if user is admin
+				if tonumber(admin) == user.id then
+					promoteToAdmin(msg.to.id, user.id)
+				end
+			end
+			if new_is_sudo(user.id) then                                 -- checks if user is sudo
+				promoteToAdmin(msg.to.id, user.id)
+			end			
+		end
 		if redis:get("settings:welcome:"..msg.to.id) then
 			local users
 			if #msg.added > 0 then
