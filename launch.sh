@@ -2,9 +2,11 @@
 # Launch created by @Jarriz, @Josepdal and @iicc1
 tgcli_version=1222
 TMUX_SESSION=DBTeamV2
+luarocks_version=2.4.2
 
 lualibs=(
 'luasec'
+'luarepl'
 'lbase64 20120807-3'
 'luafilesystem'
 'lub'
@@ -85,10 +87,16 @@ function update() {
 }
 
 function configure() {
-    dir=`pwd`
-    wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz &>/dev/null
-    tar zxpf luarocks-2.2.2.tar.gz &>/dev/null
-    cd luarocks-2.2.2
+    if [[ -f "/usr/bin/lua5.3" ]]; then
+        echo -e "\033[0;31mError\033[0m":\
+        "DBTeam ins't working with lua5.3 and the package must be removed,"\
+        "please use your remove them, install lua5.2 and run launch.sh again."
+        exit 1
+    fi
+    dir=$PWD
+    wget http://luarocks.org/releases/luarocks-${luarocks_version}.tar.gz &>/dev/null
+    tar zxpf luarocks-${luarocks_version}.tar.gz &>/dev/null
+    cd luarocks-${luarocks_version}
     if [[ ${1} == "--no-null" ]]; then
         ./configure --prefix=$dir/.luarocks --sysconfdir=$dir/.luarocks/luarocks --force-config
         make bootstrap
@@ -99,7 +107,7 @@ function configure() {
     cd ..; rm -rf luarocks*
     if [[ ${1} != "--no-download" ]]; then
         download_libs_lua
-        wget --progress=bar:force https://valtman.name/files/telegram-cli-1222 2>&1 | get_sub
+        wget --progress=bar:force https://valtman.name/files/telegram-cli-${tgcli_version} 2>&1 | get_sub
         if [ ! -d "bin" ]; then mkdir bin; fi
         mv telegram-cli-${tgcli_version} ./bin/telegram-cli; chmod +x ./bin/telegram-cli
     fi
