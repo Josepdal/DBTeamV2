@@ -39,6 +39,19 @@ get_sub() {
     done
 }
 
+get_firstname_by_username() {
+	user=`./bin/telegram-cli --disable-link-preview -C -R -D -e \
+	'resolve_username '${1}'' 2>/dev/null`
+    space_index=`echo ${user} | tr -cd ' '  | wc -c`
+	msg=null
+	if [[ ! ${user} ]] || [[ ${user} =~ 400 ]]; then
+		echo $msg
+	else
+		msg=`echo ${user} | cut -d ' ' -f${space_index}- | cut -d ' ' -f1`
+		echo "${msg}"
+	fi
+}
+
 make_progress() {
 exe=`lua <<-EOF
     print(tonumber($1)/tonumber($2)*100)
@@ -63,23 +76,6 @@ function download_libs_lua() {
     rm -rf luarocks-2.2.2*
 }
 
-function install() {
-    install_libs_lua
-    if [ -d /mnt/c/Windows ]; then
-        echo "Patching bot.lua for Windows 10 support..."
-        sed -i '5d' bot/bot.lua
-        sed -i '5d' bot/bot.lua
-        sed -i '5i\require("bot/utils")' bot/bot.lua
-        sed -i '6i\require("bot/permissions")' bot/bot.lua
-        sed -i '7i\--File patched to support W10' bot/bot.lua
-    fi
-}
-
-function character() {
-    string=`echo "$2"`
-    echo ${string:${letter}:1}
-}
-
 function update() {
     git checkout launch.sh plugins/ lang/ bot/ libs/
     git pull
@@ -87,10 +83,10 @@ function update() {
 }
 
 function configure() {
-    if [[ -f "/usr/bin/lua5.3" ]]; then
+    if [[ -f "/usr/bin/lua5.3" ]] || [[ -f "/usr/bin/lua5.1" ]] || [[ -f "/usr/local/bin/lua5.3" ]]; then
         echo -e "\033[0;31mError\033[0m":\
-        "DBTeam ins't working with lua5.3 and the package must be removed,"\
-        "please use your remove them, install lua5.2 and run launch.sh again."
+        "DBTeam ins't working with lua5.3 and others versions, the packages must be removed,"\
+        "please remove them, reinstall lua5.2 and run launch.sh again."
         exit 1
     fi
     dir=$PWD
@@ -119,15 +115,7 @@ function configure() {
 }
 
 function start_bot() {
-    if [[ $1 == "--"* ]]; then
-        ./bin/telegram-cli --${1:2}
-        exit
-    elif [[ $1 == "-"* ]]; then
-        ./bin/telegram-cli -${1:1}
-        exit
-    else
-        ./bin/telegram-cli -s ./bot/bot.lua
-    fi
+    ./bin/telegram-cli -s ./bot/bot.lua $@
 }
 
 function show_logo_slowly() {
@@ -183,12 +171,18 @@ case $1 in
     	if [ ! -f "/usr/bin/tmux" ]; then echo "Please install tmux"; exit; fi
     	tmux kill-session -t $TMUX_SESSION
     	exit ;;
+    whois)
+        name=`get_firstname_by_username "${2}"`
+        if [[ $name == null ]]; then
+        	echo "Error resolving the user."
+        	exit 1
+        else
+        	echo "${name}"
+        	exit 0
+        fi ;;
 esac
-if [[ $1 == "-"* ]]; then
-    show_logo
-    start_bot $1
-    exit
-fi
+
+
 show_logo
-start_bot
-exit
+start_bot $@
+exit 0
