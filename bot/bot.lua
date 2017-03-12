@@ -62,7 +62,8 @@ function create_config()
             "commands",
             "plugins",
             "stats",
-			"gban"
+			"gbans",
+			"extra"
         },
         enabled_lang = {
             "english_lang"
