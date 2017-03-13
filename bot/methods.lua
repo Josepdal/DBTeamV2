@@ -36,6 +36,17 @@ function reply_msg(chat_id, text, msg_id, parse)
     }, dl_cb, nil)
 end
 
+function changeChatMemberStatus(chat_id, user_id, status, cb, cmd)
+  tdcli_function ({
+    ID = "ChangeChatMemberStatus",
+    chat_id_ = chat_id,
+    user_id_ = user_id,
+    status_ = {
+      ID = "ChatMemberStatus" .. status
+    },
+  }, cb or dl_cb, cmd)
+end
+
 function delete_msg(chat_id, msg_id)
 	msg_id = {[0] = msg_id}
     tdcli_function ({
@@ -53,6 +64,18 @@ function getParse(parse)
 	else
 		return nil
 	end
+end
+
+function sendRequest(request_id, chat_id, reply_to_message_id, disable_notification, from_background, reply_markup, input_message_content, callback, extra)
+  tdcli_function ({
+    ID = request_id,
+    chat_id_ = chat_id,
+    reply_to_message_id_ = reply_to_message_id,
+    disable_notification_ = disable_notification,
+    from_background_ = from_background,
+    reply_markup_ = reply_markup,
+    input_message_content_ = input_message_content,
+  }, callback or dl_cb, extra)
 end
 
 function add_user(chat_id, user_id)
@@ -335,7 +358,7 @@ function redisunmute_resolve(chat_id, username)
     resolve_username(username, redisunmute_resolve_cb, chat_id)
 end
 
-local function getInputFile(file)
+function getInputFile(file)
     if file:match('/') then
         infile = {ID = "InputFileLocal", path_ = file}
     elseif file:match('^%d+$') then
@@ -344,6 +367,16 @@ local function getInputFile(file)
         infile = {ID = "InputFilePersistentId", persistent_id_ = file}
     end
     return infile
+end
+
+function sendSticker(chat_id, reply_to_message_id, disable_notification, from_background, reply_markup, sticker, cb, cmd)
+  local input_message_content = {
+    ID = "InputMessageSticker",
+    sticker_ = getInputFile(sticker),
+    width_ = 0,
+    height_ = 0
+  }
+  sendRequest('SendMessage', chat_id, reply_to_message_id, disable_notification, from_background, reply_markup, input_message_content, cb, cmd)
 end
 
 function send_document(chat_id, document)
@@ -360,6 +393,89 @@ function send_document(chat_id, document)
             caption_ = nil
         },
     }, dl_cb, cb_extra)
+end
+
+function sendSticker(chat_id, sticker)
+  local input_message_content = {
+    ID = "InputMessageSticker",
+    sticker_ = getInputFile(sticker),
+    width_ = 0,
+    height_ = 0
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendAnimation(chat_id, gif, caption)
+  local input_message_content = {
+    ID = "InputMessageAnimation",
+    animation_ = getInputFile(gif),
+    width_ = 0,
+    height_ = 0,
+    caption_ = nil
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendAudio(chat_id, audio, caption)
+  local input_message_content = {
+    ID = "InputMessageAudio",
+    audio_ = getInputFile(audio),
+    duration_ = duration or 0,
+    title_ = title or 0,
+    performer_ = performer or "whatever",
+    caption_ = caption or "whatever"
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendDocument(chat_id, document, caption)
+  local input_message_content = {
+    ID = "InputMessageDocument",
+    document_ = getInputFile(document),
+    caption_ = caption
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendPhoto(chat_id, photo, caption)
+  local input_message_content = {
+    ID = "InputMessagePhoto",
+    photo_ = getInputFile(photo),
+    added_sticker_file_ids_ = {},
+    width_ = 0,
+    height_ = 0,
+    caption_ = caption
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendVideo(chat_id, video, caption)
+  local input_message_content = {
+    ID = "InputMessageVideo",
+    video_ = getInputFile(video),
+    added_sticker_file_ids_ = {},
+    duration_ = duration or 0,
+    width_ = width or 0,
+    height_ = height or 0,
+    caption_ = caption
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function sendVoice(chat_id, voice, caption)
+  local input_message_content = {
+    ID = "InputMessageVoice",
+    voice_ = getInputFile(voice),
+    duration_ = duration or 0,
+    waveform_ = waveform or 0,
+    caption_ = caption
+  }
+  sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
+end
+
+function cbsti(a,b)
+	--vardump(a)
+	--vardump(b)
 end
 
 function export_link(chat_id, cb_function, cb_extra)

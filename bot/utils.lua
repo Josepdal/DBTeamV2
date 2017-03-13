@@ -47,7 +47,7 @@ function oldtg(data)
     msg.to = {}
     msg.from = {}
     msg.replied = {}
-
+    
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
     if data.message_.content_.ID == "MessageText" then
@@ -66,36 +66,43 @@ function oldtg(data)
     end
     if data.message_.content_.ID == "MessagePhoto" then
         msg.photo = true
+		msg.file_id = data.message_.content_.photo_.sizes_[3].photo_.persistent_id_
     else
         msg.photo = false
     end
     if data.message_.content_.ID == "MessageSticker" then
         msg.sticker = true
+		msg.file_id = data.message_.content_.sticker_.sticker_.persistent_id_
     else
         msg.sticker = false
     end
     if data.message_.content_.ID == "MessageAudio" then
         msg.audio = true
+		msg.file_id = data.message_.content_.audio_.audio_.persistent_id_
     else
         msg.audio = false
     end
     if data.message_.content_.ID == "MessageVoice" then
         msg.voice = true
+		msg.file_id = data.message_.content_.voice_.voice_.persistent_id_
     else
         msg.voice = false
     end
     if data.message_.content_.ID == "MessageAnimation" then
         msg.gif = true
+		msg.file_id = data.message_.content_.animation_.animation_.persistent_id_
     else
         msg.gif = false
     end
     if data.message_.content_.ID == "MessageVideo" then
         msg.video = true
+		msg.file_id = data.message_.content_.video_.video_.persistent_id_
     else
         msg.video = false
     end
     if data.message_.content_.ID == "MessageDocument" then
         msg.document = true
+		msg.file_id = data.message_.content_.document_.document_.persistent_id_
     else
         msg.document = false
     end
