@@ -56,6 +56,7 @@ local function run(msg, matches)
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				delete_msg(msg.to.id, msg.reply_id)
+				delete_msg(msg.to.id, msg.id)
 			end
 		end
 	elseif matches[1] == "ban" then
