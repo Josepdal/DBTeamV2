@@ -43,6 +43,11 @@ local function get_exported_link(arg, data)
 	end
 end
 
+local function getlink(arg,data)
+	local link = data.invite_link_
+	send_msg(msg.to.id, link, 'md')
+end
+
 local function pre_process(msg)
 	if msg.added then
 		for k, user in pairs (msg.added) do 
@@ -523,7 +528,12 @@ local function run(msg, matches)
 		elseif matches[1]:lower() == "newlink" and not matches[2] and permissions(msg.from.id, msg.to.id, "settings") then
 			export_link(msg.to.id, get_exported_link, msg.to.id)
 		elseif matches[1]:lower() == "link" and not matches[2] then
-			send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
+			local link = redis:get("settings:link:" .. msg.to.id)
+			if link then
+				send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
+			else
+				getChannelFull(msg.to.id,  getlink)
+			end
 		elseif matches[1]:lower() == "rules" and not matches[2] then
 			if not redis:get("settings:norules:" .. msg.to.id) then
 				if redis:get("settings:rules:" .. msg.to.id) then

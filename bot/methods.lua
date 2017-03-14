@@ -250,6 +250,13 @@ function resolve_id(user_id, cb_function, cb_extra)
     }, cb_function, cb_extra)
 end
 
+function getChat(chat_id, cb, cmd)
+  tdcli_function ({
+    ID = "GetChat",
+    chat_id_ = chat_id
+  }, cb or dl_cb, cmd)
+end
+
 function getChannelMembers(channel_id, offset, filter, limit, cb_function, cb_extra)
   if not limit or limit > 200 then
     limit = 200
@@ -483,6 +490,20 @@ function export_link(chat_id, cb_function, cb_extra)
         ID = "ExportChatInviteLink",
         chat_id_ = chat_id
     }, cb_function, cb_extra)
+end
+
+function checkChatInviteLink(link, cb, cmd)
+  tdcli_function ({
+    ID = "CheckChatInviteLink",
+    invite_link_ = link
+  }, cb or dl_cb, cmd)
+end
+
+function getChannelFull(channel_id, cb, cmd)
+  tdcli_function ({
+    ID = "GetChannelFull",
+    channel_id_ = getChatId(channel_id).ID
+  }, cb or dl_cb, cmd)
 end
 
 function chat_history(chat_id, from_message_id, offset, limit, cb_function, cb_extra)

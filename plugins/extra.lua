@@ -17,11 +17,11 @@ local function run(msg, matches)
 				extra = { string.match(matches[2], "^[!/#](%S+) (.*)$") }
 				addCommand(msg.to.id, extra)
 			else
-				local list = "*Extra list in this chat:*\n"
+				local list = "<b>Extra list in this chat:</b>\n"
 				for command, text in pairs (redis:hgetall("extra".. msg.to.id)) do
 					list = list .. "[#/!]" .. command .. "\n"
 				end
-				send_msg(msg.to.id, list, 'md')
+				send_msg(msg.to.id, list, 'html')
 			end
 		end
 	elseif matches[1] ==  "extra" and  msg.reply_id then
@@ -34,7 +34,7 @@ local function run(msg, matches)
 			extra = string.match(matches[2], "^[!/#](%S+)$")
 			if extra then
 				redis:hdel("extra" .. msg.to.id, extra)
-				send_msg(msg.to.id, "The command: [!/#]`" .. extra .."` *has been removed.*", 'md')
+				send_msg(msg.to.id, "The command: [!/#]" .. extra .." <b>has been removed.</b>", 'html')
 			else
 				send_msg(msg.to.id, "*Error:* the extra command does not exist in this chat.", 'md')
 			end
