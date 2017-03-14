@@ -66,7 +66,11 @@ function oldtg(data)
     end
     if data.message_.content_.ID == "MessagePhoto" then
         msg.photo = true
-		msg.file_id = data.message_.content_.photo_.sizes_[3].photo_.persistent_id_
+		if data.message_.content_.photo_.sizes_[3] then 
+			msg.file_id = data.message_.content_.photo_.sizes_[3].photo_.persistent_id_
+		else
+			msg.file_id = data.message_.content_.photo_.sizes_[0].photo_.persistent_id_
+		end
     else
         msg.photo = false
     end

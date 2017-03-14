@@ -24,7 +24,11 @@ local function get_added_users(msg)
 end
 
 function send_report(msg,reason)
-    local text = '*Spam report:*\n*User:* @'..msg.from.username..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* _'..msg.text..'_\n*Pattern:* _'..reason..'_' ---put translattions
+	local user_id_ = ''
+	if msg.from.username then
+		 user_id_ = "@" .. msg.from.username
+	end
+    local text = '*Spam report:*\n*User:* '.. user_id_ ..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* _'..msg.text..'_\n*Pattern:* _'..reason..'_' ---put translattions
     for v,user in pairs(_config.sudo_users) do
         send_msg(user, text, 'md')
     end
