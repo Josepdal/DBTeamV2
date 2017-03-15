@@ -368,6 +368,17 @@ function plugins_names( )
     return files
 end
 
+function langs_names( )
+    local files = {}
+    for k, v in pairs(scandir("lang")) do
+        -- Ends with .lua
+        if (v:match(".lua$")) then
+            table.insert(files, v)
+        end
+    end
+    return files
+end
+
 function get_multimatch_byspace(str, regex, cut)
     list = {}
     for wrd in str:gmatch("%S+") do

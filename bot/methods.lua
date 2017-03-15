@@ -418,7 +418,7 @@ function sendAnimation(chat_id, gif, caption)
     animation_ = getInputFile(gif),
     width_ = 0,
     height_ = 0,
-    caption_ = nil
+    caption_ = caption
   }
   sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
 end
@@ -429,8 +429,8 @@ function sendAudio(chat_id, audio, caption)
     audio_ = getInputFile(audio),
     duration_ = duration or 0,
     title_ = title or 0,
-    performer_ = performer or "whatever",
-    caption_ = caption or "whatever"
+    performer_ = performer,
+    caption_ = caption
   }
   sendRequest('SendMessage', chat_id, 0, 0, 1, nil, input_message_content, cbsti)
 end
