@@ -1,5 +1,25 @@
-local function run(msg, matches)
+----------------------------------------------------
+--      ___  ___ _____            __   _____      --
+--     |   \| _ )_   _|__ __ _ _ _\ \ / /_  )     --
+--     | |) | _ \ | |/ -_) _` | '  \ V / / /      --
+--     |___/|___/ |_|\___\__,_|_|_|_\_/ /___|     --
+--                                                --
+----------------------------------------------------
 
+local function run(msg, matches)
+  if matches[1] == "add" then
+	  if permissions(msg.from.id, msg.to.id, "add_moderation") then
+		  redis:set("moderation_group: " .. msg.from.id, true)
+		  send_msg(msg.to.id, "<b>Group added to moderation list.</b>", "html")
+	  end
+  end
+  if matches[1] == "rem" then
+	  if permissions(msg.from.id, msg.to.id, "add_moderation") then
+		  redis:del("moderation_group: " .. msg.from.id)
+		  send_msg(msg.to.id, "<b>Group removed from moderation list.</b>", "html")
+	  end
+  end
+  if redis:get("moderation_group: " .. msg.from.id) then
 	if matches[1] == "admin" then
 		if permissions(msg.from.id, msg.to.id, "promote_admin") then
 			if msg.reply_id then
@@ -52,18 +72,6 @@ local function run(msg, matches)
 			end
 			send_msg(msg.to.id, text, 'html')
 		end
-	elseif matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall" then
-		if permissions(msg.from.id, msg.to.id, "tagall") then
-			if matches[2] then
-				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = matches[2]})
-			else
-				getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
-			end
-		end	
-	elseif matches[1] == "bots" then
-		if permissions(msg.from.id, msg.to.id, "tagall") then
-			getChannelMembers(msg.to.id, 0, 'Bots', 200, bots_cb, msg.to.id)
-		end
 	elseif matches[1] == "kicked" then
 		if permissions(msg.from.id, msg.to.id, "tagall") then
 			getChannelMembers(msg.to.id, 0, 'Kicked', 200, kicked_cb, msg.to.id)
@@ -72,17 +80,34 @@ local function run(msg, matches)
 		if permissions(msg.from.id, msg.to.id, "banall") then
 			getChannelMembers(msg.to.id, 0, 'Recent', 200, banall_cb, msg.to.id)
 		end
-	elseif matches[1] == "leave" then
-		if permissions(msg.from.id, msg.to.id, "leave") then
-			send_msg(msg.to.id, lang_text(msg.to.id, 'leave'), 'html')
-			kick_user(msg.to.id, _config.our_id[1])
-		end
-	elseif matches[1] == "setabout" and matches[2] then
-		if permissions(msg.from.id, msg.to.id, "setabout") then
-			changeAbout(matches[2], ok_cb)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'setAbout') .. matches[2], 'html')
-		end			
 	end
+  else
+	print("\27[32m> Not moderating this group.\27[39m")
+  end		
+  if matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall" then
+	  if permissions(msg.from.id, msg.to.id, "tagall") then
+		  if matches[2] then
+		  	getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = matches[2]})
+		  else
+			  getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
+		  end
+	  end	
+  elseif matches[1] == "bots" then
+	  if permissions(msg.from.id, msg.to.id, "tagall") then
+		  getChannelMembers(msg.to.id, 0, 'Bots', 200, bots_cb, msg.to.id)
+	  end
+
+  elseif matches[1] == "leave" then
+	  if permissions(msg.from.id, msg.to.id, "leave") then
+		  send_msg(msg.to.id, lang_text(msg.to.id, 'leave'), 'html')
+		  kick_user(msg.to.id, _config.our_id[1])
+	  end
+  elseif matches[1] == "setabout" and matches[2] then
+	  if permissions(msg.from.id, msg.to.id, "setabout") then
+		  changeAbout(matches[2], ok_cb)
+		  send_msg(msg.to.id, lang_text(msg.to.id, 'setAbout') .. matches[2], 'html')
+	  end			
+  end
 end
 
 function members_cb(extra, data)
@@ -181,6 +206,8 @@ end
 
 return {
   patterns = {
+  	"^[!/#]([Aa]dd)$",
+	"^[!/#]([Rr]em)$",
   	"^[!/#]([Aa]dmin)$",
 	"^[!/#]([Aa]dmin) (.*)$",
     "^[!/#]([Mm]od)$",

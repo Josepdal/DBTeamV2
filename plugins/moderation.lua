@@ -25,26 +25,34 @@ local function pre_process(msg)
 
 	-- Check if user is chat-banned
 	if redis:get("ban:" .. msg.to.id .. ":" .. msg.from.id) then
-		kick_user(msg.to.id, msg.from.id)
+		if redis:get("moderation_group: " .. msg.from.id) then
+			kick_user(msg.to.id, msg.from.id)
+		end
 	end
 
 	-- Check if user is global-banned
 	if redis:sismember("gbans", msg.from.id) then
-		kick_user(msg.to.id, msg.from.id)
+		if redis:get("moderation_group: " .. msg.from.id) then
+			kick_user(msg.to.id, msg.from.id)
+		end
 	end
 
 	--Check if user is muted
 	if redis:get("muted:" .. msg.to.id .. ":" .. msg.from.id) then
-		delete_msg(msg.to.id, msg.id)
-		if not redis:get("muted:alert:" .. msg.to.id .. ":" .. msg.from.id) then
-			redis:setex("muted:alert:" .. msg.to.id .. ":" .. msg.from.id, 300, true)
-			send_msg(msg.to.id, 'Trying to speak...', 'md')
+		if redis:get("moderation_group: " .. msg.from.id) then
+			delete_msg(msg.to.id, msg.id)
+			if not redis:get("muted:alert:" .. msg.to.id .. ":" .. msg.from.id) then
+				redis:setex("muted:alert:" .. msg.to.id .. ":" .. msg.from.id, 300, true)
+				send_msg(msg.to.id, 'Trying to speak...', 'md')
+			end
 		end
 	end
 	--Check if chat is muted
 	if redis:get("muteall:" .. msg.to.id) then
-		if not permissions(msg.from.id, msg.to.id, "moderation", "silent") then
-			delete_msg(msg.to.id, msg.id)
+		if redis:get("moderation_group: " .. msg.from.id) then
+			if not permissions(msg.from.id, msg.to.id, "moderation", "silent") then
+				delete_msg(msg.to.id, msg.id)
+			end
 		end
 	end
 	
@@ -52,6 +60,7 @@ local function pre_process(msg)
 end
 
 local function run(msg, matches)
+  if redis:get("moderation_group: " .. msg.from.id) then
 	if matches[1] == "del" and not matches[2] then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
@@ -232,6 +241,9 @@ local function run(msg, matches)
 		delete_msg(msg.to.id, msg.id)
 		send_msg(msg.to.id, lang_text(msg.to.id, 'delXMsg'):gsub("$user", msg.from.first_name):gsub("$num", matches[2]), 'md')
 	end
+  else
+	print("\27[32m> Not moderating this group.\27[39m")
+  end
 end
 
 return {

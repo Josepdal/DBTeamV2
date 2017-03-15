@@ -9,7 +9,8 @@ local sudos = {
 local admins = {
 	"promote_mod",
 	"promote_user",
-	"gban"
+	"gban",
+	"add_moderation"
 }
 local mods = {
 	"set_lang",
