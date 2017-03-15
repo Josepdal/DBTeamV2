@@ -77,7 +77,7 @@ local function run(msg, matches)
 			else
 				permissions(msg.from.id, msg.to.id, "moderation")
 			end
-	    elseif is_number(matches[2]) then
+	    elseif is_number(matches[2]) and not msg.reply_id then
 		   	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 				send_msg(msg.to.id, lang_text(msg.to.id, 'banUser'), "md")
 		    	kick_user(msg.to.id, matches[2])
@@ -87,6 +87,10 @@ local function run(msg, matches)
 			end
 	    elseif not is_number(matches[2]) and matches[2] then
 			resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "moderation", command = "ban"})
+		elseif is_number(matches[2]) and msg.reply_id then
+			send_msg(msg.to.id, "`>` The user has been *banned* for `" .. matches[2] .. "` secs." , "md")
+		    kick_user(msg.to.id, msg.replied.id)
+		    redis:setex("ban:" .. msg.to.id .. ":" .. msg.replied.id, matches[2], true)
 		end
 	elseif matches[1] == "unban" then
 		if not matches[2] and msg.reply_id ~= 0 then

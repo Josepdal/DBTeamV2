@@ -75,7 +75,7 @@ local function run(msg, matches)
 end
 return {
         patterns = {
-                "[!/#](stats)"
+                "^[!/#](stats)$"
         },
         run = run,
         pre_process = pre_process
