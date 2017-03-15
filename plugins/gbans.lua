@@ -8,7 +8,7 @@
 
 
 local function run(msg, matches)
-   if permissions(msg.from.id, msg.to.id, "gban") and redis:get("moderation_group: " .. msg.from.id) then
+   if permissions(msg.from.id, msg.to.id, "gban") and redis:get("moderation_group: " .. msg.to.id) then
 		if not matches[2] then
 			local count =(redis:scard("gbans"))
 			local text = lang_text(msg.to.id, 'gbans')..count.."<b>) :</b>\n"

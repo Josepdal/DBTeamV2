@@ -25,21 +25,21 @@ local function pre_process(msg)
 
 	-- Check if user is chat-banned
 	if redis:get("ban:" .. msg.to.id .. ":" .. msg.from.id) then
-		if redis:get("moderation_group: " .. msg.from.id) then
+		if redis:get("moderation_group: " .. msg.to.id) then
 			kick_user(msg.to.id, msg.from.id)
 		end
 	end
 
 	-- Check if user is global-banned
 	if redis:sismember("gbans", msg.from.id) then
-		if redis:get("moderation_group: " .. msg.from.id) then
+		if redis:get("moderation_group: " .. msg.to.id) then
 			kick_user(msg.to.id, msg.from.id)
 		end
 	end
 
 	--Check if user is muted
 	if redis:get("muted:" .. msg.to.id .. ":" .. msg.from.id) then
-		if redis:get("moderation_group: " .. msg.from.id) then
+		if redis:get("moderation_group: " .. msg.to.id) then
 			delete_msg(msg.to.id, msg.id)
 			if not redis:get("muted:alert:" .. msg.to.id .. ":" .. msg.from.id) then
 				redis:setex("muted:alert:" .. msg.to.id .. ":" .. msg.from.id, 300, true)
@@ -49,7 +49,7 @@ local function pre_process(msg)
 	end
 	--Check if chat is muted
 	if redis:get("muteall:" .. msg.to.id) then
-		if redis:get("moderation_group: " .. msg.from.id) then
+		if redis:get("moderation_group: " .. msg.to.id) then
 			if not permissions(msg.from.id, msg.to.id, "moderation", "silent") then
 				delete_msg(msg.to.id, msg.id)
 			end
@@ -60,7 +60,7 @@ local function pre_process(msg)
 end
 
 local function run(msg, matches)
-  if redis:get("moderation_group: " .. msg.from.id) then
+  if redis:get("moderation_group: " .. msg.to.id) then
 	if matches[1] == "del" and not matches[2] then
 		if not matches[2] and msg.reply_id then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then

@@ -9,17 +9,17 @@
 local function run(msg, matches)
   if matches[1] == "add" then
 	  if permissions(msg.from.id, msg.to.id, "add_moderation") then
-		  redis:set("moderation_group: " .. msg.from.id, true)
+		  redis:set("moderation_group: " .. msg.to.id, true)
 		  send_msg(msg.to.id, "<b>Group added to moderation list.</b>", "html")
 	  end
   end
   if matches[1] == "rem" then
 	  if permissions(msg.from.id, msg.to.id, "add_moderation") then
-		  redis:del("moderation_group: " .. msg.from.id)
+		  redis:del("moderation_group: " .. msg.to.id)
 		  send_msg(msg.to.id, "<b>Group removed from moderation list.</b>", "html")
 	  end
   end
-  if redis:get("moderation_group: " .. msg.from.id) then
+  if redis:get("moderation_group: " .. msg.to.id) then
 	if matches[1] == "admin" then
 		if permissions(msg.from.id, msg.to.id, "promote_admin") then
 			if msg.reply_id then
