@@ -36,6 +36,21 @@ function reply_msg(chat_id, text, msg_id, parse)
     }, dl_cb, nil)
 end
 
+function createNewGroupChat(user_ids, title, cb, cmd)
+  tdcli_function ({
+    ID = "CreateNewGroupChat",
+    user_ids_ = user_ids, -- vector
+    title_ = title
+  }, cb or dl_cb, cmd)
+end
+
+function migrateGroupChatToChannelChat(chat_id, cb, cmd)
+  tdcli_function ({
+    ID = "MigrateGroupChatToChannelChat",
+    chat_id_ = chat_id
+  }, cb or dl_cb, cmd)
+end
+
 function changeChatMemberStatus(chat_id, user_id, status, cb, cmd)
   tdcli_function ({
     ID = "ChangeChatMemberStatus",

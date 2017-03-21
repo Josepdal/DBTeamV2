@@ -12,7 +12,6 @@ package.cpath = package.cpath .. ';.luarocks/lib/lua/5.2/?.so'
 redis = require("redis")
 redis = redis.connect('127.0.0.1', 6379)
 
-
 require('utils')
 require("permissions")
 require('methods')
@@ -64,7 +63,8 @@ function create_config()
             "stats",
 			"gbans",
 			"extra",
-			"langs"
+			"langs",
+			"private"
         },
         enabled_lang = {
             "english_lang"
@@ -142,7 +142,7 @@ function bot_init(msg)
 		end
     end
 
-    if msg.to.id then
+    if msg.to.id ~= msg.from.id then 		-- If it is not a private chat
         redis:sadd('chats:ids', msg.to.id)
     end
 
@@ -153,8 +153,12 @@ function bot_init(msg)
     if msg_valid(msg) then
         msg = pre_process_msg(msg)
         if msg then
-            match_plugins(msg)
-            mark_as_read(msg.to.id, {[0] = msg.id})
+			if msg.from.id == msg.to.id then 	-- match special plugins in private
+				match_plugin(plugins.private, private, msg)
+			else
+				match_plugins(msg)
+			end
+			mark_as_read(msg.to.id, {[0] = msg.id})
         end
     end
 
@@ -209,6 +213,10 @@ function tdcli_update_callback(data)
 			redis:srem("load", "settings")
 			-- This loads to cache most of users, chats, channels .. that are removed in every reboot
 			getChats(2^63 - 1, 0, 20, ok_cb)
+			-- This opens all chats and channels in order to receive updates
+			for k, chat in pairs (redis:smembers('chats:ids')) do
+				 openChat(chat, ok_cb)
+			end
 		end
 
         msg = oldtg(data)

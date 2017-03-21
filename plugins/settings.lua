@@ -70,9 +70,19 @@ local function pre_process(msg)
 				if new_is_sudo(user.id) then                                 -- checks if user is sudo
 					promoteToAdmin(msg.to.id, user.id)
 				end
-				if string.find(user.username, "([Bb][oO][Tt])$") then		-- checks if it is a bot
-					if redis:get("settings:bots:" .. msg.to.id) then			
-						kick_user(msg.to.id, user.id)
+				if user.username then
+					if string.find(user.username, "([Bb][oO][Tt])$") then		-- checks if it is a bot
+						if redis:get("settings:bots:" .. msg.to.id) then			
+							kick_user(msg.to.id, user.id)
+						end
+					end
+				end
+				if user.first_name then
+					if redis:get("settings:arabic:" .. msg.to.id) then        -- checks if name with arabic letters, removes the msg and kicks him
+						if string.find(user.first_name, "[\216-\219][\128-\191]") then
+							delete_msg(msg.to.id, user.id)
+							kick_user(msg.to.id, user.id)
+						end
 					end
 				end
 			end
@@ -182,7 +192,7 @@ local function pre_process(msg)
 	        	send_msg(msg.to.id, lang_text(chat, 'user')..' @'.. username ..' ('..msg.from.id..') ' .. lang_text(chat, 'isFlooding'), 'md')
 	        end
 	        redis:setex("settings:flood:user:" .. msg.from.id, 60, true)
-	        --kick_user(msg.to.id, msg.from.id)
+	        kick_user(msg.to.id, msg.from.id)
 	        msg.text = ""
 		    return msg
 	    end
@@ -502,7 +512,7 @@ local function run(msg, matches)
 				redis:del("settings:flood:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'floodT'), 'md')
 			end
-		elseif matches[1] == "welcome" and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
+		elseif matches[1] == "welcome" and permissions(msg.from.id, msg.to.id, "settings") then
 			if matches[2] == 'off' then
 				redis:del("settings:welcome:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'noWelcomeT'), 'md')
@@ -510,7 +520,7 @@ local function run(msg, matches)
 				redis:set("settings:welcome:" .. msg.to.id, true)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'welcomeT'), 'md')
 			end
-		elseif matches[1] == "setwelcome" and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
+		elseif matches[1] == "setwelcome" and permissions(msg.from.id, msg.to.id, "settings") then
 			if tonumber(matches[2]) == 0 then
 				redis:del("settings:welcome:msg:" .. msg.to.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'weldefault'), 'md')
@@ -534,12 +544,12 @@ local function run(msg, matches)
 				redis:set("settings:floodTime:" .. msg.to.id, tonumber(matches[2]))
 				send_msg(msg.to.id, lang_text(msg.to.id, 'floodMax') .. ": `" .. matches[2] .. "`", 'md')
 			end
-		elseif matches[1]:lower() == "setlink" and matches[2] and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
+		elseif matches[1]:lower() == "setlink" and matches[2] and permissions(msg.from.id, msg.to.id, "settings") then
 				redis:set("settings:link:" .. msg.to.id, matches[2])
 				send_msg(msg.to.id, lang_text(msg.to.id, 'linkSet'), 'md')
-		elseif matches[1]:lower() == "newlink" and not matches[2] and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
+		elseif matches[1]:lower() == "newlink" and not matches[2] and permissions(msg.from.id, msg.to.id, "settings") then
 			export_link(msg.to.id, get_exported_link, msg.to.id)
-		elseif matches[1]:lower() == "link" and not matches[2] and redis:get("moderation_group: " .. msg.to.id) then
+		elseif matches[1]:lower() == "link" and not matches[2] then
 			local link = redis:get("settings:link:" .. msg.to.id)
 			if link then
 				send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
