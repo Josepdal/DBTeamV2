@@ -10,12 +10,12 @@ local function get_added_users(msg)
 	local users = ""
 	for i = 1, #msg.added, 1 do
 		if msg.added[i].username then
-			users = users .. " `@"..msg.added[i].username .."`"
-		elseif msg.added[0].first_name then
-			users = users .. " `@"..msg.added[i].username .."`"
+			users = users .. "@" .. msg.added[i].username
+		elseif msg.added[i].first_name then
+			users = users .. msg.added[i].first_name
 		end
 		if i == (#msg.added - 1) then
-			users = users .. " and "
+			users = users .. " & "
 		elseif i ~= #msg.added then
 			users = users .. ", "
 		end
@@ -52,37 +52,37 @@ local function pre_process(msg)
 	if msg.added then
 		if redis:get("moderation_group: " .. msg.to.id) then
 			for k, user in pairs (msg.added) do 
-				for k,gbanned in pairs (redis:smembers("gbans")) do          --checks if user is gbanned
-					if tonumber(gbanned) == user.id then
-						kick_user(msg.to.id, user.id)
-					end
+				if is_gban(user.id)	then									-- checks if user is gbanned
+					kick_user(msg.to.id, user.id)
 				end
-				for k, mod in pairs(redis:smembers("mods:" .. msg.to.id)) do --checks if user is mod
-					if tonumber(mod) == user.id then
-						promoteToAdmin(msg.to.id, user.id)
-					end
+				if is_mod(msg.to.id, user.id) then 	                        -- checks if user is mod
+					promoteToAdmin(msg.to.id, user.id)
 				end
-				for k, admin in pairs(redis:smembers("admins")) do           --checks if user is admin
-					if tonumber(admin) == user.id then
-						promoteToAdmin(msg.to.id, user.id)
-					end
+				if is_admin(user.id) then                                   -- checks if user is admin
+					promoteToAdmin(msg.to.id, user.id)
 				end
 				if new_is_sudo(user.id) then                                 -- checks if user is sudo
 					promoteToAdmin(msg.to.id, user.id)
 				end
 				if user.username then
 					if string.find(user.username, "([Bb][oO][Tt])$") then		-- checks if it is a bot
-						if redis:get("settings:bots:" .. msg.to.id) then			
+						if redis:get("settings:bots:" .. msg.to.id) then
 							kick_user(msg.to.id, user.id)
 						end
 					end
 				end
 				if user.first_name then
 					if redis:get("settings:arabic:" .. msg.to.id) then        -- checks if name with arabic letters, removes the msg and kicks him
-						if string.find(user.first_name, "[\216-\219][\128-\191]") then
+						if (string.find(user.first_name, "[\216-\219][\128-\191]")) then
 							delete_msg(msg.to.id, user.id)
 							kick_user(msg.to.id, user.id)
 						end
+						if user.last_name then
+							if (string.find(user.last_name, "[\216-\219][\128-\191]")) then
+								delete_msg(msg.to.id, user.id)
+								kick_user(msg.to.id, user.id)
+							end
+						end	
 					end
 				end
 			end
@@ -100,7 +100,7 @@ local function pre_process(msg)
 			else
 				welcomeText = lang_text(msg.to.id, 'defaultWelcome'):gsub("$users", users)
 			end
-			send_msg(msg.to.id, welcomeText, 'md')
+			send_msg(msg.to.id, welcomeText, 'html')
 		end
 	end
 	if permissions(msg.from.id, msg.to.id, "settings", "silent") then

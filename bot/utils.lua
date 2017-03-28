@@ -278,6 +278,10 @@ function is_admin(user_id)
     return redis:sismember('admins', user_id)
 end
 
+function is_gban(user_id)
+    return redis:sismember('gbans', user_id)
+end
+
 function new_is_sudo(user_id)
     local var = false
     -- Check users id in config

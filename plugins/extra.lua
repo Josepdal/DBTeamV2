@@ -36,7 +36,7 @@ local function run(msg, matches)
 				redis:hdel("extra" .. msg.to.id, extra)
 				send_msg(msg.to.id, "The command: [!/#]" .. extra .." <b>has been removed.</b>", 'html')
 			else
-				send_msg(msg.to.id, "*Error:* the extra command does not exist in this chat.", 'md')
+				send_msg(msg.to.id, "<b>Error:</b> the extra command does not exist in this chat.", 'html')
 			end
 		end
 	elseif matches[1] then
@@ -66,7 +66,7 @@ local function run(msg, matches)
 						sendDocument(msg.to.id, extra[2], extra[3])
 					end
 				else
-					send_msg(msg.to.id, data, 'md')
+					send_msg(msg.to.id, data, 'html')
 				end
 			end
 		end

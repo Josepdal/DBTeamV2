@@ -89,7 +89,7 @@ local function run(msg, matches)
 		  if matches[2] then
 		  	getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = matches[2]})
 		  else
-			  getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
+			getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
 		  end
 	  end	
   elseif matches[1] == "bots" then
@@ -173,10 +173,18 @@ function resolveid_kicked_cb(extra,info)
 		end
 		resolve_id(extra.idkicked, resolveid_kicked_cb, {userid = extra.idkicked , send = extra.send, chat = extra.chat, status = "kicked", infokicker = info_from_kicker })		
 	else
-		if info.user_.username_ then
-			text  = text..extra.infokicker..'banned @'..info.user_.username_..'\n'
+		if info then
+			if info.user_ then
+				if info.user_.username_ then
+					text  = text..extra.infokicker..'banned @'..info.user_.username_..'\n'
+				else
+					text  = text..extra.infokicker..'banned '..info.user_.first_name_..'\n'
+				end
+			else
+				text  = text .. 'no info \n'
+			end
 		else
-			text  = text..extra.infokicker..'banned '..info.user_.first_name_..'\n'
+			text  = text .. 'no info \n'
 		end
 		if extra.send == 0 then
 			send_msg(extra.chat, text, 'html')
