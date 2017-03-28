@@ -119,7 +119,7 @@ local function run(msg, matches)
 		set_text(LANG, 'noSet', 'no establecido')
 
 		set_text(LANG, 'stickers', 'Stickers')
-		set_text(LANG, 'tgservices', 'Tg services')
+		set_text(LANG, 'tgservices', 'Servicios de Telegram')
 		set_text(LANG, 'links', 'Enlaces')
 		set_text(LANG, 'arabic', 'Árabe')
 		set_text(LANG, 'bots', 'Bots')
@@ -152,15 +152,15 @@ local function run(msg, matches)
 
 		set_text(LANG, 'langUpdated', 'Su idioma ha sido actualizado a: ')
 
-		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
-		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+		set_text(LANG, 'linkSet', '`>` Un *nuevo link* ha sido *establecido*')
+		set_text(LANG, 'linkError', '`>` Se necesita *permisos de creador* para exportar el link de invitación del chat.')
 
-		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
-		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
-		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
-		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
+		set_text(LANG, 'newRules', '`>` *Nuevas normas* han sido *creadas.*')
+		set_text(LANG, 'rulesDefault', '`>` Tus anteriores *normas han sido eliminadas.*')
+		set_text(LANG, 'noRules', '`>` *No hay normas visibles* en este grupo.')
+		set_text(LANG, 'defaultRules', '*Normas del chat:*\n`>` No hacer Flood.\n`>` No hacer Spam.\n`>` Intenta permanecer en el tema.\n`>` Prohibido cualquier contenido racista, sexual, gore......\n\n_El incumplimiento reiterado de estas normas puede comportar el ban._')
 
-		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
+		set_text(LANG, 'delAll', '`>` Todos los mensajes han sido *eliminados*.')
 
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'cuentas globalmente baneadas.')
@@ -169,27 +169,26 @@ local function run(msg, matches)
 		set_text(LANG, 'alreadyAdmin', 'Este usuario ya es *admin.*')
 		set_text(LANG, 'alreadyMod', 'Este usuario ya es *mod.*')
 
-		set_text(LANG, 'newAdmin', '<code>></code> <b>New admin</b>')
-		set_text(LANG, 'newMod', '<code>></code> <b>New mod</b>')
-		set_text(LANG, 'nowUser', ' <b>is now an user.</b>')
+		set_text(LANG, 'newAdmin', '<code>></code> <b>Nuevo admin</b>')
+		set_text(LANG, 'newMod', '<code>></code> <b>Nuevo mod</b>')
+		set_text(LANG, 'nowUser', ' <b>es ahora un usuario.</b>')
 
 		set_text(LANG, 'modList', '`>` *Lista de Mods*')
 		set_text(LANG, 'adminList', '`>` *Lista de Admins')
 		set_text(LANG, 'modEmpty', '*La lista de mods está vacia* en este chat.')
 		set_text(LANG, 'adminEmpty', '*La lista de admins está vacia*.')
-		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
-		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
-		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
-		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
-		set_text(LANG, 'leave', '<b>Bye!</b>')
+		set_text(LANG, 'error1', '<b>Error:</b> tiene que ser un supergrupo.')
+		set_text(LANG, 'error2', '<b>Error:</b> tiene que ser un supergrupo y admin del chat.')
+		set_text(LANG, 'banall', '<b>Probando de banear a todos los usuarios...</b>')
+		set_text(LANG, 'setAbout', '<b>Acerca del grupo ha sido cambiado a: </b>')
+		set_text(LANG, 'leave', '<b>Adios!</b>')
 		
 		
 		-- gban.lua --
-		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
-		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanDel', 'Gbans database removed.')
+		set_text(LANG, 'gbans', '<b>Usuarios baneados globalmente (</b>')
+		set_text(LANG, 'gbanLua', ' usuarios baneados globalmente del archivo LUA!')
+		set_text(LANG, 'gbanJson', ' usuarios baneados globalmente del archivo JSON!')
+		set_text(LANG, 'gbanDel', 'Base de datos de los Gbans eliminado.')
 
 		-- id.lua --
 		set_text(LANG, 'user', 'Usuario')
@@ -200,16 +199,16 @@ local function run(msg, matches)
 		set_text(LANG, 'kickUser', '`>` El usuario ha sido *expulsado.*')
 		set_text(LANG, 'banUser', '`>` El usuario ha sido *baneado.*')
 		set_text(LANG, 'unbanUser', '`>` El usuario ha sido *eliminado* de la lista *baneados.*')
-		set_text(LANG, 'gbanUser', '`>` The user has been *globally banned*.')
+		set_text(LANG, 'gbanUser', '`>` EL usuario ha sido *baneado globalmente*.')
 		set_text(LANG, 'ungbanUser', '`>` El usuario ha sido * eliminado * de * lista de baneados globales. *')
 		set_text(LANG, 'muteUser', '`>` El usuario ha sido *silenciado.*')
 		set_text(LANG, 'muteChat', '`>` El chat ha sido *silenciado.*')
-		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
-		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
+		set_text(LANG, 'muteChatSec', '`>` EL chat ha sido *silenciado* durante ')
+		set_text(LANG, 'muteUserSec', '`>` El usuario ha sido *silenciado* durante ')
 		set_text(LANG, 'unmuteUser', '`>` El usuario *puede hablar ahora.*')
 		set_text(LANG, 'unmuteChat', '`>` Los usuarios *pueden hablar ahora.*')
 
-		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
+		set_text(LANG, 'delXMsg', '`>` Al usuario $user *se le ha eliminado* `$num mensajes`.')
 
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'Comandos')
@@ -217,14 +216,14 @@ local function run(msg, matches)
 
 		-- plugins.lua --
 
-		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
-		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
-		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
-		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
-		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
+		set_text(LANG, 'pluginsActivated', '*Plugins activados:*\n')
+		set_text(LANG, 'pluginNoExist', '`>` *El plugin* $name *no existe*.')
+		set_text(LANG, 'pluginIsEnabled', '`>` *El plugin* está *actualmente activado*.')
+		set_text(LANG, 'pluginNoEnabled', '`>` *El plugin* está *actualmente desactivado*.')
+		set_text(LANG, 'pluginsReload', '`>` *Plugin recargado!*')
 
-		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
-		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
+		set_text(LANG, 'pluginEnabled', '`>` El *plugin* ha sido *activado*.')
+		set_text(LANG, 'pluginDisabled', '`>` El *plugin* ha sido *desactivado*.')
 
 		------------
 		-- Usages --
@@ -256,8 +255,8 @@ local function run(msg, matches)
 		set_text(LANG, 'promote:2', '#admin <user_id>/<user_name>: Añade un admin mediante su ID/Username.')
 		set_text(LANG, 'promote:3', '#mod (reply): Convierte la persona a la que respondes en mod.')
 		set_text(LANG, 'promote:4', '#mod <user_id>/<user_name>: Añade un mod mediante su ID/Username.')
-		set_text(LANG, 'promote:5', '#user (reply): Remove admin by reply.')
-		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: Añade un mod mediante su ID/Username.')
+		set_text(LANG, 'promote:5', '#user (reply): Convierte a la persona a la que respondes en usuario.')
+		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: Convierte un usuario mediante su ID/Usuario a usuario normal.')
 
 		-- id.lua --
 		set_text(LANG, 'id:0', 1)
