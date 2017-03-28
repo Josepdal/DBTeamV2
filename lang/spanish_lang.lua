@@ -152,8 +152,8 @@ local function run(msg, matches)
 
 		set_text(LANG, 'langUpdated', 'Su idioma ha sido actualizado a: ')
 
-		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
-		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+		set_text(LANG, 'linkSet', '`>` Un *nuevo link* ha sido *establecido*')
+		set_text(LANG, 'linkError', '`>` Se necesita *permisos de creador* para exportar el link de invitación del chat.')
 
 		set_text(LANG, 'newRules', '`>` *Nuevas normas* han sido *creadas.*')
 		set_text(LANG, 'rulesDefault', '`>` Tus anteriores *normas han sido eliminadas.*')
