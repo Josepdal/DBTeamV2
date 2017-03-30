@@ -45,7 +45,7 @@ end
 
 local function getlink(arg,data)
 	local link = data.invite_link_
-	send_msg(msg.to.id, link, 'md')
+	send_msg(msg.to.id, link, 'html')
 end
 
 local function pre_process(msg)
@@ -552,7 +552,7 @@ local function run(msg, matches)
 		elseif matches[1]:lower() == "link" and not matches[2] then
 			local link = redis:get("settings:link:" .. msg.to.id)
 			if link then
-				send_msg(msg.to.id, redis:get("settings:link:" .. msg.to.id), 'md')
+				send_msg(msg.to.id, link, 'html')
 			else
 				getChannelFull(msg.to.id,  getlink)
 			end
