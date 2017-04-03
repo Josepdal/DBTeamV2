@@ -190,6 +190,14 @@ local function run(msg, matches)
 		set_text(LANG, 'pluginEnabled', '`>` *پلاگین فعال* شد.')
 		set_text(LANG, 'pluginDisabled', '`>` *پلاگین غیر فعال* شد.')
 
+		
+		-- private.lua--
+		
+		set_text(LANG, 'privateMSG', '`>` متاسفانه این پیغام تنها در خصوصی ربات کار میکند!')
+		set_text(LANG, 'privateError', '`>` خطایی رخ داد!')
+		set_text(LANG, 'privateSuper', '`>` گروه ایجاد شد و به سوپر گروه ارتقا یافت')
+		
+		
 		------------
 		-- Usages --
 		------------
