@@ -10,19 +10,19 @@
 -- missing translations
 
 local function run(msg, matches)
-	if matches[1] ==  "extra" and not msg.reply_id then
-		if permissions(msg.from.id, msg.to.id, "mod_commands") then
-			if matches[2] then
+	if matches[1] ==  "extra" and not msg.reply_id then	
+		if matches[2] then
+			if permissions(msg.from.id, msg.to.id, "mod_commands") then
 				local extra = {}
 				extra = { string.match(matches[2], "^[!/#](%S+) (.*)$") }
 				addCommand(msg.to.id, extra)
-			else
-				local list = "<b>Extra list in this chat:</b>\n"
-				for command, text in pairs (redis:hgetall("extra".. msg.to.id)) do
-					list = list .. "[#/!]" .. command .. "\n"
-				end
-				send_msg(msg.to.id, list, 'html')
 			end
+		else
+			local list = "<b>Extra list in this chat:</b>\n"
+			for command, text in pairs (redis:hgetall("extra".. msg.to.id)) do
+				list = list .. "[#/!]" .. command .. "\n"
+			end
+			send_msg(msg.to.id, list, 'html')
 		end
 	elseif matches[1] ==  "extra" and  msg.reply_id then
 		if permissions(msg.from.id, msg.to.id, "mod_commands") then

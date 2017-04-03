@@ -60,15 +60,15 @@ local function run(msg, matches)
 		if permissions(msg.from.id, msg.to.id, "promote_user") then
 			local text = "<b>Admins:</b>\n"
 			for k, v in pairs(redis:smembers("admins")) do
-				text = text .. "<code>></code> " .. redis:hget('bot:ids', v) .. " <code>(" .. v .. ")</code>\n"
+				text = text .. "<code>></code> " .. (redis:hget('bot:ids', v) or "user_not_known" ) .. " <code>(" .. v .. ")</code>\n"
 			end
 			send_msg(msg.to.id, text, 'html')
 		end
 	elseif matches[1] == "mods" then
-		if permissions(msg.from.id, msg.to.id, "promote_user") then
+		if permissions(msg.from.id, msg.to.id, "moderation") then
 			local text = "<b>Mods:</b>\n"
 			for k, v in pairs(redis:smembers("mods:" .. msg.to.id)) do
-				text = text .. "<code>></code> " .. redis:hget('bot:ids', v) .. " <code>(" .. v .. ")</code>\n"
+				text = text .. "<code>></code> " .. (redis:hget('bot:ids', v) or "user_not_known" ) .. " <code>(" .. v .. ")</code>\n"
 			end
 			send_msg(msg.to.id, text, 'html')
 		end

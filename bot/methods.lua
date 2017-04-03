@@ -237,12 +237,14 @@ function resolve_cb(extra, user)
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'newAdmin') .. ": @" .. (user.type_.user_.username_ or user.type_.user_.first_name_), "html")
 			redis:sadd('admins', user.id_)
 			redis:srem('mods:'..extra.chat_id, user.id_)
+      redis:hset('bot:ids',user.id_, '@'.. user.type_.user_.username_)
 		elseif extra.command == "mod" then
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'newMod') .. ": @" .. (user.type_.user_.username_ or user.type_.user_.first_name_), "html")
 			redis:sadd('mods:'..extra.chat_id, user.id_)
 			if new_is_sudo(extra.superior) then
 				redis:srem('admins', user.id_)
 			end
+      redis:hset('bot:ids',user.id_, '@'.. user.type_.user_.username_)
 		elseif extra.command == "user" then
 			if new_is_sudo(extra.superior) then
 				redis:srem('mods:'..extra.chat_id, user.id_)
