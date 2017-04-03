@@ -66,7 +66,7 @@ local function pre_process(msg)
         return msg
 end
 
-
+statsCommandT=lang_text(msg.to.id, 'statsCommand')
 local function run(msg, matches)
         if matches[1] == lang_text(msg.to.id, 'statsCommand') then
                 ranking = get_ranking(msg.to.id, lang_text(msg.to.id, 'stats'))
@@ -75,7 +75,7 @@ local function run(msg, matches)
 end
 return {
         patterns = {
-                "^[!/#]('lang_text(msg.to.id, 'statsCommand')')$"
+                "^[!/#]('statsCommandT')$"
         },
         run = run,
         pre_process = pre_process
