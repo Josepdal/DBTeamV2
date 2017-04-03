@@ -49,7 +49,7 @@ return {
                 "^[!/#]([sS][tT][Aa][rR][tT])",
 				"^[!/#]([Hh][eE][Ll][pP])",
 				"^[!/#]([Cc]reategroup) (.*)",
-				"^[!/#]([Tt]osuper) (.*)"
+				"^[!/#](tosuper) (.*)"
         },
         run = run,
 }
