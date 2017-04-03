@@ -1,4 +1,4 @@
-
+do
 local function sort_(tbl, sortFunction)
         local keys = {}
         for key in pairs(tbl) do
@@ -82,3 +82,4 @@ return {
         run = run,
         pre_process = pre_process
 }
+end
