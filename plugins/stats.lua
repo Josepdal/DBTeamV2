@@ -1,4 +1,4 @@
-do
+
 local function sort_(tbl, sortFunction)
         local keys = {}
         for key in pairs(tbl) do
@@ -69,12 +69,13 @@ end
 
 
 local function run(msg, matches)
+	msgcommands= lang_text(msg.to.id, 'statsCommand')
         if matches[1] == lang_text(msg.to.id, 'statsCommand') then
                 ranking = get_ranking(msg.to.id, lang_text(msg.to.id, 'stats'))
                 send_msg(msg.to.id, ranking, "md")
         end
 end
-msgcommands= lang_text(msg.to.id, 'statsCommand')
+
 return {
         patterns = {
                 "^[!/#](" .. msgcommands .. ")$"
@@ -82,4 +83,3 @@ return {
         run = run,
         pre_process = pre_process
 }
-end
