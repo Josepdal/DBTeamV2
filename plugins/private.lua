@@ -17,8 +17,7 @@ local function run(msg, matches)
 		createNewGroupChat({[0] = msg.from.id}, matches[2], groupcb)
 	end
 	elseif matches[1] == "tosuper" and matches[2] and permissions(msg.from.id, msg.to.id, "creategroup") then
-		local group_id = "-" .. data.type_.group_.id_
-		migrateGroupChatToChannelChat(group_id, migratecb)
+		migrateGroupChatToChannelChat(matches[2], migratecb)
 	end
 end
 
