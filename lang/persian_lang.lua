@@ -179,14 +179,14 @@ local function run(msg, matches)
 
 		-- plugins.lua --
 
-		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
-		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
-		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
-		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
-		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
+		set_text(LANG, 'pluginsActivated', '*پلاگین فعال شد:*\n')
+		set_text(LANG, 'pluginNoExist', '`>` *پلاگین* $name *موجود نیست*.')
+		set_text(LANG, 'pluginIsEnabled', '`>` این *پلاگین* هم اکنون *فعال* است.')
+		set_text(LANG, 'pluginNoEnabled', '`>` این *پلاگین* هم اکنون *غیر فعال* است.')
+		set_text(LANG, 'pluginsReload', '`>` *پلاگین ها مجددا بارگذاری شد!*')
 
-		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
-		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
+		set_text(LANG, 'pluginEnabled', '`>` *پلاگین فعال* شد.')
+		set_text(LANG, 'pluginDisabled', '`>` *پلاگین غیر فعال* شد.')
 
 		------------
 		-- Usages --
