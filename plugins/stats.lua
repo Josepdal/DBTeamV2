@@ -75,7 +75,7 @@ local function run(msg, matches)
 end
 return {
         patterns = {
-                "^[!/#]('lang_text(msg.to.id, 'statsCommand''))$"
+                "^[!/#]("..lang_text(msg.to.id, 'statsCommand')..")$"
         },
         run = run,
         pre_process = pre_process
