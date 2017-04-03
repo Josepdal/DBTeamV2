@@ -1,3 +1,4 @@
+
 local function sort_(tbl, sortFunction)
         local keys = {}
         for key in pairs(tbl) do
@@ -73,10 +74,10 @@ local function run(msg, matches)
                 send_msg(msg.to.id, ranking, "md")
         end
 end
-
+msgcommands= lang_text(msg.to.id, 'statsCommand')
 return {
         patterns = {
-                "^[!/#](" .. lang_text(msg.to.id, 'statsCommand') .. ")$"
+                "^[!/#](" .. msgcommands .. ")$"
         },
         run = run,
         pre_process = pre_process
