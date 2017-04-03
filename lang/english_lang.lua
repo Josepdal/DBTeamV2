@@ -35,6 +35,7 @@ local function run(msg, matches)
 
 		-- stats.lua
 		set_text(LANG, 'stats', '*Chat stats*')
+		set_text(LANG, 'statsCommand', 'stats')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
