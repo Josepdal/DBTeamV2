@@ -80,7 +80,7 @@ return {
         patterns = {
                 "^[!/#](stats)$",
 				"^[!/#](وضعیت)$"--[[,
-				"^[!/#](your language)$"]]--
+				"^[!/#](add your language)$"]]--
         },
         run = run,
         pre_process = pre_process
