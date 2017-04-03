@@ -16,6 +16,10 @@ local function run(msg, matches)
     elseif matches[1] == "creategroup" and matches[2] and permissions(msg.from.id, msg.to.id, "creategroup") then
 		createNewGroupChat({[0] = msg.from.id}, matches[2], groupcb)
 	end
+	elseif matches[1] == "tosuper" and matches[2] and permissions(msg.from.id, msg.to.id, "creategroup") then
+		local group_id = "-" .. data.type_.group_.id_
+		migrateGroupChatToChannelChat(group_id, migratecb)
+	end
 end
 
 function groupcb(extra,data)
@@ -45,7 +49,8 @@ return {
         patterns = {
                 "^[!/#]([sS][tT][Aa][rR][tT])",
 				"^[!/#]([Hh][eE][Ll][pP])",
-				"^[!/#]([Cc]reategroup) (.*)"
+				"^[!/#]([Cc]reategroup) (.*)",
+				"^[!/#]([Tt]super) (.*)"
         },
         run = run,
 }
