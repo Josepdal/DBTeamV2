@@ -24,7 +24,9 @@ end
 
 return {
   patterns = {
-   '^[!/#]([Ii][Dd])$'
+   '^[!/#]([Ii][Dd])$',
+   '^[!/#](شناسه)$'--[[,
+   '^[!/#](add your language)$']]--
   },
   run = run
 }
