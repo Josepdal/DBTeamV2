@@ -33,8 +33,8 @@ end
 
 
 local function run(msg, matches)
-        if matches[1] == "tr" and if matches[2] then
-			local text = babelfish("fa",matches[2])
+        if matches[1] == "tr" and matches[2] and  matches[3] then
+			local text = babelfish(matches[2], matches[3])
                  send_msg(msg.to.id, text, "md")
         end
 end
