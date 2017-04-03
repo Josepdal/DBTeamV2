@@ -34,13 +34,13 @@ end
 
 local function run(msg, matches)
         if matches[1] == "tr" and if matches[2] then
-			local text = babelfish(matches[2])
+			local text = babelfish("fa",matches[2])
                  send_msg(msg.to.id, text, "md")
         end
 end
 return {
         patterns = {
-                "^[!/#](tr)$"
+               "^[!/#](tr) (.*)$"
         },
         run = run,
         pre_process = pre_process
