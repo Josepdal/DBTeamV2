@@ -29,7 +29,7 @@ local function run(msg, matches)
 		set_text(LANG, 'defaultWelcome', 'خوش آمديد $users به گروه')
 
 		-- stats.lua
-		set_text(LANG, 'stats', '*Chat stats*')
+		set_text(LANG, 'stats', '*وضعیت چت*')
 		set_text(LANG, 'statsCommand', 'وضعیت')
 
 		-- settings.lua --
@@ -76,8 +76,8 @@ local function run(msg, matches)
 		set_text(LANG, 'noSpamT', '`>` ارسال هرزنامه هم اکنون غير مجاز است .')
 		set_text(LANG, 'setSpam', '`>` حساسيت هرزنامه ')
 		set_text(LANG, 'floodT', '`>` ارسال پيام هاي مکرر مجاز است.')
-		set_text(LANG, 'forwardT', '`>` *Forward messages* is now *allowed* in this chat.')
-		set_text(LANG, 'noForwardT', '`>` *Forward messages* is not *allowed* in this chat.')
+		set_text(LANG, 'forwardT', '`>`*فروارد کردن* پبام در این گروه *غیر مجاز* است.')
+		set_text(LANG, 'noForwardT', '`>` *فروارد کردن* پبام در این گروه *مجاز* است.')
 		set_text(LANG, 'noFloodT', '`>` ارسال پيام هاي مکرر غير مجاز است.')
 		set_text(LANG, 'floodTime', '`>` زمان ارسال پيام مکرر و سريع تغيير يافت به : ')
 		set_text(LANG, 'floodMax', '`>` حساسيت ارسال پيام مکرر تغير يافت به: ')
@@ -119,42 +119,43 @@ local function run(msg, matches)
 		set_text(LANG, 'settingsText', 'متن ')
 		set_text(LANG, 'langUpdated', 'زبان شما تغيير يافت به : ')
 
-		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
-		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
+		set_text(LANG, 'linkSet', '`>` *لینک جدید* تنظیم شد')
+		set_text(LANG, 'linkError', '`>` فقط ایجادکننده گروه میتواند لینک را ایجاد کند!')
 
-		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
-		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
-		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
-		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
-
-		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
+		
+		
+		set_text(LANG, 'newRules', '`>` *قوانین جدید* ایجاد شد.')
+		set_text(LANG, 'rulesDefault', '`>` *قوانین قبلی حذف شد*')
+		set_text(LANG, 'noRules', '`>` قوانینی در این گروه مشخص نشده است.')
+		set_text(LANG, 'defaultRules', '*قوانین گروه:*\n`>` اسپم ممنوع\n`>` سعی کنید در راستای اهداف گروه پیش بروید\n`>` هرگونه مطالب نژادپرستی، جنسی و... ممنوع\n\n_در صورت رعایت نکردن قوانین از گروه اخراج و مسدود می شوید_')
+		
+		set_text(LANG, 'delAll', '`>` تمام پیام ها *پاکسازی* شد.')
 
 		-- export_gban.lua --
 		set_text(LANG, 'accountsGban', 'کاربران بن گلوبال')
 		-- promote.lua --
 		set_text(LANG, 'alreadyAdmin', 'اين کاربر در حال حاظر ادمين ميباشد')
 		set_text(LANG, 'alreadyMod', 'اين کاربر در حال حاظر مدير ميباشد')
-		set_text(LANG, 'newAdmin', '<code>></code> <b>New admin</b>')
-		set_text(LANG, 'newMod', '<code>></code> <b>New mod</b>')
-		set_text(LANG, 'nowUser', ' <b>is now an user.</b>')
+		set_text(LANG, 'newAdmin', '<code>></code> <b>ادمین جدید</b>')
+		set_text(LANG, 'newMod', '<code>></code> <b>مدیر جدید</b>')
+		set_text(LANG, 'nowUser', ' <b>در حال حاضر کاربر معمولی است.</b>')
 		set_text(LANG, 'modList', '`>` *ليست مديران*')
 		set_text(LANG, 'adminList', '`>` *ليست ادمين ها')
 		set_text(LANG, 'modEmpty', '*هيچ مديري در اين گروه وجود ندارد .')
-		set_text(LANG, 'adminEmpty', '*Admin list is empty.*')
-		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
-		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
-		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
-		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
-		set_text(LANG, 'leave', '<b>Bye!</b>')
+		set_text(LANG, 'adminEmpty', '*هیچ ادمینی وجود ندارد*')
+		set_text(LANG, 'error1', '<b>خطا:</b> باید یک سوپر گروه باید')
+		set_text(LANG, 'error2', '<b>خطا:</b>باید یک سوپر گروه و مدیر چت باشد')
+		set_text(LANG, 'banall', '<b>تلاش برای مسدود سازی تمام کاربران ...</b>')
+		set_text(LANG, 'setAbout', '<b>اطلاعات تغییر کرد به:</b>')
+		set_text(LANG, 'leave', '<b>خدانگهدار!</b>')
 		
 		
 		-- gban.lua --
-		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
-		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanDel', 'Gbans database removed.')
-
+		set_text(LANG, 'gbans', '<b>کاربران مسدود شده به صورت سراسری (</b>')
+		set_text(LANG, 'gbanLua', ' کاربران مسدود شده به صورت سراسری در فایل LUA')
+		set_text(LANG, 'gbanJson', ' کاربران مسدود شده به صورت سراسری در فایل Json')
+		set_text(LANG, 'gbanDel', 'پایگاه داده کاربران مسدود شده سراسری پاکسازی شد!')
+  
 		-- id.lua --
 		set_text(LANG, 'user', 'کابر')
 		set_text(LANG, 'chatName', 'نام گروه')
@@ -169,10 +170,11 @@ local function run(msg, matches)
 		set_text(LANG, 'muteChat', '`>` اين گروه در حال حاظر در حالت سکوت قرار دارد*')
 		set_text(LANG, 'unmuteUser', '`>` کاربر از ليست سکوت خارج شد و ميتواند صحبت کند.*')
 		set_text(LANG, 'unmuteChat', '`>` گروه از حالت سکوت خارج شد و همه کاربران ميتوانند چت کنند*')
-		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
-		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
+		set_text(LANG, 'muteChatSec', '`>` گروه در حالت *سکوت* قرار گرفت برای ')
+		set_text(LANG, 'muteUserSec', '`>` کاربر در حالت *سکوت* قرار گرفت برای ')
 		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
 
+		
 		-- commands.lua --
 		set_text(LANG, 'commandsT', 'دستور ها')
 		set_text(LANG, 'errorNoPlug', 'اين پلاگين وجود ندارد.')
