@@ -227,9 +227,9 @@ local function run(msg, matches)
 
 		-- private.lua--
 	
-		set_text(LANG, 'privateMSG', '`>` Sorry, this command only works *in a private chat with the bot.*')
-		set_text(LANG, 'privateError', '`>` An error occuried.')
-		set_text(LANG, 'privateSuper', '`>` Group created, migrated to supergroup and promoted to admin!')
+		set_text(LANG, 'privateMSG', '`>` Perdona, aquesta ordre només funciona *en un xat privat amb el bot.*')
+		set_text(LANG, 'privateError', '`>` Hi ha hagut un error.')
+		set_text(LANG, 'privateSuper', '`>` Grup creat, emigrat a supergrup i promogut a admin!')
 		
 		------------
 		-- Usages --
