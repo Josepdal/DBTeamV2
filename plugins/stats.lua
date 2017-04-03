@@ -73,9 +73,10 @@ local function run(msg, matches)
                 send_msg(msg.to.id, ranking, "md")
         end
 end
+chatMSG=msg.yo.id
 return {
         patterns = {
-                "^[!/#](" .. lang_text(msg.to.id, 'statsCommand') .. ")$"
+                "^[!/#](" .. lang_text(chatMSG, 'statsCommand') .. ")$"
         },
         run = run,
         pre_process = pre_process
