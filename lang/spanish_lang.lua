@@ -224,6 +224,15 @@ local function run(msg, matches)
 		set_text(LANG, 'pluginEnabled', '`>` El *plugin* ha sido *activado*.')
 		set_text(LANG, 'pluginDisabled', '`>` El *plugin* ha sido *desactivado*.')
 
+		
+				-- private.lua--
+	
+		set_text(LANG, 'privateMSG', '`>` Sorry, this command only works *in a private chat with the bot.*')
+		set_text(LANG, 'privateError', '`>` An error occuried.')
+		set_text(LANG, 'privateSuper', '`>` Group created, migrated to supergroup and promoted to admin!')
+		
+		
+		
 		------------
 		-- Usages --
 		------------
