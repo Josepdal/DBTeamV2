@@ -75,9 +75,8 @@ local function run(msg, matches)
 end
 
 return {
-	chatMSG=msg.to.id
         patterns = {
-                "^[!/#](" .. lang_text(chatMSG, 'statsCommand') .. ")$"
+                "^[!/#](" .. lang_text(msg.to.id, 'statsCommand') .. ")$"
         },
         run = run,
         pre_process = pre_process
