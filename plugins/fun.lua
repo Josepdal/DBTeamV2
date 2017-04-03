@@ -22,12 +22,12 @@ local function send_title(cb_extra, success, result)
 end
 
 local function run(msg, matches)
-        if matches[1] == "9gag" then
+        
 			local receiver = get_receiver(msg)
   			local url, title = get_9GAG()
   			send_photo_from_url(receiver, url, send_title, {receiver, title})
 			return false
-        end
+        
 end
 return {
         patterns = {
