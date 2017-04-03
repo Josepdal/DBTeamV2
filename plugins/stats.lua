@@ -78,7 +78,9 @@ end
 
 return {
         patterns = {
-                "^[!/#](" .. lang_text('statsCommand') .. ")$"
+                "^[!/#](stats)$",
+				"^[!/#](وضعیت)$"--[[,
+				"^[!/#](your language)$"]]--
         },
         run = run,
         pre_process = pre_process
