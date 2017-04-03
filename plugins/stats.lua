@@ -75,7 +75,7 @@ local function run(msg, matches)
 end
 return {
         patterns = {
-                "^[!/#](stats)$"
+                "^[!/#](stats)$",
 				"^[!/#](وضعیت)$"
         },
         run = run,
