@@ -235,15 +235,21 @@ local function run(msg, matches)
 		end
 	elseif matches[1] == "delall" and msg.reply_id then
 		if permissions(msg.from.id, msg.to.id, "rem_history") then
-			delete_msg_user(msg.to.id, msg.replied.id)
-			delete_msg(msg.to.id, msg.id)
-			send_msg(msg.to.id, lang_text(msg.to.id, 'delAll'), 'md')
+			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
+				delete_msg_user(msg.to.id, msg.replied.id)
+				delete_msg(msg.to.id, msg.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'delAll'), 'md')
+			end
 		end
 	elseif matches[1] == "del" and matches[2] and msg.reply_id then
-		chat_history(msg.to.id, msg.reply_id, 0, tonumber(matches[2]), history_cb, msg.to.id)
-		delete_msg(msg.to.id, msg.reply_id)
-		delete_msg(msg.to.id, msg.id)
-		send_msg(msg.to.id, lang_text(msg.to.id, 'delXMsg'):gsub("$user", msg.from.first_name):gsub("$num", matches[2]), 'md')
+		if permissions(msg.from.id, msg.to.id, "rem_history") then
+			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
+				chat_history(msg.to.id, msg.reply_id, 0, tonumber(matches[2]), history_cb, msg.to.id)
+				delete_msg(msg.to.id, msg.reply_id)
+				delete_msg(msg.to.id, msg.id)
+				send_msg(msg.to.id, lang_text(msg.to.id, 'delXMsg'):gsub("$user", msg.from.first_name):gsub("$num", matches[2]), 'md')
+			end
+		end
 	end
   else
 	print("\27[32m> Not moderating this group.\27[39m")
