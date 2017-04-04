@@ -41,6 +41,7 @@ local function run(msg, matches)
 
 		-- stats.lua
 		set_text(LANG, 'stats', '*Estadísticas del chat*')
+		set_text(LANG, 'statsCommand', 'stats')
 
 
 		-- settings.lua --
@@ -193,6 +194,8 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'Usuario')
 		set_text(LANG, 'chatName', 'Nombre del Chat')
 		set_text(LANG, 'chat', 'Chat')
+		set_text(LANG, 'userID', '*User ID:*')
+		set_text(LANG, 'ChatID', '*Chat ID:*')
 
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` El usuario ha sido *expulsado.*')
