@@ -201,6 +201,17 @@ function promoteToAdmin(chat_id, user_id)
   	}, dl_cb, nil)
 end
 
+function removeFromBanList(chat_id, user_id)
+    tdcli_function ({
+      ID = "ChangeChatMemberStatus",
+      chat_id_ = chat_id,
+      user_id_ = user_id,
+      status_ = {
+          ID = "ChatMemberStatusLeft"
+      },
+    }, dl_cb, nil)
+end
+
 function resolve_username(username, cb_function, cb_extra)
     tdcli_function ({
         ID = "SearchPublicChat",
@@ -217,6 +228,7 @@ function resolve_cb(extra, user)
 		elseif extra.command == "unban" then		
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
 			redis:del("ban:" .. extra.chat_id .. ":" .. user.id_)
+      removeFromBanList(extra.chat_id, user.id_)
 		elseif extra.command == "kick" then		
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'kickUser'), "md")
 			kick_user(extra.chat_id, user.id_)
@@ -226,7 +238,7 @@ function resolve_cb(extra, user)
 			redis:sadd("gbans", user.id_)
 		elseif extra.command == "ungban" then		
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
-			redis:srem("gbans", user.id_)		
+			redis:srem("gbans", user.id_)
 		elseif extra.command == "mute" then
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'muteUser'), "md")
 			redis:set("muted:" .. extra.chat_id .. ":" .. user.id_, true)

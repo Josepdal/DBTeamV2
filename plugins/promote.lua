@@ -26,34 +26,52 @@ local function run(msg, matches)
 				redis:sadd('admins', msg.replied.id)
 				redis:srem('mods:'..msg.to.id, msg.replied.id)
 				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
-			elseif matches[2] then
+			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_admin", command = "admin"})
+			elseif is_number(matches[2]) then
+				redis:sadd('admins', matches[2])
+				redis:srem('mods:'..msg.to.id, matches[2])
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": " .. matches[2], "html")
 			end
 		end
 	elseif matches[1] == "mod" then
 		if permissions(msg.from.id, msg.to.id, "promote_mod") then
-			if msg.reply_id then
+			if msg.reply_id and not matches[2] then
 				redis:sadd('mods:'..msg.to.id, msg.replied.id)
 				if new_is_sudo(msg.from.id) then
 					redis:srem('admins', msg.replied.id)
 				end
 				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
-			elseif matches[2] then
+			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_mod", command = "mod"})
+			elseif is_number(matches[2]) then
+				redis:sadd('mods:'..msg.to.id, matches[2])
+				if new_is_sudo(msg.from.id) then
+					redis:srem('admins', matches[2])
+				end
+				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": " .. matches[2], "html")
 			end
 		end
 	elseif matches[1] == "user" then
 		if permissions(msg.from.id, msg.to.id, "promote_user") then
-			if msg.reply_id then
+			if msg.reply_id and not matches[2] then
 				if new_is_sudo(msg.from.id) then
 					redis:srem('mods:'..msg.to.id, msg.replied.id)
 					redis:srem('admins', msg.replied.id)
-				elseif is_admin(msg.to.id) then
+				elseif is_admin(msg.from.id) then
 					redis:srem('mods:'..msg.to.id, msg.replied.id)
 				end
 				send_msg(msg.to.id, "<code>></code> @" .. (msg.replied.username or msg.replied.first_name) .. "" ..  lang_text(msg.to.id, 'nowUser'), "html")
-			elseif matches[2] then
+			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_user", command = "user"})
+			elseif is_number(matches[2]) then
+				if new_is_sudo(msg.from.id) then
+					redis:srem('mods:'..msg.to.id, matches[2])
+					redis:srem('admins', matches[2])
+				elseif is_admin(msg.from.id) then
+					redis:srem('mods:'..msg.to.id, matches[2])
+				end
+				send_msg(msg.to.id, "<code>></code> " .. matches[2] .. lang_text(msg.to.id, 'nowUser'), "html")
 			end
 		end
 	elseif matches[1] == "admins" then
