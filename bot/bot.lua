@@ -120,7 +120,10 @@ function bot_init(msg)
     if msg.from then
         if msg.from.username then
             redis:hset('bot:usernames', '@'..msg.from.username:lower(), msg.from.id)
-            redis:hset('bot:ids', msg.from.id, '@'.. (msg.from.username:lower() or msg.from.first_name:lower()))
+            redis:hset('bot:ids', msg.from.id, '@'.. msg.from.username:lower())
+        else
+        	redis:hset('bot:usernames', '@' .. msg.from.first_name:lower(), msg.from.id)
+        	redis:hset('bot:ids', msg.from.id, msg.from.first_name:lower())
         end
         redis:sadd('chat:' .. msg.to.id .. ':members', msg.from.id)
     end

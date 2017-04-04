@@ -91,12 +91,14 @@ local function run(msg, matches)
 			send_msg(msg.to.id, "`>` The user has been *banned* for `" .. matches[2] .. "` secs." , "md")
 		    kick_user(msg.to.id, msg.replied.id)
 		    redis:setex("ban:" .. msg.to.id .. ":" .. msg.replied.id, matches[2], true)
+		    removeFromBanList(msg.to.id, msg.replied.id)
 		end
 	elseif matches[1] == "unban" then
 		if not matches[2] and msg.reply_id ~= 0 then
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 				redis:del("ban:" .. msg.to.id .. ":" .. msg.replied.id)
+				removeFromBanList(msg.to.id, msg.replied.id)
 			else
 				permissions(msg.from.id, msg.to.id, "moderation")
 			end
@@ -104,6 +106,7 @@ local function run(msg, matches)
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 				send_msg(msg.to.id, lang_text(msg.to.id, 'unbanUser'), "md")
 		    	redis:del("ban:" .. msg.to.id .. ":" .. matches[2])
+		    	removeFromBanList(msg.to.id, matches[2])
 			else
 				permissions(msg.from.id, msg.to.id, "moderation")
 			end
