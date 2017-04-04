@@ -68,7 +68,7 @@ end
 
 
 local function run(msg, matches)
-        if matches[1] == lang_text(msg.to.id, 'statsCommand') then
+        if matches[1] == lang_text(msg.to.id, 'statsCommand') or if matches[1] == "stats" then
                 ranking = get_ranking(msg.to.id, lang_text(msg.to.id, 'stats'))
                 send_msg(msg.to.id, ranking, "md")
         end
