@@ -68,14 +68,16 @@ end
 
 
 local function run(msg, matches)
-        if matches[1] == "stats" then
+        if matches[1] == lang_text(msg.to.id, 'statsCommand') then
                 ranking = get_ranking(msg.to.id, lang_text(msg.to.id, 'stats'))
                 send_msg(msg.to.id, ranking, "md")
         end
 end
 return {
         patterns = {
-                "^[!/#](stats)$"
+                "^[!/#](stats)$",
+				"^[!/#](وضعیت)$"--[[,
+				"^[!/#](add command with your language)$"]]--
         },
         run = run,
         pre_process = pre_process
