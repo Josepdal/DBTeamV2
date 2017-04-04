@@ -35,6 +35,7 @@ local function run(msg, matches)
 
 		-- stats.lua
 		set_text(LANG, 'stats', '*Chat stats*')
+		set_text(LANG, 'statsCommand', 'stats')
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'User')
@@ -189,6 +190,8 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'chatName', 'Chat Name')
 		set_text(LANG, 'chat', 'Chat')
+		set_text(LANG, 'userID', '*User ID:*')
+		set_text(LANG, 'ChatID', '*Chat ID:*')
 
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` The user has been *kicked out.*')
@@ -225,6 +228,7 @@ local function run(msg, matches)
 		set_text(LANG, 'privateMSG', '`>` Sorry, this command only works *in a private chat with the bot.*')
 		set_text(LANG, 'privateError', '`>` An error occuried.')
 		set_text(LANG, 'privateSuper', '`>` Group created, migrated to supergroup and promoted to admin!')
+		
 		
 		
 		------------
