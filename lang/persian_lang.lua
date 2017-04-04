@@ -29,8 +29,9 @@ local function run(msg, matches)
 		set_text(LANG, 'defaultWelcome', 'خوش آمديد $users به گروه')
 
 		-- stats.lua
-		set_text(LANG, 'stats', '*وضعیت چت*')
 		set_text(LANG, 'statsCommand', 'وضعیت')
+		set_text(LANG, 'stats', '*وضعیت چت*')
+		
 
 		-- settings.lua --
 		set_text(LANG, 'user', 'کاربر')
@@ -160,6 +161,10 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'کابر')
 		set_text(LANG, 'chatName', 'نام گروه')
 		set_text(LANG, 'chat', 'گروه')
+		set_text(LANG, 'userID', '*شناسه کاربر:*')
+		set_text(LANG, 'ChatID', '*شناسه گروه:*')
+		
+		
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` کاربر اخراج شد')
 		set_text(LANG, 'banUser', '`>` کابر بن شد و ورودش مسدود شد.')
