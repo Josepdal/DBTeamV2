@@ -194,6 +194,8 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'Usuari')
 		set_text(LANG, 'chatName', 'Nom del grup')
 		set_text(LANG, 'chat', 'Xat')
+		set_text(LANG, 'userID', '*User ID:*')
+		set_text(LANG, 'chatID', '*Chat ID:*')
 
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` L\'usuari ha estat *expulsat.*')
