@@ -160,6 +160,9 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'کابر')
 		set_text(LANG, 'chatName', 'نام گروه')
 		set_text(LANG, 'chat', 'گروه')
+		set_text(LANG, 'userID', '*شناسه کاربر:*')
+		set_text(LANG, 'chatID', '*شناسه گروه:*')
+		
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` کاربر اخراج شد')
 		set_text(LANG, 'banUser', '`>` کابر بن شد و ورودش مسدود شد.')
