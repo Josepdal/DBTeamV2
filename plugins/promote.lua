@@ -146,12 +146,10 @@ end
 
 function banall_cb(extra, data)
 	send_msg(extra, lang_text(msg.to.id, 'banall'), 'html')
-	for k,vv in pairs(data.members_) do
-		for v,user in pairs(_config.sudo_users) do
-			if vv.user_id_ ~= user and  vv.user_id_ ~= _config.our_id[1] then
-				kick_user(extra, vv.user_id_)		
-			end
-		end
+	for k,user in pairs(data.members_) do
+		if user.user_id_ ~= _config.our_id[1] and not new_is_sudo(user.user_id_) and not is_admin(user.user_id_) and not is_mod(extra, user.user_id_) then
+			kick_user(extra, user.user_id_)
+		end	
 	end
 end
 

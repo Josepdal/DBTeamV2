@@ -28,7 +28,7 @@ function send_report(msg,reason)
 	if msg.from.username then
 		 user_id_ = "@" .. msg.from.username
 	end
-    local text = '*Spam report:*\n*User:* '.. user_id_ ..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* _'..msg.text..'_\n*Pattern:* _'..reason..'_' ---put translattions
+    local text = '*Spam report:*\n*User:* '.. user_id_ ..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* `'..msg.text..'`\n*Pattern:* `'..reason..'`' ---put translattions
     for v,user in pairs(_config.sudo_users) do
         send_msg(user, text, 'md')
     end
@@ -111,13 +111,15 @@ local function pre_process(msg)
 	    	local list = require("data/spam_data")
 	    	local customlist = redis:get("settings:setspam:" .. msg.to.id) or "default"
 		    for number, pattern in pairs(list.blacklist[customlist]) do
-		        matches = match_pattern(pattern, msg.text)
-				spam = true
-		        if matches then	
-					for number, pattern1 in pairs(list.whitelist[customlist]) do
-						local matches1 = match_pattern(pattern1, msg.text)
-						if matches1 then
-							spam = false
+		        local matches = match_pattern(pattern, msg.text)
+				local spam = true
+		        if matches then
+		        	if list.whitelist[customlist] then
+						for number, pattern1 in pairs(list.whitelist[customlist]) do
+							local matches1 = match_pattern(pattern1, msg.text)
+							if matches1 then
+								spam = false
+							end
 						end
 					end					
 					if spam then
@@ -131,6 +133,8 @@ local function pre_process(msg)
 						if redis:get("settings:reports:" .. msg.to.id) then
 							send_report(msg,pattern)
 						end
+						-- One matches is enough
+						return msg
 					end
 		        end
 		    end

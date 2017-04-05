@@ -47,11 +47,17 @@ function oldtg(data)
     msg.to = {}
     msg.from = {}
     msg.replied = {}
-    
     msg.to.id = data.message_.chat_id_
     msg.from.id = data.message_.sender_user_id_
     if data.message_.content_.ID == "MessageText" then
         msg.text = data.message_.content_.text_
+        if #data.message_.content_.entities_ ~= 0 then
+            for k, v in ipairs (data.message_.content_.entities_) do
+                if v.url_ then
+                    msg.text = msg.text .. " url: " .. v.url_
+                end
+            end
+        end
     end
     if data.message_.content_.caption_ then
         msg.text = data.message_.content_.caption_
