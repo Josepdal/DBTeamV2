@@ -189,6 +189,9 @@ local function run(msg, matches)
 		set_text(LANG, 'user', 'User')
 		set_text(LANG, 'chatName', 'Chat Name')
 		set_text(LANG, 'chat', 'Chat')
+		set_text(LANG, 'userID', '*User ID:*')
+		set_text(LANG, 'chatID', '*Chat ID:*')
+		
 
 		-- moderation.lua --
 		set_text(LANG, 'kickUser', '`>` The user has been *kicked out.*')
