@@ -118,6 +118,7 @@ local function run(msg, matches)
 			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
 				send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 				kick_user(msg.to.id, msg.replied.id)
+				removeFromBanList(msg.to.id, msg.replied.id)
 			else
 				permissions(msg.from.id, msg.to.id, "moderation")
 			end
@@ -125,6 +126,7 @@ local function run(msg, matches)
 	    	if compare_permissions(msg.to.id, msg.from.id, matches[2]) then
 		    	send_msg(msg.to.id, lang_text(msg.to.id, 'kickUser'), "md")
 				kick_user(msg.to.id, matches[2])
+				removeFromBanList(msg.to.id, matches[2])
 		    else
 				permissions(msg.from.id, msg.to.id, "moderation")
 			end

@@ -232,6 +232,7 @@ function resolve_cb(extra, user)
 		elseif extra.command == "kick" then		
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'kickUser'), "md")
 			kick_user(extra.chat_id, user.id_)
+      removeFromBanList(extra.chat_id, user.id_)
 		elseif extra.command == "gban" then		
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'gbanUser'), "md")
 			kick_user(extra.chat_id, user.id_)
