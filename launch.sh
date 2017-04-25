@@ -160,8 +160,8 @@ case $1 in
     	exit ;;
     tmux)
     	if [ ! -f "/usr/bin/tmux" ]; then echo "Please install tmux"; exit; fi
-    	ok=`tmux new-session -s $TMUX_SESSION -d "./bin/telegram-cli -s ./bot/bot.lua"`
-    	if [[ $ok ]]; then echo "New session tmux: ${TMUX_SESSION}"; else echo "Error while run tgcli"; fi
+    	error=`tmux new-session -s $TMUX_SESSION -d "./bin/telegram-cli -s ./bot/bot.lua" 2>/dev/stdout`
+    	if [[ ! $error ]]; then echo "New session tmux: ${TMUX_SESSION}"; else echo "Error running tmux."; fi
     	exit ;;
     attach)
     	if [ ! -f "/usr/bin/tmux" ]; then echo "Please install tmux"; exit; fi
