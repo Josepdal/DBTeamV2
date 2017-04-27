@@ -212,6 +212,15 @@ function removeFromBanList(chat_id, user_id)
     }, dl_cb, nil)
 end
 
+function addChatMember(chat_id, user_id)
+  tdcli_function ({
+    ID = "AddChatMember",
+    chat_id_ = chat_id,
+    user_id_ = user_id,
+    forward_limit_ = 50
+  }, cb or dl_cb, nil)
+end
+
 function resolve_username(username, cb_function, cb_extra)
     tdcli_function ({
         ID = "SearchPublicChat",

@@ -63,10 +63,10 @@ local function run(msg, matches)
   if redis:get("moderation_group: " .. msg.to.id) then
 	if matches[1] == "del" and not matches[2] then
 		if not matches[2] and msg.reply_id then
-			if compare_permissions(msg.to.id, msg.from.id, msg.replied.id) then
+			if permissions(msg.from.id, msg.to.id, "rem_history") then
 				delete_msg(msg.to.id, msg.reply_id)
-				delete_msg(msg.to.id, msg.id)
 			end
+			delete_msg(msg.to.id, msg.id)
 		end
 	elseif matches[1] == "ban" then
 		if not matches[2] and msg.reply_id then

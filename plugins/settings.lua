@@ -23,6 +23,10 @@ local function get_added_users(msg)
 	return users
 end
 
+function adduser_cb(chat, data)
+	addChatMember(chat, data.id_)
+end
+
 function send_report(msg,reason)
 	local user_id_ = ''
 	if msg.from.username then
@@ -96,9 +100,9 @@ local function pre_process(msg)
 			end
 			local welcomeText
 			if redis:get("settings:welcome:msg:" .. msg.to.id) then
-				welcomeText = redis:get("settings:welcome:msg:" .. msg.to.id):gsub("$users", users)
+				welcomeText = redis:get("settings:welcome:msg:" .. msg.to.id):gsub("$users", users):gsub("$id", msg.from.id):gsub("$chatid", msg.to.id)
 			else
-				welcomeText = lang_text(msg.to.id, 'defaultWelcome'):gsub("$users", users)
+				welcomeText = lang_text(msg.to.id, 'defaultWelcome'):gsub("$users", users):gsub("$id", msg.from.id):gsub("$chatid", msg.to.id)
 			end
 			send_msg(msg.to.id, welcomeText, 'html')
 		end
@@ -579,12 +583,24 @@ local function run(msg, matches)
 		elseif matches[1]:lower() == "remrules" and not matches[2] and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
 			redis:del("settings:rules:" .. msg.to.id, matches[2])
 			send_msg(msg.to.id, lang_text(msg.to.id, 'rulesDefault'), 'md')
+		elseif matches[1]:lower() == "adduser" and matches[2] then
+			if matches[2] then
+				if is_number(matches[2]) then
+					addChatMember(msg.to.id, matches[2])
+				else
+					resolve_username(matches[2], adduser_cb, msg.to.id)
+				end
+			elseif msg.reply_id then
+				addChatMember(msg.to.id, msg.reply_id)
+			end
 		end
 	
 end
 
 return {
   	patterns = {
+  		'^[!/#]([Aa]dduser)$',
+  		'^[!/#]([Aa]dduser) (.*)$',
 		'^[!/#]([Ss]ettings)$',
 		'^[!/#](lang) (.*)$',
 		'^[!/#](tgservices) (.*)$',

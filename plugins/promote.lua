@@ -118,7 +118,7 @@ local function run(msg, matches)
   elseif matches[1] == "leave" then
 	  if permissions(msg.from.id, msg.to.id, "leave") then
 		  send_msg(msg.to.id, lang_text(msg.to.id, 'leave'), 'html')
-		  kick_user(msg.to.id, _config.our_id[1])
+		  removeFromBanList(msg.to.id, _config.our_id[1])
 	  end
   elseif matches[1] == "setabout" and matches[2] then
 	  if permissions(msg.from.id, msg.to.id, "setabout") then
