@@ -24,6 +24,7 @@ local function get_added_users(msg)
 end
 
 function adduser_cb(chat, data)
+	redis:del("ban:" .. msg.to.id .. ":" .. data.id_)
 	addChatMember(chat, data.id_)
 end
 
@@ -583,15 +584,17 @@ local function run(msg, matches)
 		elseif matches[1]:lower() == "remrules" and not matches[2] and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
 			redis:del("settings:rules:" .. msg.to.id, matches[2])
 			send_msg(msg.to.id, lang_text(msg.to.id, 'rulesDefault'), 'md')
-		elseif matches[1]:lower() == "adduser" and matches[2] then
+		elseif matches[1]:lower() == "adduser" and permissions(msg.from.id, msg.to.id, "adduser") then
 			if matches[2] then
 				if is_number(matches[2]) then
+					redis:del("ban:" .. msg.to.id .. ":" .. matches[2])
 					addChatMember(msg.to.id, matches[2])
 				else
 					resolve_username(matches[2], adduser_cb, msg.to.id)
 				end
 			elseif msg.reply_id then
-				addChatMember(msg.to.id, msg.reply_id)
+				redis:del("ban:" .. msg.to.id .. ":" .. msg.replied.id)
+				addChatMember(msg.to.id, msg.replied.id)		
 			end
 		end
 	

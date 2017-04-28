@@ -11,7 +11,8 @@ local admins = {
 	"promote_mod",
 	"promote_user",
 	"gban",
-	"add_moderation"
+	"add_moderation",
+	"adduser"
 }
 local mods = {
 	"set_lang",
