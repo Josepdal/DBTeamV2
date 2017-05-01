@@ -250,7 +250,8 @@ local function run(msg, matches)
 				chat_history(msg.to.id, msg.reply_id, 0, tonumber(matches[2]), history_cb, msg.to.id)
 				delete_msg(msg.to.id, msg.reply_id)
 				delete_msg(msg.to.id, msg.id)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'delXMsg'):gsub("$user", (msg.replied.username or msg.replied.from.first_name)):gsub("$num", matches[2]), 'md')
+				send_msg(msg.to.id, lang_text(msg.to.id, 'delXMsg'):gsub("$user", (msg.replied.username or msg.replied.first_name):gsub("$num", matches[2]), 'md')
+
 			end
 		end
 	end
