@@ -231,29 +231,29 @@ end
 function resolve_cb(extra, user)
 	if compare_permissions(extra.chat_id, extra.superior, user.id_) then
 		if extra.command == "ban" then
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'banUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'banUser'):gsub("$id", user.id_), "md")
 			kick_user(extra.chat_id, user.id_)
 			redis:set("ban:" .. extra.chat_id .. ":" .. user.id_, true)
 		elseif extra.command == "unban" then		
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'):gsub("$id", user.id_), "md")
 			redis:del("ban:" .. extra.chat_id .. ":" .. user.id_)
       removeFromBanList(extra.chat_id, user.id_)
 		elseif extra.command == "kick" then		
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'kickUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'kickUser'):gsub("$id", user.id_), "md")
 			kick_user(extra.chat_id, user.id_)
       removeFromBanList(extra.chat_id, user.id_)
 		elseif extra.command == "gban" then		
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'gbanUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'gbanUser'):gsub("$id", user.id_), "md")
 			kick_user(extra.chat_id, user.id_)
 			redis:sadd("gbans", user.id_)
 		elseif extra.command == "ungban" then		
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unbanUser'):gsub("$id", user.id_), "md")
 			redis:srem("gbans", user.id_)
 		elseif extra.command == "mute" then
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'muteUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'muteUser'):gsub("$id", user.id_), "md")
 			redis:set("muted:" .. extra.chat_id .. ":" .. user.id_, true)
 		elseif extra.command == "unmute" then
-			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unmuteUser'), "md")
+			send_msg(extra.chat_id, lang_text(extra.chat_id, 'unmuteUser'):gsub("$id", user.id_), "md")
 			redis:del("muted:" .. extra.chat_id .. ":" .. user.id_)
 		elseif extra.command == "admin" then
 			send_msg(extra.chat_id, lang_text(extra.chat_id, 'newAdmin') .. ": @" .. (user.type_.user_.username_ or user.type_.user_.first_name_), "html")
@@ -278,7 +278,6 @@ function resolve_cb(extra, user)
 		end
 	else
 		permissions(extra.superior, extra.chat_id, extra.plugin_tag)
-		
 	end
 end
 
