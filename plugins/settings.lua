@@ -29,13 +29,13 @@ function adduser_cb(chat, data)
 end
 
 function send_report(msg,reason)
-	local user_id_ = ''
+	local user_ = "<i>no username</i>"
 	if msg.from.username then
-		 user_id_ = "@" .. msg.from.username
+		 user_ = "@" .. msg.from.username
 	end
-    local text = '*Spam report:*\n*User:* '.. user_id_ ..'`(`'..msg.from.id..'`)-'..msg.from.first_name..'`\n*Message:* `'..msg.text..'`\n*Pattern:* `'..reason..'`' ---put translattions
+    local text = '<b>Spam report:</b>\n<b>User:</b> '.. user_ ..'<code>(</code>'..msg.from.id..'<code>)-'..msg.from.first_name..'</code>\n<b>Message:</b> <code>'..msg.text..'</code>\n<b>Pattern:</b> <code>'..reason..'</code>'
     for v,user in pairs(_config.sudo_users) do
-        send_msg(user, text, 'md')
+        send_msg(user, text, 'html')
     end
 end
 

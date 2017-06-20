@@ -38,6 +38,8 @@ sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblu
 # If you have errors (maybe you'll need this on Ubuntu)
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; sudo apt-get autoclean; sudo apt-get update
 sudo apt-get install git redis-server libconfig8-dev libjansson-dev lua5.2 liblua5.2-dev lua-lgi glib-2.0 libnotify-dev libssl-dev libssl1.0.0 make libstdc++6 g++-4.9 unzip libreadline-gplv2-dev libreadline5-dev tmux -y
+
+# If your bot still not working, maybe you don't have installed gcc and openssl, check if you have both installed.
 ```
 
 Arch:
